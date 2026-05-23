@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a1a">
+<title>DOSTON</title>
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRE9TVE9OIiwic2hvcnRfbmFtZSI6IkRPU1RPTiIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMGEwYTFhIiwidGhlbWVfY29sb3IiOiIjMGEwYTFhIn0=">
+<style>
+:root {
+  --bg-deep: #0a0a1a;
+  --bg-card: rgba(255,255,255,0.04);
+  --bg-card-hover: rgba(255,255,255,0.08);
+  --text-primary: #e8e6f0;
+  --text-secondary: rgba(232,230,240,0.55);
+  --text-dim: rgba(232,230,240,0.3);
+  --accent-glow: #7c6cf0;
+  --accent-warm: #f0a060;
+  --accent-breath: #60d0c0;
+  --accent-sit: #c090f0;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body {
+  height:100%; width:100%;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+#bgCanvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
+#app {
+  position:relative; z-index:1; height:100%;
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+  padding: calc(var(--safe-top) + 16px) 20px calc(var(--safe-bottom) + 30px);
+}
+#app::-webkit-scrollbar { width:0; }
+.screen-title { font-size:28px; font-weight:700; letter-spacing:-0.5px; margin-bottom:6px; }
+.screen-subtitle { font-size:14px; color:var(--text-secondary); margin-bottom:28px; line-height:1.5; }
+.section-label { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); margin-bottom:12px; margin-top:28px; }
+.section-label:first-of-type { margin-top:0; }
+.card {
+  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding:20px; margin-bottom:12px;
+  cursor:pointer; transition: background 0.3s, transform 0.2s, border-color 0.3s;
+}
+.card:active { transform:scale(0.97); background:var(--bg-card-hover); }
+.card-title { font-size:17px; font-weight:600; margin-bottom:4px; }
+.card-desc { font-size:13px; color:var(--text-secondary); line-height:1.4; }
+.card-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-size:22px; }
+.card-row { display:flex; align-items:center; gap:14px; }
+.card-row .card-icon { margin-bottom:0; flex-shrink:0; }
+.card-row .card-info { flex:1; }
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding: 14px 28px; border-radius: 50px; border:none;
+  font-size:15px; font-weight:600; cursor:pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.btn:active { transform:scale(0.95); }
+.btn-primary { background: linear-gradient(135deg, var(--accent-glow), #9b8cf8); color:white; box-shadow: 0 4px 24px rgba(124,108,240,0.3); }
+.btn-ghost { background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); }
+.btn-snap {
+  background: radial-gradient(circle at 30% 30%, #f0a060, #e06040); color:white;
+  box-shadow: 0 4px 20px rgba(240,160,96,0.3); width:100%; padding:14px;
+  font-size:14px; font-weight:600; letter-spacing:0.5px;
+}
+.stats-row { display:flex; gap:10px; margin-bottom:20px; }
+.stat-chip { flex:1; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-sm); padding:14px 12px; text-align:center; }
+.stat-value { font-size:24px; font-weight:700; }
+.stat-label { font-size:10px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+/* Mute toggle */
+.mute-btn {
+  position:fixed; top: calc(var(--safe-top) + 14px); right:20px;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+  border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--text-secondary); font-size:16px; z-index:50;
+  transition: background 0.3s, color 0.3s;
+}
+.mute-btn.muted { color:var(--text-dim); background:rgba(255,80,80,0.08); border-color:rgba(255,80,80,0.15); }
+
+/* Breathwork overlay */
+.breath-container { display:flex; flex-direction:column; align-items:center; padding:30px 0; }
+.breath-orb-wrap { position:relative; width:200px; height:200px; margin-bottom:30px; }
+.breath-orb {
+  width:100%; height:100%; border-radius:50%;
+  background: radial-gradient(circle at 40% 35%, var(--accent-breath), #2a6060);
+  box-shadow: 0 0 60px rgba(96,208,192,0.3);
+  transition: transform 3s ease-in-out, box-shadow 3s ease-in-out;
+  display:flex; align-items:center; justify-content:center;
+}
+.breath-orb.expand { transform:scale(1.3); box-shadow: 0 0 100px rgba(96,208,192,0.5); }
+.breath-orb.hold-big { transform:scale(1.3); }
+.breath-orb.contract { transform:scale(0.7); box-shadow: 0 0 20px rgba(96,208,192,0.12); }
+.breath-orb.hold-small { transform:scale(0.7); }
+.breath-timer { font-size:48px; font-weight:200; color:white; }
+.breath-phase { font-size:20px; font-weight:300; letter-spacing:2px; text-transform:uppercase; color:var(--accent-breath); margin-bottom:8px; }
+.breath-cycle { font-size:13px; color:var(--text-secondary); }
+.breath-patterns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:20px; }
+.breath-pattern-btn {
+  padding:8px 16px; border-radius:20px;
+  background: var(--bg-card); border:1px solid rgba(255,255,255,0.08);
+  color:var(--text-secondary); font-size:13px;
+  cursor:pointer; transition: all 0.3s;
+}
+.breath-pattern-btn.active { background: rgba(96,208,192,0.15); border-color: var(--accent-breath); color: var(--accent-breath); }
+.custom-builder {
+  background: var(--bg-card); border:1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius); padding:20px; margin-bottom:20px; display:none; width:100%;
+}
+.custom-builder.visible { display:block; }
+.phase-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.phase-row input[type="text"] {
+  flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px; padding:10px 12px; color:var(--text-primary); font-size:14px;
+  font-family:inherit; outline:none;
+}
+.phase-row input[type="text"]:focus { border-color: var(--accent-breath); }
+.phase-row input[type="text"]::placeholder { color:var(--text-dim); }
+.phase-row input[type="number"], .cycles-row input[type="number"] {
+  width:60px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px; padding:10px 8px; color:var(--text-primary); font-size:14px;
+  font-family:inherit; outline:none; text-align:center;
+}
+.phase-row .sec-label { font-size:12px; color:var(--text-dim); flex-shrink:0; }
+.phase-remove {
+  width:32px; height:32px; border-radius:50%; border:none;
+  background:rgba(255,80,80,0.15); color:#f06060; font-size:18px;
+  cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+}
+.builder-actions { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.builder-actions .btn { padding:10px 18px; font-size:13px; }
+.cycles-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
+.cycles-row label { font-size:13px; color:var(--text-secondary); }
+
+/* Snap */
+.snap-container { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0; text-align:center; width:100%; height:100%; }
+.snap-prompt { font-size:44px; font-weight:700; line-height:1.2; padding:0 20px; display:flex; align-items:center; justify-content:center; text-align:center; transition: opacity 0.1s ease; text-shadow: 0 0 60px rgba(255,255,255,0.3); }
+.snap-step-dots { display:flex; gap:6px; position:absolute; bottom:40px; left:50%; transform:translateX(-50%); }
+.snap-dot { width:6px; height:6px; border-radius:50%; background: rgba(255,255,255,0.15); transition: background 0.2s, transform 0.2s; }
+.snap-dot.active { background: var(--accent-warm); transform:scale(1.5); }
+.snap-dot.done { background: rgba(240,160,96,0.6); }
+.snap-flash {
+  position:fixed; inset:0; background:white; z-index:999; pointer-events:none;
+  opacity:0; transition: opacity 0.06s ease-out;
+}
+.snap-flash.fire { opacity:0.9; }
+
+/* Overlays (shared) */
+.exercise-overlay {
+  position:fixed; inset:0; z-index:200; background: var(--bg-deep);
+  display:none; flex-direction:column;
+  padding: calc(var(--safe-top) + 20px) 20px calc(var(--safe-bottom) + 20px);
+  transition: background-color 0.5s ease;
+}
+.exercise-overlay.active { display:flex; }
+.overlay-close { align-self:flex-end; background:none; border:none; color:var(--text-secondary); font-size:14px; font-weight:500; padding:8px 16px; cursor:pointer; z-index:10; position:relative; }
+.overlay-content { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow-y:auto; }
+
+/* Just Sit overlay */
+.sit-overlay {
+  position:fixed; inset:0; z-index:200; background: var(--bg-deep);
+  display:none; flex-direction:column; align-items:center; justify-content:center;
+  padding: calc(var(--safe-top) + 20px) 20px calc(var(--safe-bottom) + 20px);
+}
+.sit-overlay.active { display:flex; }
+.sit-close { position:absolute; top: calc(var(--safe-top) + 16px); right:20px; background:none; border:none; color:var(--text-secondary); font-size:14px; font-weight:500; padding:8px 16px; cursor:pointer; z-index:5; }
+.sit-timer-display { font-size:72px; font-weight:200; letter-spacing:-2px; margin-bottom:8px; }
+.sit-wander-count { font-size:14px; color:var(--text-secondary); margin-bottom:40px; }
+.sit-left-btn {
+  width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, rgba(192,144,240,0.25), rgba(192,144,240,0.08));
+  border: 2px solid rgba(192,144,240,0.3);
+  color: var(--accent-sit); font-size:16px; font-weight:600;
+  cursor:pointer; transition: transform 0.15s, box-shadow 0.3s, background 0.3s;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  position:relative; overflow:hidden;
+}
+.sit-left-btn:active { transform:scale(0.92); background: rgba(192,144,240,0.2); box-shadow: 0 0 40px rgba(192,144,240,0.3); }
+.sit-left-btn .sit-btn-sub { font-size:11px; color:var(--text-secondary); font-weight:400; }
+.sit-duration-pills { display:flex; gap:10px; margin-bottom:20px; }
+.sit-pill {
+  padding:10px 20px; border-radius:24px;
+  background: var(--bg-card); border:1px solid rgba(255,255,255,0.08);
+  color:var(--text-secondary); font-size:14px; font-weight:500;
+  cursor:pointer; transition: all 0.3s;
+}
+.sit-pill.active { background: rgba(192,144,240,0.15); border-color: var(--accent-sit); color: var(--accent-sit); }
+.interval-selector { display:flex; gap:8px; margin-bottom:20px; align-items:center; }
+.interval-label { font-size:12px; color:var(--text-secondary); margin-right:4px; white-space:nowrap; }
+.interval-pill {
+  padding:6px 14px; border-radius:16px;
+  background: var(--bg-card); border:1px solid rgba(255,255,255,0.08);
+  color:var(--text-dim); font-size:12px; font-weight:500;
+  cursor:pointer; transition: all 0.3s;
+}
+.interval-pill.active { background: rgba(192,144,240,0.12); border-color: rgba(192,144,240,0.3); color: var(--accent-sit); }
+
+/* Welcome back flash */
+.welcome-flash {
+  position:absolute; inset:0; border-radius:50%; pointer-events:none;
+  background: radial-gradient(circle, rgba(192,144,240,0.6), transparent 70%);
+  opacity:0; transition: opacity 0.15s ease-out;
+}
+.welcome-flash.active { opacity:1; }
+.welcome-msg {
+  font-size:14px; font-weight:500; color:var(--accent-sit);
+  white-space:nowrap; opacity:0; transition: opacity 0.3s, transform 0.3s;
+  pointer-events:none; margin-top:16px;
+}
+.welcome-msg.show { opacity:1; transform:translateY(-4px); }
+
+/* Sit complete */
+.sit-complete { display:none; flex-direction:column; align-items:center; text-align:center; }
+.sit-complete.visible { display:flex; }
+.sit-complete-title { font-size:24px; font-weight:600; margin-bottom:8px; }
+.sit-complete-sub { font-size:14px; color:var(--text-secondary); margin-bottom:24px; }
+.sit-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:300px; margin-bottom:24px; }
+.sit-stat-box { background:var(--bg-card); border:1px solid rgba(255,255,255,0.06); border-radius:var(--radius-sm); padding:16px 12px; text-align:center; }
+.sit-stat-val { font-size:28px; font-weight:700; }
+.sit-stat-label { font-size:10px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+
+/* Wander timeline */
+.wander-timeline { width:100%; max-width:300px; margin-bottom:24px; }
+.wander-tl-label { font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.wander-tl-bar {
+  width:100%; height:28px; background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.06); border-radius:14px;
+  position:relative; overflow:hidden;
+}
+.wander-tl-fill {
+  position:absolute; left:0; top:0; bottom:0;
+  background: linear-gradient(90deg, rgba(192,144,240,0.08), rgba(192,144,240,0.15));
+  border-radius:14px;
+}
+.wander-tl-dot {
+  position:absolute; top:50%; width:8px; height:8px;
+  background:var(--accent-sit); border-radius:50%;
+  transform:translate(-50%, -50%);
+  box-shadow: 0 0 6px rgba(192,144,240,0.5);
+}
+.wander-tl-ends { display:flex; justify-content:space-between; margin-top:4px; }
+.wander-tl-ends span { font-size:9px; color:var(--text-dim); }
+
+.history-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+.history-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.history-info { flex:1; }
+.history-title { font-size:14px; font-weight:500; }
+.history-meta { font-size:12px; color:var(--text-secondary); }
+.history-min { font-size:13px; font-weight:600; color:var(--accent-breath); text-align:right; }
+.history-wanders { font-size:11px; color:var(--accent-sit); }
+
+@keyframes pulse-glow {
+  0%,100% { box-shadow: 0 0 30px rgba(240,160,96,0.3); }
+  50% { box-shadow: 0 0 60px rgba(240,160,96,0.6); }
+}
+@keyframes pulse-sit {
+  0%,100% { box-shadow: 0 0 20px rgba(192,144,240,0.15); }
+  50% { box-shadow: 0 0 50px rgba(192,144,240,0.3); }
+}
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+<div class="snap-flash" id="snapFlash"></div>
+<button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Toggle sound">
+  <svg id="muteIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path id="muteSlash" d="M23 9l-6 6m0-6l6 6" style="display:none"/><path id="soundWaves" d="M15.5 8.5a5 5 0 010 7M19 6a9 9 0 010 12"/></svg>
+</button>
+
+<div id="app">
+  <div style="margin-bottom:8px;"><span style="font-size:13px;color:var(--text-secondary);">Welcome back</span></div>
+  <div class="screen-title">DOSTON</div>
+  <div class="screen-subtitle">Dost on. Be here.</div>
+
+  <div class="stats-row">
+    <div class="stat-chip"><div class="stat-value" id="statStreak">0</div><div class="stat-label">Day Streak</div></div>
+    <div class="stat-chip"><div class="stat-value" id="statSessions">0</div><div class="stat-label">Sessions</div></div>
+    <div class="stat-chip"><div class="stat-value" id="statMinutes">0</div><div class="stat-label">Total Min</div></div>
+  </div>
+
+  <button class="btn btn-snap" onclick="startSnap()" style="margin-bottom:20px; animation: pulse-glow 3s ease-in-out infinite;">SNAP PRESENT</button>
+
+  <div class="section-label">Practice</div>
+  <div class="card" onclick="openSitPicker()">
+    <div class="card-row"><div class="card-icon" style="background:rgba(192,144,240,0.12);">🧘</div><div class="card-info"><div class="card-title">Just Sit</div><div class="card-desc">Pure awareness — track when your mind wanders</div></div></div>
+  </div>
+  <div class="card" onclick="openBreathe()">
+    <div class="card-row"><div class="card-icon" style="background:rgba(96,208,192,0.12);">🌊</div><div class="card-info"><div class="card-title">Breathwork</div><div class="card-desc">Guided breathing — presets or build your own</div></div></div>
+  </div>
+
+  <div class="section-label" style="margin-top:36px;">Recent Sessions</div>
+  <div id="journeyHistory"></div>
+  <div style="margin-top:30px; text-align:center;">
+    <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.6); border-color:rgba(255,80,80,0.15); font-size:12px; padding:10px 20px;">Reset All Progress</button>
+  </div>
+</div>
+
+<!-- ═══ OVERLAYS ═══ -->
+
+<!-- Snap -->
+<div class="exercise-overlay" id="snapOverlay">
+  <button class="overlay-close" onclick="closeSnap()">Close ✕</button>
+  <div class="overlay-content">
+    <div class="snap-container">
+      <div class="snap-step-dots" id="snapDots"></div>
+      <div class="snap-prompt" id="snapPrompt">Get ready...</div>
+    </div>
+  </div>
+</div>
+
+<!-- Breathwork -->
+<div class="exercise-overlay" id="breatheOverlay">
+  <button class="overlay-close" onclick="closeBreathe()">Close ✕</button>
+  <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-breath);">Breathwork</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Let the rhythm dissolve the noise</div>
+    <div class="breath-patterns" id="breathPatterns">
+      <button class="breath-pattern-btn active" data-pattern="box">Box 4-4-4-4</button>
+      <button class="breath-pattern-btn" data-pattern="478">4-7-8 Calm</button>
+      <button class="breath-pattern-btn" data-pattern="coherent">Coherent 5-5</button>
+      <button class="breath-pattern-btn" data-pattern="wim">Power Breath</button>
+      <button class="breath-pattern-btn" data-pattern="custom" id="customPatternBtn">+ Custom</button>
+    </div>
+    <div class="custom-builder" id="customBuilder">
+      <div class="section-label" style="margin-top:0; margin-bottom:14px;">Build Your Pattern</div>
+      <div id="customPhases"></div>
+      <div class="builder-actions">
+        <button class="btn btn-ghost" onclick="addCustomPhase()">+ Add Phase</button>
+        <button class="btn btn-primary" onclick="saveCustomPattern()">Save & Use</button>
+      </div>
+      <div class="cycles-row"><label>Cycles:</label><input type="number" id="customCycles" value="6" min="1" max="99"></div>
+    </div>
+    <div class="breath-container">
+      <div class="breath-phase" id="breathPhase">Ready</div>
+      <div class="breath-orb-wrap"><div class="breath-orb" id="breathOrb"><span class="breath-timer" id="breathTimer">—</span></div></div>
+      <div class="breath-cycle" id="breathCycle">Tap start to begin</div>
+      <div style="margin-top:24px; display:flex; gap:12px;">
+        <button class="btn btn-primary" id="breathStartBtn" onclick="toggleBreath()">Start</button>
+        <button class="btn btn-ghost" onclick="stopBreath()">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Just Sit -->
+<div class="sit-overlay" id="sitOverlay">
+  <button class="sit-close" onclick="endSit()">End ✕</button>
+  <div id="sitPicker" style="display:flex; flex-direction:column; align-items:center;">
+    <div style="font-size:22px; font-weight:300; margin-bottom:8px; color:var(--accent-sit);">Just Sit</div>
+    <div style="font-size:14px; color:var(--text-secondary); margin-bottom:28px; text-align:center;">Choose your duration. Tap the circle<br>each time you notice your mind wandered.</div>
+    <div class="sit-duration-pills">
+      <button class="sit-pill" data-dur="2" onclick="selectSitDur(2,this)">2 min</button>
+      <button class="sit-pill active" data-dur="12" onclick="selectSitDur(12,this)">12 min</button>
+      <button class="sit-pill" data-dur="24" onclick="selectSitDur(24,this)">24 min</button>
+      <button class="sit-pill" data-dur="48" onclick="selectSitDur(48,this)">48 min</button>
+    </div>
+    <div class="interval-selector">
+      <span class="interval-label">Bells:</span>
+      <button class="interval-pill active" data-int="0" onclick="selectInterval(0,this)">Off</button>
+      <button class="interval-pill" data-int="5" onclick="selectInterval(5,this)">5m</button>
+      <button class="interval-pill" data-int="10" onclick="selectInterval(10,this)">10m</button>
+      <button class="interval-pill" data-int="15" onclick="selectInterval(15,this)">15m</button>
+    </div>
+    <button class="btn btn-primary" onclick="startSit()" style="margin-top:8px;">Begin Sitting</button>
+  </div>
+  <div id="sitActive" style="display:none; flex-direction:column; align-items:center;">
+    <div class="sit-timer-display" id="sitTimerDisplay">0:00</div>
+    <div class="sit-wander-count" id="sitWanderText">Mind wanders: 0</div>
+    <button class="sit-left-btn" id="sitLeftBtn" onclick="logWander()" style="animation: pulse-sit 4s ease-in-out infinite;">
+      <div class="welcome-flash" id="welcomeFlash"></div>
+      <span id="sitBtnLabel">I'm Back</span>
+      <span class="sit-btn-sub" id="sitBtnSub">tap when you notice</span>
+    </button>
+    <div class="welcome-msg" id="welcomeMsg">Welcome back</div>
+  </div>
+  <div class="sit-complete" id="sitComplete">
+    <div class="sit-complete-title" id="sitCompleteTitle">Session Complete</div>
+    <div class="sit-complete-sub" id="sitCompleteSub"></div>
+    <div class="sit-stat-grid">
+      <div class="sit-stat-box"><div class="sit-stat-val" id="scDuration">0</div><div class="sit-stat-label">Minutes</div></div>
+      <div class="sit-stat-box"><div class="sit-stat-val" id="scWanders">0</div><div class="sit-stat-label">Wanders</div></div>
+      <div class="sit-stat-box"><div class="sit-stat-val" id="scRate">—</div><div class="sit-stat-label">Min / Wander</div></div>
+      <div class="sit-stat-box"><div class="sit-stat-val" id="scPresence">—</div><div class="sit-stat-label">Presence %</div></div>
+    </div>
+    <div class="wander-timeline" id="wanderTimeline" style="display:none;">
+      <div class="wander-tl-label">Wander Timeline</div>
+      <div class="wander-tl-bar" id="wanderTlBar"><div class="wander-tl-fill" id="wanderTlFill"></div></div>
+      <div class="wander-tl-ends"><span>0:00</span><span id="wanderTlEnd">0:00</span></div>
+    </div>
+    <button class="btn btn-primary" onclick="closeSit()">Done</button>
+  </div>
+</div>
+
+
+<script>
+/* ════════════════════════════════════════════
+   DOSTON v7
+   ════════════════════════════════════════════ */
+
+// ═══ SOUND ENGINE ═══
+let audioCtx = null;
+function getAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+function playBowl(freq = 220, duration = 3) {
+  if (state && state.muted) return;
+  try {
+    const ctx = getAudio(), o = ctx.createOscillator(), g = ctx.createGain(), o2 = ctx.createOscillator();
+    o.type = 'sine'; o.frequency.value = freq;
+    o2.type = 'sine'; o2.frequency.value = freq * 2.01;
+    g.gain.setValueAtTime(0, ctx.currentTime);
+    g.gain.linearRampToValueAtTime(0.15, ctx.currentTime + 0.1);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    o.connect(g); o2.connect(g); g.connect(ctx.destination);
+    o.start(); o2.start();
+    o.stop(ctx.currentTime + duration); o2.stop(ctx.currentTime + duration);
+  } catch(e) {}
+}
+function playChime(freq = 880, dur = 0.6) {
+  if (state && state.muted) return;
+  try {
+    const ctx = getAudio(), o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'sine'; o.frequency.value = freq;
+    g.gain.setValueAtTime(0.12, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime + dur);
+  } catch(e) {}
+}
+function playTick() { playChime(600, 0.15); }
+function playSoftTap() { playChime(400, 0.1); }
+function playWelcomeBack() { playChime(528, 0.25); setTimeout(() => playChime(660, 0.35), 120); }
+
+// ═══ STATE ═══
+let state = loadState();
+function defaultState() { return { totalMinutes:0, totalSessions:0, streak:0, lastSessionDate:null, history:[], customPatterns:[], muted:false, dailyMinutes:0, dailyDate:null }; }
+function loadState() { try { const s = localStorage.getItem('awake_v3'); if(s) return {...defaultState(),...JSON.parse(s)}; } catch(e){} return defaultState(); }
+function saveState() { localStorage.setItem('awake_v3', JSON.stringify(state)); }
+function checkDailyReset() { const today = new Date().toDateString(); if (state.dailyDate !== today) { state.dailyMinutes = 0; state.dailyDate = today; saveState(); } }
+function addMinutes(minutes, type, label, extra) {
+  state.totalMinutes = Math.round((state.totalMinutes + minutes) * 10) / 10;
+  state.dailyMinutes = Math.round((state.dailyMinutes + minutes) * 10) / 10;
+  state.totalSessions++;
+  const today = new Date().toDateString();
+  if (state.lastSessionDate !== today) { const yesterday = new Date(Date.now()-86400000).toDateString(); state.streak = (state.lastSessionDate === yesterday) ? state.streak+1 : 1; state.lastSessionDate = today; }
+  const entry = { type, label, minutes: Math.round(minutes*10)/10, date: new Date().toISOString(), ...extra };
+  state.history.unshift(entry); if (state.history.length > 100) state.history.pop();
+  saveState();
+  updateAllUI();
+}
+
+// ═══ MUTE ═══
+function toggleMute() { state.muted = !state.muted; saveState(); updateMuteUI(); }
+function updateMuteUI() {
+  const btn = document.getElementById('muteBtn'), slash = document.getElementById('muteSlash'), waves = document.getElementById('soundWaves');
+  if (state.muted) { btn.classList.add('muted'); slash.style.display = ''; waves.style.display = 'none'; }
+  else { btn.classList.remove('muted'); slash.style.display = 'none'; waves.style.display = ''; }
+}
+
+// ═══ WAKE LOCK ═══
+let wakeLock = null;
+async function requestWakeLock() { try { if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } } catch(e) {} }
+function releaseWakeLock() { if (wakeLock) { wakeLock.release().catch(()=>{}); wakeLock = null; } }
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && (sitState.running || breathState.running)) requestWakeLock(); });
+
+// ═══ UI ═══
+function updateAllUI() {
+  checkDailyReset();
+
+  document.getElementById('statStreak').textContent = state.streak;
+  document.getElementById('statSessions').textContent = state.totalSessions;
+  document.getElementById('statMinutes').textContent = Math.floor(state.totalMinutes);
+
+  renderHistory(); updateMuteUI();
+}
+
+function renderHistory() {
+  const c = document.getElementById('journeyHistory');
+  if (!state.history.length) { c.innerHTML='<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:14px;">No sessions yet.</div>'; return; }
+  const icons = {snap:'⚡',breath:'🌊',sit:'🧘'};
+  const colors = {snap:'rgba(240,160,96,0.12)',breath:'rgba(96,208,192,0.12)',sit:'rgba(192,144,240,0.12)'};
+  c.innerHTML = state.history.slice(0,20).map(h => {
+    const d = new Date(h.date);
+    const wanderInfo = h.wanders !== undefined ? `<div class="history-wanders">${h.wanders} wander${h.wanders!==1?'s':''}</div>` : '';
+    return `<div class="history-item"><div class="history-icon" style="background:${colors[h.type]||'var(--bg-card)'}">${icons[h.type]||'●'}</div><div class="history-info"><div class="history-title">${h.label}</div><div class="history-meta">${d.toLocaleDateString([],{month:'short',day:'numeric'})} · ${d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div></div><div class="history-min">+${h.minutes}m${wanderInfo}</div></div>`;
+  }).join('');
+}
+
+// ═══ SNAP PRESENT (Randomized from pools — hundreds of unique sequences) ═══
+const SNAP = {
+  openers: [
+    "STOP.","WAKE UP.","HEY.","NOW.","ENOUGH.","PAUSE.","FREEZE.","HERE.",
+    "SNAP OUT\nOF IT.","LOOK UP.","DROP IT.","QUIT\nDREAMING.","YOU.","HELLO.",
+    "BREAK.","CUT.","SILENCE.","ATTENTION.","EYES OPEN.","STILL.",
+  ],
+  body: [
+    "FEET.\nON THE GROUND.","PUSH DOWN.\nFEEL IT.","FEEL YOUR\nSPINE.","UNCLENCH\nYOUR JAW.",
+    "DROP YOUR\nSHOULDERS.","FEEL YOUR\nHANDS.","WIGGLE\nYOUR TOES.","PRESS YOUR\nFINGERTIPS\nTOGETHER.",
+    "FEEL YOUR\nWEIGHT.","STRAIGHTEN\nYOUR BACK.","RELAX\nYOUR FACE.","FEEL THE\nCHAIR.","OPEN\nYOUR HANDS.",
+    "TOUCH\nSOMETHING\nNEAR YOU.","FEEL YOUR\nHEARTBEAT.","SQUEEZE\nYOUR FISTS.\nRELEASE.",
+    "ROLL YOUR\nNECK.","PLANT\nYOUR FEET.","FEEL\nGRAVITY.","GROUND\nDOWN.",
+  ],
+  breath: [
+    {in:"BREATHE IN.",hold:"HOLD.",out:"OUT."},
+    {in:"INHALE.\nDEEP.",hold:"HOLD IT.",out:"RELEASE."},
+    {in:"AIR IN.\nFILL UP.",hold:"KEEP IT.",out:"LET GO."},
+    {in:"PULL AIR\nIN.",hold:"HOLD\nEVERYTHING.",out:"PUSH\nIT OUT."},
+    {in:"BIG\nBREATH\nIN.",hold:"FREEZE.",out:"SLOW\nOUT."},
+    {in:"NOSE.\nIN.",hold:"STILL.",out:"MOUTH.\nOUT."},
+    {in:"SHARP\nINHALE.",hold:"STOP.",out:"LONG\nEXHALE."},
+    {in:"DEEP\nIN.",hold:"PAUSE.",out:"ALL\nOUT."},
+  ],
+  senses: [
+    "LOOK.\nWHAT DO\nYOU SEE?","LISTEN.","FEEL THE AIR.","WHAT'S THE\nCLOSEST SOUND?",
+    "WHAT COLOR\nIS NEAREST?","NAME ONE\nTHING YOU\nSMELL.","WHAT IS\nTOUCHING\nYOUR SKIN?",
+    "LOOK AT\nYOUR HANDS.","FIND\nSOMETHING\nBLUE.","WHAT'S\nBEHIND YOU?","FEEL THE\nTEMPERATURE.",
+    "TASTE\nTHE AIR.","HOW BRIGHT\nIS IT?","WHAT'S THE\nFARTHEST\nTHING\nYOU SEE?",
+    "COUNT\nTHREE\nSOUNDS.","FEEL FABRIC\nON SKIN.","NOTICE\nSHADOWS.","LOOK AT\nTHE SKY.",
+    "WHAT'S\nMOVING?","WHAT'S\nSTILL?",
+  ],
+  presence: [
+    "YOU\nARE\nHERE.","THIS\nIS REAL.","RIGHT\nNOW.","ONLY\nTHIS\nMOMENT.",
+    "NOTHING\nELSE\nEXISTS.","NOT\nYESTERDAY.\nNOT\nTOMORROW.","JUST\nTHIS.",
+    "NOWHERE\nELSE.","YOU'RE\nALIVE.","THIS\nSECOND.","FULLY\nHERE.",
+    "ALL OF\nYOU.\nHERE.","THE LOOP\nIS BROKEN.","THOUGHTS\nAREN'T\nYOU.",
+    "MIND\nOFF.\nBODY ON.","BE.\nHERE.\nNOW.","JUST\nEXIST.","NO PAST.\nNO FUTURE.",
+  ],
+  closers: [
+    "PRESENT. ✦","DOST ON. ✦","AWAKE. ✦","HERE. ✦","ARRIVED. ✦","BACK. ✦",
+    "RETURNED. ✦","LANDED. ✦","YOU MADE IT. ✦","CLEAR. ✦","REAL. ✦","ALIVE. ✦",
+  ],
+};
+const SNAP_COLORS = ['#200800','#1a0400','#0d0a1a','#100a1e','#0a1218','#0a1520','#0a180d','#18120a','#120a18','#0a1418','#0d0d1e','#0e0e20','#0a0a1a','#1a0a10','#0a1a10','#10081a'];
+function pick(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+function pickN(arr, n) { const s=[...arr]; for(let i=s.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]];} return s.slice(0,n); }
+function buildSnapSequence() {
+  const br = pick(SNAP.breath);
+  const bodies = pickN(SNAP.body, 2);
+  const senses = pickN(SNAP.senses, 2);
+  const pres = pickN(SNAP.presence, 2);
+  const steps = [
+    {prompt:pick(SNAP.openers), sz:72, wt:900, hold:1.1},
+    {prompt:bodies[0], sz:48, wt:700, hold:1.8},
+    {prompt:br.in, sz:56, wt:800, hold:1.5},
+    {prompt:br.hold, sz:68, wt:900, hold:2},
+    {prompt:br.out, sz:68, wt:900, hold:1.5},
+    {prompt:senses[0], sz:44, wt:700, hold:2.2},
+    {prompt:bodies[1], sz:48, wt:700, hold:1.8},
+    {prompt:senses[1], sz:44, wt:700, hold:2.2},
+    {prompt:pres[0], sz:60, wt:900, hold:2},
+    {prompt:pres[1], sz:56, wt:800, hold:1.8},
+    {prompt:pick(SNAP.closers), sz:72, wt:900, hold:3},
+  ];
+  const colors = pickN(SNAP_COLORS, steps.length);
+  steps.forEach((s,i) => s.color = colors[i]);
+  return steps;
+}
+let snapSteps = [], snapStep = 0, snapTimer = null, snapRunning = false;
+function startSnap() {
+  snapSteps = buildSnapSequence();
+  snapStep=0; snapRunning=true;
+  document.getElementById('snapOverlay').classList.add('active');
+  fireSnapFlash();
+  playBowl(180,2);
+  if(navigator.vibrate)navigator.vibrate([100,50,100]);
+  requestWakeLock(); canvasIntensity=0.8;
+  renderSnapStep();
+  scheduleNextSnap();
+}
+function closeSnap() {
+  snapRunning=false; clearTimeout(snapTimer);
+  document.getElementById('snapOverlay').classList.remove('active');
+  document.getElementById('snapOverlay').style.backgroundColor = '';
+  canvasIntensity=0.15;
+  if(snapStep>=snapSteps.length-1){addMinutes(1,'snap','Snap Present');playBowl(440,3);}
+  releaseWakeLock();
+}
+function fireSnapFlash() {
+  const f = document.getElementById('snapFlash');
+  f.classList.add('fire');
+  setTimeout(() => f.classList.remove('fire'), 80);
+}
+function renderSnapStep() {
+  const step = snapSteps[snapStep];
+  const prompt = document.getElementById('snapPrompt');
+  const freq = 180 + Math.round((snapStep/snapSteps.length)*740);
+  prompt.style.opacity = '0';
+  setTimeout(() => {
+    prompt.innerHTML = step.prompt.replace(/\n/g,'<br>');
+    prompt.style.fontSize = step.sz + 'px';
+    prompt.style.fontWeight = step.wt;
+    prompt.style.opacity = '1';
+  }, 80);
+  document.getElementById('snapOverlay').style.backgroundColor = step.color;
+  document.getElementById('snapDots').innerHTML = snapSteps.map((_,i) => `<div class="snap-dot ${i<snapStep?'done':i===snapStep?'active':''}"></div>`).join('');
+  playChime(freq, 0.4);
+  if(navigator.vibrate)navigator.vibrate([40+snapStep*8, 20, 40+snapStep*8]);
+  canvasIntensity = 0.5 + (snapStep / snapSteps.length) * 0.5;
+}
+function scheduleNextSnap() {
+  if(!snapRunning) return;
+  const step = snapSteps[snapStep];
+  snapTimer = setTimeout(() => {
+    if(!snapRunning) return;
+    snapStep++;
+    if(snapStep >= snapSteps.length) { closeSnap(); return; }
+    fireSnapFlash();
+    setTimeout(renderSnapStep, 80);
+    scheduleNextSnap();
+  }, step.hold * 1000);
+}
+
+// ═══ JUST SIT ═══
+let sitState = { duration:12, running:false, startTime:null, timer:null, wanders:0, elapsed:0, intervalBell:0, intervalTimer:null, wanderTimes:[] };
+function openSitPicker() { document.getElementById('sitOverlay').classList.add('active'); document.getElementById('sitPicker').style.display='flex'; document.getElementById('sitActive').style.display='none'; document.getElementById('sitComplete').classList.remove('visible'); }
+function selectSitDur(dur, btn) { sitState.duration = dur; document.querySelectorAll('.sit-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
+function selectInterval(mins, btn) { sitState.intervalBell = mins; document.querySelectorAll('.interval-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
+function startSit() {
+  sitState.running=true; sitState.startTime=Date.now(); sitState.wanders=0; sitState.elapsed=0; sitState.wanderTimes=[];
+  document.getElementById('sitPicker').style.display='none'; document.getElementById('sitActive').style.display='flex';
+  document.getElementById('sitComplete').classList.remove('visible');
+  document.getElementById('sitWanderText').textContent='Mind wanders: 0';
+  document.getElementById('sitBtnLabel').textContent="I'm Back"; document.getElementById('sitBtnSub').textContent='tap when you notice';
+  document.getElementById('welcomeMsg').classList.remove('show');
+  playBowl(220,3); requestWakeLock(); canvasIntensity = 0.6; sitTick();
+  if (sitState.intervalBell > 0) { sitState.intervalTimer = setInterval(() => { if (sitState.running) { playBowl(280,2); if(navigator.vibrate) navigator.vibrate([30,60,30]); } }, sitState.intervalBell*60*1000); }
+}
+function sitTick() {
+  if (!sitState.running) return;
+  const elapsed = (Date.now()-sitState.startTime)/1000; sitState.elapsed=elapsed;
+  const remaining = Math.max(0, sitState.duration*60 - elapsed);
+  document.getElementById('sitTimerDisplay').textContent = Math.floor(remaining/60)+':'+String(Math.floor(remaining%60)).padStart(2,'0');
+  if (remaining <= 0) { completeSit(); return; }
+  sitState.timer = setTimeout(sitTick, 250);
+}
+const WELCOME_MESSAGES = ['Welcome back','You noticed',"That's awareness",'Here again','Good catch','Present now','Right here','Back again'];
+function logWander() {
+  if (!sitState.running) return;
+  sitState.wanders++; sitState.wanderTimes.push(Math.round(sitState.elapsed));
+  document.getElementById('sitWanderText').textContent = `Mind wanders: ${sitState.wanders}`;
+  const msg = WELCOME_MESSAGES[Math.floor(Math.random()*WELCOME_MESSAGES.length)];
+  const flash=document.getElementById('welcomeFlash'), welcomeEl=document.getElementById('welcomeMsg');
+  const label=document.getElementById('sitBtnLabel'), sub=document.getElementById('sitBtnSub');
+  flash.classList.add('active'); label.textContent=msg; sub.textContent=''; welcomeEl.textContent=msg; welcomeEl.classList.add('show');
+  playWelcomeBack(); if(navigator.vibrate) navigator.vibrate([20,40,20]);
+  setTimeout(() => flash.classList.remove('active'), 300);
+  setTimeout(() => { label.textContent="I'm Back"; sub.textContent='tap when you notice'; welcomeEl.classList.remove('show'); }, 1500);
+}
+function completeSit() {
+  sitState.running=false; clearTimeout(sitState.timer); canvasIntensity = 0.15;
+  if(sitState.intervalTimer){clearInterval(sitState.intervalTimer);sitState.intervalTimer=null;}
+  const mins=Math.round((sitState.elapsed/60)*10)/10, actualMins=Math.min(mins,sitState.duration);
+  playBowl(440,4); if(navigator.vibrate) navigator.vibrate([100,100,200]); releaseWakeLock();
+  document.getElementById('sitActive').style.display='none'; document.getElementById('sitComplete').classList.add('visible');
+  document.getElementById('sitCompleteTitle').textContent = actualMins>=sitState.duration?'Session Complete ✦':'Session Ended';
+  document.getElementById('sitCompleteSub').textContent = sitState.wanders===0?'Zero wanders. Pure presence.':`You noticed your mind wander ${sitState.wanders} time${sitState.wanders!==1?'s':''}. Each notice is a victory.`;
+  document.getElementById('scDuration').textContent=Math.round(actualMins); document.getElementById('scWanders').textContent=sitState.wanders;
+  document.getElementById('scRate').textContent=sitState.wanders>0?(actualMins/sitState.wanders).toFixed(1):'∞';
+  const presencePct=sitState.wanders>0?Math.max(0,Math.round(100-(sitState.wanders/actualMins)*10)):100;
+  document.getElementById('scPresence').textContent=presencePct+'%';
+  renderWanderTimeline(sitState.wanderTimes, sitState.duration*60, actualMins);
+  addMinutes(actualMins,'sit',`Just Sit · ${sitState.duration}m`,{wanders:sitState.wanders,targetDuration:sitState.duration,wanderTimes:sitState.wanderTimes});
+}
+function renderWanderTimeline(times, totalSec, actualMins) {
+  const tl=document.getElementById('wanderTimeline');
+  if(!times.length){tl.style.display='none';return;} tl.style.display='block';
+  const bar=document.getElementById('wanderTlBar'), fill=document.getElementById('wanderTlFill');
+  bar.querySelectorAll('.wander-tl-dot').forEach(d=>d.remove());
+  const actualSec=Math.round(actualMins*60), displayTotal=Math.max(totalSec,actualSec);
+  fill.style.width=Math.round((actualSec/displayTotal)*100)+'%';
+  times.forEach(t=>{const dot=document.createElement('div');dot.className='wander-tl-dot';dot.style.left=Math.round((t/displayTotal)*100)+'%';bar.appendChild(dot);});
+  const endMin=Math.floor(displayTotal/60), endSec=displayTotal%60;
+  document.getElementById('wanderTlEnd').textContent=endMin+':'+String(endSec).padStart(2,'0');
+}
+function endSit(){if(sitState.running)completeSit();else closeSit();}
+function closeSit(){document.getElementById('sitOverlay').classList.remove('active');sitState.running=false;clearTimeout(sitState.timer);if(sitState.intervalTimer){clearInterval(sitState.intervalTimer);sitState.intervalTimer=null;}releaseWakeLock();canvasIntensity=0.15;}
+
+// ═══ BREATHWORK ═══
+const BREATH_PATTERNS = {
+  box:{name:'Box Breathing',phases:[{p:'Inhale',t:4},{p:'Hold',t:4},{p:'Exhale',t:4},{p:'Hold',t:4}],cycles:6},
+  '478':{name:'4-7-8 Calm',phases:[{p:'Inhale',t:4},{p:'Hold',t:7},{p:'Exhale',t:8}],cycles:4},
+  coherent:{name:'Coherent',phases:[{p:'Inhale',t:5},{p:'Exhale',t:5}],cycles:8},
+  wim:{name:'Power Breath',phases:[{p:'Inhale',t:2},{p:'Exhale',t:2}],cycles:15},
+};
+function loadCustomPatterns(){if(state.customPatterns&&state.customPatterns.length){state.customPatterns.forEach((cp,i)=>{BREATH_PATTERNS['custom_'+i]=cp;});renderSavedCustomButtons();}}
+function renderSavedCustomButtons(){
+  const c=document.getElementById('breathPatterns');c.querySelectorAll('.saved-custom-btn').forEach(b=>b.remove());const cb=document.getElementById('customPatternBtn');
+  state.customPatterns.forEach((cp,i)=>{const btn=document.createElement('button');btn.className='breath-pattern-btn saved-custom-btn';btn.dataset.pattern='custom_'+i;btn.textContent=cp.name;c.insertBefore(btn,cb);btn.addEventListener('click',()=>selectBreathPattern(btn));});
+}
+let breathState={running:false,pattern:'box',cycle:0,phase:0,count:0,timer:null,startTime:null};
+function selectBreathPattern(btn){
+  if(breathState.running)stopBreath();
+  document.querySelectorAll('.breath-pattern-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');breathState.pattern=btn.dataset.pattern;
+  if(btn.dataset.pattern==='custom'){document.getElementById('customBuilder').classList.add('visible');initCustomBuilder();}
+  else{document.getElementById('customBuilder').classList.remove('visible');}
+}
+document.querySelectorAll('.breath-pattern-btn').forEach(btn=>{btn.addEventListener('click',()=>selectBreathPattern(btn));});
+let customPhases=[{label:'Inhale',seconds:4},{label:'Hold',seconds:4},{label:'Exhale',seconds:4},{label:'Hold',seconds:4}];
+function initCustomBuilder(){renderCustomPhases();}
+function renderCustomPhases(){
+  document.getElementById('customPhases').innerHTML=customPhases.map((ph,i)=>`<div class="phase-row"><input type="text" value="${ph.label}" placeholder="e.g. Inhale" onchange="customPhases[${i}].label=this.value"><input type="number" value="${ph.seconds}" min="1" max="60" onchange="customPhases[${i}].seconds=parseInt(this.value)||1"><span class="sec-label">sec</span>${customPhases.length>1?`<button class="phase-remove" onclick="removeCustomPhase(${i})">×</button>`:''}</div>`).join('');
+}
+function addCustomPhase(){customPhases.push({label:'',seconds:4});renderCustomPhases();const ii=document.querySelectorAll('#customPhases input[type="text"]');if(ii.length)ii[ii.length-1].focus();}
+function removeCustomPhase(i){customPhases.splice(i,1);renderCustomPhases();}
+function saveCustomPattern(){
+  const rows=document.querySelectorAll('#customPhases .phase-row'),phases=[];
+  rows.forEach(r=>{const l=r.querySelector('input[type="text"]').value.trim()||'Phase';const s=parseInt(r.querySelector('input[type="number"]').value)||4;phases.push({p:l,t:s});});
+  if(!phases.length)return;
+  const cycles=parseInt(document.getElementById('customCycles').value)||6;
+  const obj={name:`Custom ${phases.map(p=>p.t).join('-')}`,phases,cycles};
+  state.customPatterns.push(obj);saveState();
+  const key='custom_'+(state.customPatterns.length-1);BREATH_PATTERNS[key]=obj;
+  renderSavedCustomButtons();document.getElementById('customBuilder').classList.remove('visible');
+  document.querySelectorAll('.breath-pattern-btn').forEach(b=>b.classList.remove('active'));
+  const nb=document.querySelector(`[data-pattern="${key}"]`);if(nb)nb.classList.add('active');breathState.pattern=key;
+}
+function openBreathe(){document.getElementById('breatheOverlay').classList.add('active');requestWakeLock();}
+function closeBreathe(){
+  if(breathState.running)stopBreath();
+  document.getElementById('breatheOverlay').classList.remove('active');releaseWakeLock();
+}
+function toggleBreath(){if(breathState.running)pauseBreath();else startBreathSession();}
+function startBreathSession(){
+  const pat=BREATH_PATTERNS[breathState.pattern];if(!pat)return;
+  breathState.running=true;breathState.cycle=0;breathState.phase=0;breathState.count=pat.phases[0].t;breathState.startTime=Date.now();
+  document.getElementById('breathStartBtn').textContent='Pause';playBowl(330,1.5);canvasIntensity=0.5;runBreathPhase();
+}
+function pauseBreath(){breathState.running=false;clearTimeout(breathState.timer);document.getElementById('breathStartBtn').textContent='Resume';}
+function stopBreath(){
+  const was=breathState.running;breathState.running=false;clearTimeout(breathState.timer);canvasIntensity=0.15;
+  document.getElementById('breathOrb').className='breath-orb';
+  document.getElementById('breathPhase').textContent='Ready';document.getElementById('breathTimer').textContent='—';
+  document.getElementById('breathCycle').textContent='Tap start to begin';document.getElementById('breathStartBtn').textContent='Start';
+  if(was&&breathState.startTime){const m=(Date.now()-breathState.startTime)/60000;if(m>0.25){const pat=BREATH_PATTERNS[breathState.pattern];playBowl(440,2);addMinutes(Math.round(m*10)/10,'breath',pat?pat.name:'Breathwork');}}
+}
+function runBreathPhase(){
+  if(!breathState.running)return;
+  const pat=BREATH_PATTERNS[breathState.pattern],phase=pat.phases[breathState.phase];
+  const orb=document.getElementById('breathOrb'),pL=phase.p.toLowerCase();
+  orb.className='breath-orb';
+  if(pL.includes('inhale')||pL==='in'||pL.includes('breathe in'))orb.classList.add('expand');
+  else if(pL.includes('exhale')||pL.includes('out')||pL.includes('release'))orb.classList.add('contract');
+  else if(pL.includes('hold')||pL.includes('retain')||pL.includes('pause')){if(breathState.phase>0){const prev=pat.phases[breathState.phase-1].p.toLowerCase();orb.classList.add(prev.includes('inhale')||prev==='in'?'hold-big':'hold-small');}else orb.classList.add('hold-big');}
+  document.getElementById('breathPhase').textContent=phase.p;
+  document.getElementById('breathCycle').textContent=`Cycle ${breathState.cycle+1} of ${pat.cycles}`;
+  breathState.count=phase.t;document.getElementById('breathTimer').textContent=breathState.count;
+  playTick();if(navigator.vibrate)navigator.vibrate(20);breathCountdown();
+}
+function breathCountdown(){if(!breathState.running)return;if(breathState.count<=0){nextBreathPhase();return;}document.getElementById('breathTimer').textContent=breathState.count;breathState.timer=setTimeout(()=>{breathState.count--;breathCountdown();},1000);}
+function nextBreathPhase(){const pat=BREATH_PATTERNS[breathState.pattern];breathState.phase++;if(breathState.phase>=pat.phases.length){breathState.phase=0;breathState.cycle++;if(breathState.cycle>=pat.cycles){stopBreath();closeBreathe();return;}}runBreathPhase();}
+
+function fmtTime(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+
+// ═══ SACRED GEOMETRY CANVAS ═══
+const canvas = document.getElementById('bgCanvas'), bctx = canvas.getContext('2d');
+let canvasIntensity = 0.15; // 0-1, scales during sessions
+let geoTime = 0;
+
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+
+function drawSacredGeometry() {
+  const w = canvas.width, h = canvas.height;
+  const cx = w / 2, cy = h / 2;
+  const baseR = Math.min(w, h) * 0.3;
+  const t = geoTime;
+  const intensity = canvasIntensity;
+
+  bctx.clearRect(0, 0, w, h);
+  bctx.globalAlpha = 1;
+
+  // Breathing pulse
+  const pulse = 1 + Math.sin(t * 0.8) * 0.06 * intensity;
+
+  // Draw Flower of Life
+  const petalCount = 6;
+  const layers = 3;
+  const baseAlpha = 0.04 + intensity * 0.12;
+
+  // Central circle
+  bctx.strokeStyle = `rgba(124,108,240,${baseAlpha * 1.2})`;
+  bctx.lineWidth = 0.8;
+  const centralR = baseR * 0.33 * pulse;
+  bctx.beginPath();
+  bctx.arc(cx, cy, centralR, 0, Math.PI * 2);
+  bctx.stroke();
+
+  // Rotating petal layers
+  for (let layer = 1; layer <= layers; layer++) {
+    const layerR = baseR * 0.33 * layer * pulse;
+    const rotation = t * 0.15 * (layer % 2 === 0 ? 1 : -1);
+    const layerAlpha = baseAlpha * (1 - (layer - 1) * 0.2);
+
+    // Ring of circles (Flower of Life pattern)
+    const circlesInLayer = petalCount * layer;
+    for (let i = 0; i < circlesInLayer; i++) {
+      const angle = (i / circlesInLayer) * Math.PI * 2 + rotation;
+      const px = cx + Math.cos(angle) * layerR;
+      const py = cy + Math.sin(angle) * layerR;
+      const petalR = centralR * (0.9 - layer * 0.1);
+
+      bctx.strokeStyle = `rgba(124,108,240,${layerAlpha})`;
+      bctx.lineWidth = 0.6;
+      bctx.beginPath();
+      bctx.arc(px, py, petalR, 0, Math.PI * 2);
+      bctx.stroke();
+    }
+
+    // Connecting ring
+    bctx.strokeStyle = `rgba(124,108,240,${layerAlpha * 0.6})`;
+    bctx.lineWidth = 0.4;
+    bctx.beginPath();
+    bctx.arc(cx, cy, layerR, 0, Math.PI * 2);
+    bctx.stroke();
+  }
+
+  // Outer seed circles — slowly rotating
+  const seedCount = 12;
+  const seedR = baseR * 1.1 * pulse;
+  const seedRotation = t * 0.05;
+  for (let i = 0; i < seedCount; i++) {
+    const angle = (i / seedCount) * Math.PI * 2 + seedRotation;
+    const px = cx + Math.cos(angle) * seedR;
+    const py = cy + Math.sin(angle) * seedR;
+    const r = baseR * 0.08;
+    const alpha = 0.02 + intensity * 0.06 + Math.sin(t * 1.2 + i) * 0.02;
+    bctx.strokeStyle = `rgba(156,140,248,${alpha})`;
+    bctx.lineWidth = 0.5;
+    bctx.beginPath();
+    bctx.arc(px, py, r, 0, Math.PI * 2);
+    bctx.stroke();
+  }
+
+  // Radiating lines from center (vesica piscis hints)
+  const lineCount = 6;
+  const lineRotation = t * 0.08;
+  for (let i = 0; i < lineCount; i++) {
+    const angle = (i / lineCount) * Math.PI + lineRotation;
+    const len = baseR * 1.3 * pulse;
+    const alpha = 0.015 + intensity * 0.04;
+    bctx.strokeStyle = `rgba(124,108,240,${alpha})`;
+    bctx.lineWidth = 0.3;
+    bctx.beginPath();
+    bctx.moveTo(cx + Math.cos(angle) * 10, cy + Math.sin(angle) * 10);
+    bctx.lineTo(cx + Math.cos(angle) * len, cy + Math.sin(angle) * len);
+    bctx.moveTo(cx - Math.cos(angle) * 10, cy - Math.sin(angle) * 10);
+    bctx.lineTo(cx - Math.cos(angle) * len, cy - Math.sin(angle) * len);
+    bctx.stroke();
+  }
+
+  // Center glow dot
+  const glowAlpha = 0.1 + intensity * 0.25 + Math.sin(t * 1.5) * 0.05;
+  const grad = bctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 0.15);
+  grad.addColorStop(0, `rgba(156,140,248,${glowAlpha})`);
+  grad.addColorStop(1, 'rgba(156,140,248,0)');
+  bctx.fillStyle = grad;
+  bctx.beginPath();
+  bctx.arc(cx, cy, baseR * 0.15, 0, Math.PI * 2);
+  bctx.fill();
+
+  geoTime += 0.016;
+  requestAnimationFrame(drawSacredGeometry);
+}
+drawSacredGeometry();
+
+// ═══ RESET ═══
+function confirmReset() {
+  if (confirm('Reset all progress? This will erase your total minutes, sessions, streak, and history.')) {
+    if (confirm('Are you absolutely sure? This cannot be undone.')) {
+      state = defaultState();
+      saveState();
+      updateAllUI();
+    }
+  }
+}
+
+// ═══ INIT ═══
+checkDailyReset();
+loadCustomPatterns();
+updateAllUI();
+</script>
+</body>
+</html>
