@@ -126,27 +126,23 @@ html, body {
 .btn-primary { background: linear-gradient(135deg, var(--accent-glow), #9b8cf8); color:white; box-shadow: 0 4px 24px rgba(124,108,240,0.3), inset 0 1px 0 rgba(255,255,255,0.15); }
 .btn-ghost { background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
 .btn-snap {
-  display:flex; position:relative; overflow:hidden;
-  width:100%; padding:18px 28px; border-radius:16px;
-  background:linear-gradient(135deg, #c04020, #e06030, #d04828);
-  border:1px solid rgba(255,120,60,0.3);
-  color:#fff; font-size:15px; font-weight:700; letter-spacing:3px;
-  cursor:pointer; transition:all 0.3s;
-  justify-content:center; align-items:center;
-  box-shadow: 0 4px 20px rgba(200,60,30,0.3), 0 0 40px rgba(200,60,30,0.1);
+  width:100%;
+  padding:12px 24px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(20px) saturate(1.5);
+  -webkit-backdrop-filter:blur(20px) saturate(1.5);
+  border:1px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.9);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:3px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transition:all 0.3s;
 }
-.btn-snap:active { transform:scale(0.97); }
-.snap-text { position:relative; z-index:1; }
-.snap-glow {
-  position:absolute; top:50%; left:50%; width:200%; height:200%;
-  transform:translate(-50%,-50%);
-  background:radial-gradient(circle, rgba(255,150,80,0.3) 0%, transparent 60%);
-  animation: snap-breathe 3s ease-in-out infinite;
-}
-@keyframes snap-breathe {
-  0%,100% { opacity:0.3; transform:translate(-50%,-50%) scale(0.8); }
-  50% { opacity:0.7; transform:translate(-50%,-50%) scale(1.2); }
-}
+.btn-snap:active { transform:scale(0.98); background:rgba(255,255,255,0.1); }
 .stats-row { display:flex; gap:10px; margin-bottom:20px; }
 .stat-chip { flex:1; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding:14px 12px; text-align:center; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow: 0 2px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.04); }
 .stat-value { font-size:24px; font-weight:700; }
@@ -604,25 +600,6 @@ html, body {
 .toggle-switch input:checked + .toggle-slider { background:var(--accent-glow); }
 .toggle-switch input:checked + .toggle-slider:before { transform:translateX(20px); }
 
-/* Language bar */
-.lang-bar { display:flex; gap:8px; justify-content:center; margin-bottom:16px; }
-.lang-btn { padding:8px 20px; border-radius:25px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:var(--text-secondary); font-size:16px; font-weight:500; cursor:pointer; transition:0.3s; }
-.lang-btn.active { background:rgba(124,108,240,0.2); border-color:var(--accent-glow); color:var(--text-primary); }
-
-/* Mantra */
-.mantra-list { max-height:400px; overflow-y:auto; width:100%; }
-.mantra-item { padding:14px; border-radius:var(--radius-sm); background:var(--bg-card); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; cursor:pointer; transition:0.2s; display:flex; justify-content:space-between; align-items:center; }
-.mantra-item:active { transform:scale(0.98); }
-.mantra-item-name { font-size:15px; color:var(--text-primary); font-weight:500; }
-.mantra-item-hindi { font-size:13px; color:var(--text-dim); margin-top:2px; }
-.mantra-item-cat { font-size:11px; color:rgba(255,180,60,0.6); }
-.mantra-session { display:none; flex-direction:column; align-items:center; gap:16px; width:100%; max-width:360px; }
-.mantra-session.visible { display:flex; }
-.mantra-session-title { font-size:18px; font-weight:300; color:#f0b43c; letter-spacing:1px; }
-.mantra-devanagari { font-size:28px; color:var(--text-primary); text-align:center; line-height:1.8; font-weight:300; max-height:300px; overflow-y:auto; padding:16px; background:rgba(255,180,60,0.04); border:1px solid rgba(255,180,60,0.1); border-radius:var(--radius-sm); width:100%; }
-.mantra-transliteration { font-size:14px; color:var(--text-secondary); text-align:center; line-height:1.8; font-style:italic; max-height:200px; overflow-y:auto; width:100%; }
-.mantra-meaning { font-size:12px; color:var(--text-dim); text-align:center; max-width:300px; }
-
 /* Tutorial */
 .tutorial-card { text-align:center; max-width:320px; padding:30px 20px; }
 .tutorial-step { font-size:12px; color:var(--accent-glow); letter-spacing:2px; margin-bottom:16px; }
@@ -649,47 +626,36 @@ html, body {
 </div>
 
 <div id="app">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:8px;"><svg viewBox="0 0 100 100" width="80" height="80" style="flex-shrink:0;filter:drop-shadow(0 0 12px rgba(160,128,240,0.35));"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:42px;font-weight:200;letter-spacing:6px;background:linear-gradient(135deg,#7c6cf0,#6ca0f0,#5cc8c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 30px rgba(124,108,240,0.4),0 0 60px rgba(124,108,240,0.2);animation:hero-glow 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(124,108,240,0.3));">AWAKE</span></div>
-  <div class="screen-subtitle" style="margin-bottom:24px;">Loops break. Presence enters.</div>
-  <div class="lang-bar">
-    <button class="lang-btn active" data-lang="en" onclick="setLang('en',this)">English</button>
-    <button class="lang-btn" data-lang="hi" onclick="setLang('hi',this)">हिन्दी</button>
-    <button class="lang-btn" data-lang="gu" onclick="setLang('gu',this)">ગુજરાતી</button>
-  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:0;"><svg viewBox="0 0 100 100" width="64" height="64" style="flex-shrink:0;filter:drop-shadow(0 0 12px rgba(160,128,240,0.35));"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:42px;font-weight:200;letter-spacing:6px;background:linear-gradient(135deg,#7c6cf0,#6ca0f0,#5cc8c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 30px rgba(124,108,240,0.4),0 0 60px rgba(124,108,240,0.2);animation:hero-glow 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(124,108,240,0.3));">AWAKE</span></div>
+  <div class="screen-subtitle" style="margin-bottom:12px;">Loops break. Presence enters.</div>
   <div class="daily-quote" id="dailyQuote"></div>
-  <div style="margin-bottom:28px;"><span class="a2hs-link" id="a2hsLink" onclick="openA2HS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg> Add to Home Screen</span></div>
-
   <button class="btn btn-snap" onclick="startSnap()" style="margin-bottom:20px;">
-    <span class="snap-text" data-i18n="snap_present">SNAP PRESENT</span>
-    <span class="snap-glow"></span>
+    <span class="snap-text">SNAP PRESENT</span>
   </button>
 
-  <div class="section-label" data-i18n="practice">Practice</div>
+  <div class="section-label">Practice</div>
   <div class="card" onclick="openSitPicker()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(192,144,240,0.12);">🧘</div><div class="card-info"><div class="card-title" data-i18n="just_sit">Just Sit</div><div class="card-desc" data-i18n="just_sit_desc">Track the mind wanders</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:rgba(192,144,240,0.12);">🧘</div><div class="card-info"><div class="card-title">Just Sit</div><div class="card-desc">Track the mind wanders</div></div></div>
   </div>
   <div class="card" onclick="openBreathe()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(96,208,192,0.12);">🌊</div><div class="card-info"><div class="card-title" data-i18n="breathwork">Breathwork</div><div class="card-desc" data-i18n="breathwork_desc">Guided breathing — presets or build your own</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:rgba(96,208,192,0.12);">🌊</div><div class="card-info"><div class="card-title">Breathwork</div><div class="card-desc">Guided breathing — presets or build your own</div></div></div>
   </div>
   <div class="card" onclick="openFocus()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(108,160,240,0.12);">🎧</div><div class="card-info"><div class="card-title" data-i18n="focus_states">Focus States</div><div class="card-desc" data-i18n="focus_states_desc">Binaural beats for deep states</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:rgba(108,160,240,0.12);">🎧</div><div class="card-info"><div class="card-title">Focus States</div><div class="card-desc">Binaural beats for deep states</div></div></div>
   </div>
   <div class="card" onclick="openBodyScan()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(160,120,220,0.12);">🫧</div><div class="card-info"><div class="card-title" data-i18n="yoga_nidra">Body Scan</div><div class="card-desc" data-i18n="yoga_nidra_desc">Yoga Nidra — rotation of consciousness</div></div></div>
-  </div>
-  <div class="card" onclick="openMantra()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(255,180,60,0.12);"><span style="font-size:20px;">🕉️</span></div><div class="card-info"><div class="card-title" data-i18n="mantra_title">Mantra</div><div class="card-desc" data-i18n="mantra_desc">Chant with tanpura drone</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:rgba(160,120,220,0.12);">🫧</div><div class="card-info"><div class="card-title">Body Scan</div><div class="card-desc">Yoga Nidra — rotation of consciousness</div></div></div>
   </div>
 
-  <div class="section-label" style="margin-top:36px;" data-i18n="recent">Recent Sessions</div>
+  <div class="section-label" style="margin-top:36px;">Recent Sessions</div>
   <div id="journeyHistory"></div>
 
   <div class="card" onclick="openInsights()" style="margin-top:28px;background:linear-gradient(135deg, rgba(240,160,96,0.06), rgba(240,120,80,0.04));border-color:rgba(240,160,96,0.12);">
-    <div class="card-row"><div class="card-icon" style="background:linear-gradient(135deg, rgba(240,160,96,0.15), rgba(240,120,80,0.1));"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(240,160,96,0.9)" stroke-width="2" stroke-linecap="round"><path d="M3 20L7 13L11 16L15 8L21 4"/><circle cx="21" cy="4" r="1.5" fill="rgba(240,160,96,0.9)"/></svg></div><div class="card-info"><div class="card-title" data-i18n="insights">Insights</div><div class="card-desc" data-i18n="insights_desc">Your practice at a glance</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:linear-gradient(135deg, rgba(240,160,96,0.15), rgba(240,120,80,0.1));"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(240,160,96,0.9)" stroke-width="2" stroke-linecap="round"><path d="M3 20L7 13L11 16L15 8L21 4"/><circle cx="21" cy="4" r="1.5" fill="rgba(240,160,96,0.9)"/></svg></div><div class="card-info"><div class="card-title">Insights</div><div class="card-desc">Your practice at a glance</div></div></div>
   </div>
 
   <div style="margin-top:30px; text-align:center;">
-    <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.4); border-color:rgba(255,80,80,0.1); font-size:10px; padding:6px 14px; letter-spacing:0.3px;" data-i18n="reset">Reset All Progress</button>
+    <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.4); border-color:rgba(255,80,80,0.1); font-size:10px; padding:6px 14px; letter-spacing:0.3px;">Reset All Progress</button>
   </div>
 </div>
 
@@ -697,7 +663,7 @@ html, body {
 
 <!-- Snap -->
 <div class="exercise-overlay" id="snapOverlay">
-  <button class="overlay-close" onclick="closeSnap()" data-i18n="close">Close ✕</button>
+  <button class="overlay-close" onclick="closeSnap()">Close ✕</button>
   <div class="overlay-content">
     <div class="snap-container">
       <div class="snap-step-dots" id="snapDots"></div>
@@ -708,18 +674,18 @@ html, body {
 
 <!-- Breathwork -->
 <div class="exercise-overlay" id="breatheOverlay">
-  <button class="overlay-close" onclick="closeBreathe()" data-i18n="close">Close ✕</button>
+  <button class="overlay-close" onclick="closeBreathe()">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
-    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-breath);" data-i18n="breathwork_heading">Breathwork</div>
-    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;" data-i18n="breathwork_sub">Let the rhythm dissolve the noise</div>
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-breath);">Breathwork</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Let the rhythm dissolve the noise</div>
     <div class="breath-patterns" id="breathPatterns">
-      <div class="breath-cat-label" data-i18n="calming">Calming</div>
+      <div class="breath-cat-label">Calming</div>
       <button class="breath-pattern-btn active" data-pattern="box">Sama Vritti</button>
       <button class="breath-pattern-btn" data-pattern="478">4-7-8</button>
       <button class="breath-pattern-btn" data-pattern="coherent">Coherence</button>
       <button class="breath-pattern-btn" data-pattern="nadi">Nadi Shodhana</button>
       <button class="breath-pattern-btn" data-pattern="calm446">4-4-6-2</button>
-      <div class="breath-cat-label" data-i18n="energizing">Energizing</div>
+      <div class="breath-cat-label">Energizing</div>
       <button class="breath-pattern-btn" data-pattern="wimhof">Wim Hof</button>
       <button class="breath-pattern-btn" data-pattern="bhastrika">Bhastrika</button>
       <button class="breath-pattern-btn" data-pattern="kapalabhati">Kapalabhati</button>
@@ -756,7 +722,7 @@ html, body {
         <div class="wim-round-results" id="wimRoundResults"></div>
       </div>
       <div style="margin-top:24px; display:flex; gap:12px;" id="breathControls">
-        <button class="btn btn-primary" id="breathStartBtn" onclick="toggleBreath()" data-i18n="start">Start</button>
+        <button class="btn btn-primary" id="breathStartBtn" onclick="toggleBreath()">Start</button>
         <button class="btn btn-ghost" onclick="stopBreath()">Reset</button>
       </div>
     </div>
@@ -830,10 +796,10 @@ html, body {
 
 <!-- Focus States -->
 <div class="exercise-overlay" id="focusOverlay">
-  <button class="overlay-close" onclick="closeFocus()" data-i18n="close">Close ✕</button>
+  <button class="overlay-close" onclick="closeFocus()">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
-    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-focus);" data-i18n="focus_heading">Focus States</div>
-    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;" data-i18n="focus_sub">Binaural beats for deep states</div>
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-focus);">Focus States</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Binaural beats for deep states</div>
     <div id="focusPicker" style="width:100%; max-width:320px;">
       <div class="focus-level-btn active" data-focus="alpha" onclick="selectFocusLevel('alpha',this)">
         <div style="display:flex;align-items:center;gap:10px;">
@@ -948,21 +914,21 @@ html, body {
       <div class="focus-elapsed" id="focusElapsed">0:00</div>
       <div style="font-size:12px; color:var(--text-dim);" id="focusRemaining"></div>
       <div class="focus-volume-wrap">
-        <label data-i18n="vol">Vol</label>
+        <label>Vol</label>
         <input type="range" id="focusVolume" min="0" max="100" value="50" oninput="setFocusVolume(this.value)">
       </div>
-      <button class="btn btn-ghost" onclick="stopFocusSession()" style="margin-top:12px;" data-i18n="end_session">End Session</button>
+      <button class="btn btn-ghost" onclick="stopFocusSession()" style="margin-top:12px;">End Session</button>
     </div>
   </div>
 </div>
 
 <!-- Yoga Nidra -->
 <div class="exercise-overlay" id="nidraOverlay">
-  <button class="overlay-close" onclick="closeBodyScan()" data-i18n="close">Close ✕</button>
+  <button class="overlay-close" onclick="closeBodyScan()">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
     <div id="nidraPicker">
-      <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:rgba(160,120,220,0.9);" data-i18n="body_scan_heading">Body Scan</div>
-      <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;" data-i18n="body_scan_sub">Yoga Nidra — rotation of consciousness</div>
+      <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:rgba(160,120,220,0.9);">Body Scan</div>
+      <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Yoga Nidra — rotation of consciousness</div>
       <div style="display:flex; gap:10px; justify-content:center; margin-bottom:20px;">
         <button class="nidra-pill" onclick="selectNidraDur(15,this)">15m</button>
         <button class="nidra-pill active" onclick="selectNidraDur(25,this)">25m</button>
@@ -974,30 +940,30 @@ html, body {
       <div style="text-align:center;"><button class="btn btn-primary" onclick="startBodyScan()" style="background:linear-gradient(135deg, rgba(160,120,220,0.8), rgba(120,80,200,0.8));">Begin Session</button></div>
     </div>
     <div class="focus-session-display" id="nidraSession">
-      <div class="focus-level-label" style="color:rgba(160,120,220,0.9);" data-i18n="body_scan_heading">BODY SCAN</div>
+      <div class="focus-level-label" style="color:rgba(160,120,220,0.9);">BODY SCAN</div>
       <div id="nidraScanText"></div>
       <div class="nidra-vis"></div>
       <div class="focus-elapsed" id="nidraElapsed">0:00</div>
       <div style="font-size:12px; color:var(--text-dim);" id="nidraRemaining"></div>
       <div class="focus-volume-wrap">
-        <label data-i18n="vol">Vol</label>
+        <label>Vol</label>
         <input type="range" min="0" max="100" value="50" oninput="setNidraVolume(this.value)">
       </div>
-      <button class="btn btn-ghost" onclick="stopBodyScan()" style="margin-top:12px;" data-i18n="end_session">End Session</button>
+      <button class="btn btn-ghost" onclick="stopBodyScan()" style="margin-top:12px;">End Session</button>
     </div>
   </div>
 </div>
 
 <!-- Insights -->
 <div class="exercise-overlay" id="insightsOverlay">
-  <button class="overlay-close" onclick="closeInsights()" data-i18n="close">Close ✕</button>
+  <button class="overlay-close" onclick="closeInsights()">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
-    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-warm);" data-i18n="insight_heading">Insights</div>
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-warm);">Insights</div>
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Your practice at a glance</div>
     <div class="stats-row" style="margin-bottom:20px;">
-      <div class="stat-chip"><div class="stat-value" id="statStreak">0</div><div class="stat-label" data-i18n="day_streak">Day Streak</div></div>
-      <div class="stat-chip"><div class="stat-value" id="statSessions">0</div><div class="stat-label" data-i18n="sessions">Sessions</div></div>
-      <div class="stat-chip"><div class="stat-value" id="statMinutes">0</div><div class="stat-label" data-i18n="total_min">Total Min</div></div>
+      <div class="stat-chip"><div class="stat-value" id="statStreak">0</div><div class="stat-label">Day Streak</div></div>
+      <div class="stat-chip"><div class="stat-value" id="statSessions">0</div><div class="stat-label">Sessions</div></div>
+      <div class="stat-chip"><div class="stat-value" id="statMinutes">0</div><div class="stat-label">Total Min</div></div>
     </div>
     <div class="section-label" style="margin-top:0;">This Week</div>
     <div class="insights-week-grid" id="insightsWeekGrid"></div>
@@ -1012,36 +978,9 @@ html, body {
   </div>
 </div>
 
-<!-- Mantra -->
-<div class="exercise-overlay" id="mantraOverlay">
-  <button class="overlay-close" onclick="closeMantra()" data-i18n="close">Close ✕</button>
-  <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
-    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:#f0b43c;" data-i18n="mantra_heading">Mantra Meditation</div>
-    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;" data-i18n="mantra_sub">Chant along with tanpura drone</div>
-
-    <div id="mantraPicker" style="width:100%;max-width:360px;">
-      <div class="mantra-list" id="mantraList"></div>
-    </div>
-
-    <div class="mantra-session" id="mantraSession">
-      <div class="mantra-session-title" id="mantraSessionTitle"></div>
-      <div class="mantra-devanagari" id="mantraDevanagari"></div>
-      <div class="mantra-transliteration" id="mantraTranslit"></div>
-      <div class="mantra-meaning" id="mantraMeaning"></div>
-      <div class="focus-elapsed" id="mantraElapsed">0:00</div>
-      <div style="font-size:12px;color:var(--text-dim);"><span data-i18n="tanpura_playing">Tanpura drone playing</span></div>
-      <div class="focus-volume-wrap">
-        <label data-i18n="vol">Vol</label>
-        <input type="range" id="mantraVolume" min="0" max="100" value="50" oninput="setMantraVolume(this.value)">
-      </div>
-      <button class="btn btn-ghost" onclick="stopMantra()" style="margin-top:12px;" data-i18n="end_session">End Session</button>
-    </div>
-  </div>
-</div>
-
 <!-- Tutorial -->
 <div class="exercise-overlay" id="tutorialOverlay">
-  <button class="overlay-close" onclick="closeTutorial()" data-i18n="close">Close ✕</button>
+  <button class="overlay-close" onclick="closeTutorial()">Close ✕</button>
   <div class="overlay-content">
     <div class="tutorial-card" id="tutorialCard">
       <div class="tutorial-step" id="tutorialStep">1/7</div>
@@ -1058,16 +997,16 @@ html, body {
 
 <!-- Settings -->
 <div class="exercise-overlay" id="settingsOverlay">
-  <button class="overlay-close" onclick="closeSettings()" data-i18n="close">Close ✕</button>
+  <button class="overlay-close" onclick="closeSettings()">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
-    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--text-primary);" data-i18n="settings">Settings</div>
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--text-primary);">Settings</div>
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Data & preferences</div>
     <div class="settings-section">
-      <div class="settings-section-label" data-i18n="preferences">Preferences</div>
+      <div class="settings-section-label">Preferences</div>
       <div class="settings-row" style="justify-content:space-between;align-items:center;padding:0 4px;">
         <div>
-          <div style="font-size:14px;color:var(--text-primary);" data-i18n="haptic_guidance">Haptic Guidance</div>
-          <div style="font-size:11px;color:var(--text-dim);" data-i18n="haptic_desc">Vibrations during breathwork & guided sessions</div>
+          <div style="font-size:14px;color:var(--text-primary);">Haptic Guidance</div>
+          <div style="font-size:11px;color:var(--text-dim);">Vibrations during breathwork & guided sessions</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" id="hapticToggle" onchange="toggleHapticGuidance(this.checked)">
@@ -1076,17 +1015,17 @@ html, body {
       </div>
       <div class="settings-row" style="justify-content:space-between;align-items:center;padding:0 4px;margin-top:12px;">
         <div>
-          <div style="font-size:14px;color:var(--text-primary);" data-i18n="how_to_use">How to Use</div>
+          <div style="font-size:14px;color:var(--text-primary);">How to Use</div>
           <div style="font-size:11px;color:var(--text-dim);">App walkthrough</div>
         </div>
         <button class="btn btn-ghost" onclick="startTutorial()" style="padding:8px 16px;font-size:13px;">▶ Start</button>
       </div>
     </div>
     <div class="settings-section">
-      <div class="settings-section-label" data-i18n="data">Data</div>
+      <div class="settings-section-label">Data</div>
       <div class="settings-row">
-        <button class="btn btn-ghost" onclick="exportData()" data-i18n="export_data">Export Data</button>
-        <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()" data-i18n="import_data">Import Data</button>
+        <button class="btn btn-ghost" onclick="exportData()">Export Data</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">Import Data</button>
         <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
       </div>
     </div>
@@ -1800,7 +1739,7 @@ function importData(input) {
 let wakeLock = null;
 async function requestWakeLock() { try { if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } } catch(e) {} }
 function releaseWakeLock() { if (wakeLock) { wakeLock.release().catch(()=>{}); wakeLock = null; } }
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && (sitState.running || breathState.running || focusState.running || (typeof mantraState!=='undefined' && mantraState.running))) requestWakeLock(); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && (sitState.running || breathState.running || focusState.running)) requestWakeLock(); });
 
 // ═══ UI ═══
 function updateAllUI() {
@@ -1873,37 +1812,10 @@ const SNAP = {
   ],
 };
 const SNAP_COLORS = ['#200800','#1a0400','#0d0a1a','#100a1e','#0a1218','#0a1520','#0a180d','#18120a','#120a18','#0a1418','#0d0d1e','#0e0e20','#0a0a1a','#1a0a10','#0a1a10','#10081a'];
-const SNAP_I18N = {
-  hi: {
-    openers: ["रुको.","जागो.","अरे.","अभी.","बस.","ठहरो.","रुक जाओ.","यहाँ.","सपने से\nबाहर आओ.","ऊपर देखो.","छोड़ो.","तुम.","नमस्ते.","चुप.","ध्यान दो."],
-    body: ["पैर.\nज़मीन पर.","रीढ़\nमहसूस करो.","जबड़ा\nढीला करो.","कंधे\nनीचे करो.","हाथ\nमहसूस करो.","पैर की उंगलियां\nहिलाओ.","अपना वज़न\nमहसूस करो.","पीठ\nसीधी करो.","चेहरा\nढीला करो.","हथेलियां\nखोलो.","दिल की\nधड़कन\nमहसूस करो.","मुट्ठी\nबंद करो.\nछोड़ो."],
-    breath: [
-      {in:"साँस अंदर.",hold:"रोको.",out:"बाहर."},
-      {in:"गहरी\nसाँस लो.",hold:"रोके रखो.",out:"छोड़ो."},
-      {in:"नाक से\nअंदर.",hold:"ठहरो.",out:"मुँह से\nबाहर."},
-    ],
-    senses: ["देखो.\nक्या दिखता\nहै?","सुनो.","हवा\nमहसूस करो.","सबसे करीब\nकी आवाज़?","सबसे पास\nका रंग?","क्या छू रहा\nहै तुम्हारी\nत्वचा को?","अपने हाथ\nदेखो.","तीन आवाज़ें\nगिनो.","आसमान\nदेखो.","क्या हिल\nरहा है?"],
-    presence: ["तुम\nयहाँ\nहो.","यह\nअसली है.","अभी.","बस यही\nपल.","कहीं\nऔर नहीं.","तुम\nज़िंदा हो.","पूरी तरह\nयहाँ.","बस\nहो.","विचार\nतुम नहीं\nहो."],
-    closers: ["उपस्थित. ✦","दोस्त ऑन. ✦","जागे. ✦","यहाँ. ✦","लौट आए. ✦","स्पष्ट. ✦","ज़िंदा. ✦"],
-  },
-  gu: {
-    openers: ["થોભો.","જાગો.","અરે.","હવે.","બસ.","ઊભા રહો.","અટકો.","અહીં.","સપનામાંથી\nબહાર આવો.","ઉપર જુઓ.","છોડો.","તમે.","નમસ્તે.","શાંત.","ધ્યાન આપો."],
-    body: ["પગ.\nજમીન પર.","કરોડરજ્જુ\nઅનુભવો.","જડબું\nછોડો.","ખભા\nનીચે કરો.","હાથ\nઅનુભવો.","પગની આંગળીઓ\nહલાવો.","તમારું વજન\nઅનુભવો.","પીઠ\nસીધી કરો.","ચહેરો\nછોડો.","હથેળીઓ\nખોલો.","હૃદયના\nધબકારા\nઅનુભવો.","મુઠ્ઠી\nબંધ કરો.\nછોડો."],
-    breath: [
-      {in:"શ્વાસ અંદર.",hold:"રોકો.",out:"બહાર."},
-      {in:"ઊંડો\nશ્વાસ લો.",hold:"રોકી રાખો.",out:"છોડો."},
-      {in:"નાકથી\nઅંદર.",hold:"થોભો.",out:"મોંથી\nબહાર."},
-    ],
-    senses: ["જુઓ.\nશું દેખાય\nછે?","સાંભળો.","હવા\nઅનુભવો.","સૌથી નજીકનો\nઅવાજ?","સૌથી નજીકનો\nરંગ?","શું સ્પર્શે\nછે તમારી\nત્વચાને?","તમારા હાથ\nજુઓ.","ત્રણ અવાજ\nગણો.","આકાશ\nજુઓ.","શું હલે\nછે?"],
-    presence: ["તમે\nઅહીં\nછો.","આ\nવાસ્તવિક છે.","હવે.","બસ આ\nપળ.","ક્યાંય\nબીજે નહીં.","તમે\nજીવિત છો.","સંપૂર્ણ\nઅહીં.","બસ\nરહો.","વિચારો\nતમે નથી."],
-    closers: ["હાજર. ✦","દોસ્ત ઑન. ✦","જાગ્યા. ✦","અહીં. ✦","પાછા આવ્યા. ✦","સ્પષ્ટ. ✦","જીવંત. ✦"],
-  }
-};
 function pick(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 function pickN(arr, n) { const s=[...arr]; for(let i=s.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]];} return s.slice(0,n); }
 function buildSnapSequence() {
-  const lang = currentLang;
-  const src = (lang !== 'en' && SNAP_I18N[lang]) ? SNAP_I18N[lang] : SNAP;
+  const src = SNAP;
   const br = pick(src.breath);
   const bodies = pickN(src.body, 2);
   const senses = pickN(src.senses, 2);
@@ -3333,390 +3245,16 @@ function stopBodyScan() {
   document.getElementById('nidraPicker').style.display = 'block';
 }
 
-// ═══ INTERNATIONALIZATION ═══
-const I18N = {
-  en: {
-    subtitle: 'Loops break. Presence enters.',
-    add_home: 'Add to Home Screen',
-    snap_present: 'SNAP PRESENT',
-    practice: 'Practice',
-    just_sit: 'Just Sit', just_sit_desc: 'Track the mind wanders',
-    breathwork: 'Breathwork', breathwork_desc: 'Guided breathing — presets or build your own',
-    focus_states: 'Focus States', focus_states_desc: 'Binaural beats for deep states',
-    yoga_nidra: 'Body Scan', yoga_nidra_desc: 'Yoga Nidra — rotation of consciousness',
-    mantra_title: 'Mantra', mantra_desc: 'Chant with tanpura drone',
-    mantra_heading: 'Mantra Meditation', mantra_sub: 'Chant along with tanpura drone',
-    insights: 'Insights', insights_desc: 'Your practice at a glance',
-    recent: 'Recent Sessions',
-    day_streak: 'Day Streak', sessions: 'Sessions', total_min: 'Total Min',
-    settings: 'Settings', preferences: 'Preferences', data: 'Data',
-    haptic_guidance: 'Haptic Guidance', haptic_desc: 'Vibrations during breathwork & guided sessions',
-    export_data: 'Export Data', import_data: 'Import Data',
-    how_to_use: 'How to Use', reset: 'Reset All Progress',
-    all: 'All',
-    close: 'Close ✕',
-    get_ready: 'Get ready...',
-    breathwork_heading: 'Breathwork',
-    breathwork_sub: 'Let the rhythm dissolve the noise',
-    calming: 'Calming', energizing: 'Energizing', custom: 'Custom',
-    start: 'Start', pause: 'Pause', stop: 'Stop',
-    end_session: 'End Session',
-    vol: 'Vol',
-    tanpura_playing: 'Tanpura drone playing',
-    focus_heading: 'Focus States',
-    focus_sub: 'Binaural beats for deep states',
-    body_scan_heading: 'Body Scan',
-    body_scan_sub: 'Yoga Nidra — rotation of consciousness',
-    begin_scan: 'Begin Scan',
-    guided: 'Guided',
-    choose_journey: 'Choose a journey',
-    insight_heading: 'Insights',
-    streak_label: 'Day Streak',
-    sessions_label: 'Sessions',
-    totalmin_label: 'Total Min',
-  },
-  hi: {
-    subtitle: 'चक्र टूटें। उपस्थिति आए।',
-    add_home: 'होम स्क्रीन पर जोड़ें',
-    snap_present: 'वर्तमान में आओ',
-    practice: 'अभ्यास',
-    just_sit: 'बस बैठो', just_sit_desc: 'मन की भटकन पर नज़र रखें',
-    breathwork: 'प्राणायाम', breathwork_desc: 'श्वास अभ्यास — तैयार या अपना बनाएं',
-    focus_states: 'ध्यान अवस्थाएं', focus_states_desc: 'गहरी अवस्थाओं के लिए बाइनॉरल बीट्स',
-    yoga_nidra: 'बॉडी स्कैन', yoga_nidra_desc: 'योग निद्रा — चेतना का घूर्णन',
-    mantra_title: 'मंत्र', mantra_desc: 'तानपुरा ध्वनि के साथ जप करें',
-    mantra_heading: 'मंत्र ध्यान', mantra_sub: 'तानपुरा ध्वनि के साथ जप करें',
-    insights: 'अंतर्दृष्टि', insights_desc: 'आपके अभ्यास की झलक',
-    recent: 'हाल के सत्र',
-    day_streak: 'दिन लगातार', sessions: 'सत्र', total_min: 'कुल मिनट',
-    settings: 'सेटिंग्स', preferences: 'प्राथमिकताएं', data: 'डेटा',
-    haptic_guidance: 'स्पर्श मार्गदर्शन', haptic_desc: 'श्वास अभ्यास के दौरान कंपन',
-    export_data: 'डेटा निर्यात', import_data: 'डेटा आयात',
-    how_to_use: 'उपयोग कैसे करें', reset: 'सभी प्रगति रीसेट करें',
-    all: 'सभी',
-    close: 'बंद ✕',
-    get_ready: 'तैयार हो जाओ...',
-    breathwork_heading: 'प्राणायाम',
-    breathwork_sub: 'लय को शोर मिटाने दो',
-    calming: 'शांत', energizing: 'ऊर्जा', custom: 'कस्टम',
-    start: 'शुरू', pause: 'रुको', stop: 'बंद',
-    end_session: 'सत्र समाप्त',
-    vol: 'ध्वनि',
-    tanpura_playing: 'तानपुरा बज रहा है',
-    focus_heading: 'ध्यान अवस्थाएं',
-    focus_sub: 'गहरी अवस्थाओं के लिए बाइनॉरल बीट्स',
-    body_scan_heading: 'बॉडी स्कैन',
-    body_scan_sub: 'योग निद्रा — चेतना का घूर्णन',
-    begin_scan: 'स्कैन शुरू करें',
-    guided: 'मार्गदर्शित',
-    choose_journey: 'यात्रा चुनें',
-    insight_heading: 'अंतर्दृष्टि',
-    streak_label: 'दिन लगातार',
-    sessions_label: 'सत्र',
-    totalmin_label: 'कुल मिनट',
-  },
-  gu: {
-    subtitle: 'ચક્ર તૂટે. હાજરી આવે.',
-    add_home: 'હોમ સ્ક્રીન પર ઉમેરો',
-    snap_present: 'હાજર થાઓ',
-    practice: 'અભ્યાસ',
-    just_sit: 'બસ બેસો', just_sit_desc: 'મનની ભટકણ પર નજર રાખો',
-    breathwork: 'પ્રાણાયામ', breathwork_desc: 'શ્વાસ અભ્યાસ — તૈયાર અથવા તમારું બનાવો',
-    focus_states: 'ધ્યાન અવસ્થાઓ', focus_states_desc: 'ઊંડી અવસ્થાઓ માટે બાઇનોરલ બીટ્સ',
-    yoga_nidra: 'બોડી સ્કેન', yoga_nidra_desc: 'યોગ નિદ્રા — ચેતનાનું પરિભ્રમણ',
-    mantra_title: 'મંત્ર', mantra_desc: 'તાનપુરા ધ્વનિ સાથે જાપ કરો',
-    mantra_heading: 'મંત્ર ધ્યાન', mantra_sub: 'તાનપુરા ધ્વનિ સાથે જાપ કરો',
-    insights: 'અંતર્દૃષ્ટિ', insights_desc: 'તમારા અભ્યાસની ઝલક',
-    recent: 'તાજેતરના સત્રો',
-    day_streak: 'દિવસ સતત', sessions: 'સત્રો', total_min: 'કુલ મિનિટ',
-    settings: 'સેટિંગ્સ', preferences: 'પસંદગીઓ', data: 'ડેટા',
-    haptic_guidance: 'સ્પર્શ માર્ગદર્શન', haptic_desc: 'શ્વાસ અભ્યાસ દરમિયાન કંપન',
-    export_data: 'ડેટા નિકાસ', import_data: 'ડેટા આયાત',
-    how_to_use: 'ઉપયોગ કેવી રીતે કરવો', reset: 'બધી પ્રગતિ રીસેટ કરો',
-    all: 'બધા',
-    close: 'બંધ ✕',
-    get_ready: 'તૈયાર થાઓ...',
-    breathwork_heading: 'પ્રાણાયામ',
-    breathwork_sub: 'લયને અવાજ મિટાવવા દો',
-    calming: 'શાંત', energizing: 'ઊર્જા', custom: 'કસ્ટમ',
-    start: 'શરૂ', pause: 'થોભો', stop: 'બંધ',
-    end_session: 'સત્ર સમાપ્ત',
-    vol: 'અવાજ',
-    tanpura_playing: 'તાનપુરા વાગી રહ્યું છે',
-    focus_heading: 'ધ્યાન અવસ્થાઓ',
-    focus_sub: 'ઊંડી અવસ્થાઓ માટે બાઇનોરલ બીટ્સ',
-    body_scan_heading: 'બોડી સ્કેન',
-    body_scan_sub: 'યોગ નિદ્રા — ચેતનાનું પરિભ્રમણ',
-    begin_scan: 'સ્કેન શરૂ કરો',
-    guided: 'માર્ગદર્શિત',
-    choose_journey: 'યાત્રા પસંદ કરો',
-    insight_heading: 'અંતર્દૃષ્ટિ',
-    streak_label: 'દિવસ સતત',
-    sessions_label: 'સત્રો',
-    totalmin_label: 'કુલ મિનિટ',
-  }
-};
-
-let currentLang = 'en';
-
-function setLang(lang, btn) {
-  hapticTap();
-  currentLang = lang;
-  state.language = lang;
-  saveState();
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  applyTranslations();
-}
-
-function applyTranslations() {
-  const t = I18N[currentLang] || I18N.en;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key]) el.textContent = t[key];
-  });
-  const sub = document.querySelector('.screen-subtitle');
-  if (sub) sub.textContent = t.subtitle;
-  const snap = document.querySelector('.snap-text');
-  if (snap) snap.textContent = t.snap_present;
-}
-
-// ═══ MANTRA MEDITATION ═══
-const MANTRAS = [
-  { id:'om', name:'Om', hindi:'ॐ', cat:'mantra', text:'ॐ', translit:'Oṃ', meaning:'The primordial sound of the universe' },
-  { id:'gayatri', name:'Gayatri Mantra', hindi:'गायत्री मंत्र', cat:'mantra',
-    text:'ॐ भूर्भुवः स्वः\nतत्सवितुर्वरेण्यं\nभर्गो देवस्य धीमहि\nधियो यो नः प्रचोदयात्',
-    translit:'Om Bhūr Bhuvaḥ Svaḥ\nTat Savitur Vareṇyaṃ\nBhargo Devasya Dhīmahi\nDhiyo Yo Naḥ Prachodayāt',
-    meaning:'We meditate on the glory of the Creator who has created the Universe, who is fit to be worshipped, who is the embodiment of Knowledge and Light, who removes all sins and ignorance. May He enlighten our intellect.' },
-  { id:'mahamantra', name:'Hare Krishna Mahamantra', hindi:'हरे कृष्ण महामंत्र', cat:'mantra',
-    text:'हरे कृष्ण हरे कृष्ण\nकृष्ण कृष्ण हरे हरे\nहरे राम हरे राम\nराम राम हरे हरे',
-    translit:'Hare Kṛṣṇa Hare Kṛṣṇa\nKṛṣṇa Kṛṣṇa Hare Hare\nHare Rāma Hare Rāma\nRāma Rāma Hare Hare',
-    meaning:'O Lord Krishna, O Lord Rama, please engage me in your devotional service' },
-  { id:'shiva', name:'Om Namah Shivaya', hindi:'ॐ नमः शिवाय', cat:'mantra',
-    text:'ॐ नमः शिवाय', translit:'Oṃ Namaḥ Śivāya', meaning:'I bow to Lord Shiva, the auspicious one' },
-  { id:'ganesh', name:'Ganesh Mantra', hindi:'गणेश मंत्र', cat:'mantra',
-    text:'ॐ गं गणपतये नमः', translit:'Oṃ Gaṃ Gaṇapataye Namaḥ', meaning:'Salutations to Lord Ganesha, remover of obstacles' },
-  { id:'mrityunjaya', name:'Maha Mrityunjaya', hindi:'महामृत्युंजय मंत्र', cat:'mantra',
-    text:'ॐ त्र्यम्बकं यजामहे\nसुगन्धिं पुष्टिवर्धनम्\nउर्वारुकमिव बन्धनान्\nमृत्योर्मुक्षीय माऽमृतात्',
-    translit:'Oṃ Tryambakaṃ Yajāmahe\nSugandhiṃ Puṣṭi-vardhanam\nUrvārukam iva Bandhanān\nMṛtyor Mukṣīya Māmṛtāt',
-    meaning:'We worship the three-eyed Lord Shiva who nourishes all. May He liberate us from death for the sake of immortality.' },
-  { id:'lakshmi', name:'Lakshmi Mantra', hindi:'लक्ष्मी मंत्र', cat:'mantra',
-    text:'ॐ श्रीं महालक्ष्म्यै नमः', translit:'Oṃ Śrīṃ Mahālakṣmyai Namaḥ', meaning:'Salutations to Goddess Lakshmi, bestower of wealth and prosperity' },
-  { id:'saraswati', name:'Saraswati Mantra', hindi:'सरस्वती मंत्र', cat:'mantra',
-    text:'ॐ ऐं सरस्वत्यै नमः', translit:'Oṃ Aiṃ Sarasvatyai Namaḥ', meaning:'Salutations to Goddess Saraswati, bestower of knowledge' },
-  { id:'durga', name:'Durga Mantra', hindi:'दुर्गा मंत्र', cat:'mantra',
-    text:'ॐ दुं दुर्गायै नमः', translit:'Oṃ Duṃ Durgāyai Namaḥ', meaning:'Salutations to Goddess Durga, the invincible one' },
-  { id:'hanuman', name:'Hanuman Mantra', hindi:'हनुमान मंत्र', cat:'mantra',
-    text:'ॐ हं हनुमते नमः', translit:'Oṃ Haṃ Hanumate Namaḥ', meaning:'Salutations to Lord Hanuman' },
-  { id:'vishnu', name:'Vishnu Mantra', hindi:'विष्णु मंत्र', cat:'mantra',
-    text:'ॐ नमो भगवते वासुदेवाय', translit:'Oṃ Namo Bhagavate Vāsudevāya', meaning:'I bow to Lord Vasudeva (Krishna/Vishnu)' },
-  { id:'peace', name:'Shanti Mantra', hindi:'शांति मंत्र', cat:'mantra',
-    text:'ॐ सर्वे भवन्तु सुखिनः\nसर्वे सन्तु निरामयाः\nसर्वे भद्राणि पश्यन्तु\nमा कश्चिद्दुःखभाग्भवेत्\nॐ शान्तिः शान्तिः शान्तिः',
-    translit:'Oṃ Sarve Bhavantu Sukhinaḥ\nSarve Santu Nirāmayāḥ\nSarve Bhadrāṇi Paśyantu\nMā Kaścid Duḥkha Bhāg Bhavet\nOṃ Śāntiḥ Śāntiḥ Śāntiḥ',
-    meaning:'May all be happy, may all be free from illness, may all see auspiciousness, may none suffer. Om peace, peace, peace.' },
-  { id:'asato', name:'Asato Ma Sadgamaya', hindi:'असतो मा', cat:'mantra',
-    text:'ॐ असतो मा सद्गमय\nतमसो मा ज्योतिर्गमय\nमृत्योर्मा अमृतं गमय\nॐ शान्तिः शान्तिः शान्तिः',
-    translit:'Oṃ Asato Mā Sadgamaya\nTamaso Mā Jyotir Gamaya\nMṛtyor Māmṛtaṃ Gamaya\nOṃ Śāntiḥ Śāntiḥ Śāntiḥ',
-    meaning:'Lead me from the unreal to the real, from darkness to light, from death to immortality.' },
-  { id:'chalisa', name:'Hanuman Chalisa', hindi:'हनुमान चालीसा', cat:'chalisa',
-    text:'श्रीगुरु चरन सरोज रज\nनिज मनु मुकुरु सुधारि\nबरनउँ रघुबर बिमल जसु\nजो दायकु फल चारि\n\nजय हनुमान ज्ञान गुन सागर\nजय कपीस तिहुँ लोक उजागर',
-    translit:'Śrī Guru Carana Saroja Raja\nNija Manu Mukuru Sudhāri\nBaranauṃ Raghubara Bimala Jasu\nJo Dāyaku Phala Cāri\n\nJai Hanumān Gyāna Guna Sāgara\nJai Kapīsa Tihũ Loka Ujāgara',
-    meaning:'After cleansing the mirror of my mind with the pollen-dust of holy Guru\'s lotus feet, I describe the unblemished glory of Sri Rama. Victory to Hanuman, ocean of wisdom and virtue.' },
-  { id:'soham', name:'So Ham', hindi:'सोहम्', cat:'mantra',
-    text:'सोहम्\nसोऽहम्', translit:'So Haṃ\nSo\'ham', meaning:'I am That — identifying the self with the universal' },
-  { id:'lokah', name:'Lokah Samastah', hindi:'लोकाः समस्ताः', cat:'mantra',
-    text:'लोकाः समस्ताः सुखिनो भवन्तु', translit:'Lokāḥ Samastāḥ Sukhino Bhavantu', meaning:'May all beings everywhere be happy and free' },
-  { id:'moola', name:'Moola Mantra', hindi:'मूल मंत्र', cat:'mantra',
-    text:'ॐ सत् चित् आनन्द परब्रह्म\nपुरुषोत्तम परमात्मा\nश्री भगवती समेत\nश्री भगवते नमः',
-    translit:'Oṃ Sat Cit Ānanda Parabrahma\nPuruṣottama Paramātmā\nŚrī Bhagavatī Sametha\nŚrī Bhagavate Namaḥ',
-    meaning:'Supreme Being in its manifestation as truth, consciousness, and bliss' },
-  { id:'buddha', name:'Buddhist Refuge', hindi:'बुद्ध शरण', cat:'mantra',
-    text:'बुद्धं शरणं गच्छामि\nधम्मं शरणं गच्छामि\nसंघं शरणं गच्छामि',
-    translit:'Buddhaṃ Śaraṇaṃ Gacchāmi\nDhammaṃ Śaraṇaṃ Gacchāmi\nSaṃghaṃ Śaraṇaṃ Gacchāmi',
-    meaning:'I take refuge in the Buddha, the Dharma, and the Sangha' },
-  { id:'waheguru', name:'Waheguru', hindi:'वाहेगुरु', cat:'mantra',
-    text:'वाहेगुरु वाहेगुरु\nवाहेगुरु वाहे जी', translit:'Wāhegurū Wāhegurū\nWāhegurū Wāhe Jī', meaning:'Wonderful Lord — Sikh meditation mantra' },
-  { id:'raghupati', name:'Raghupati Raghav', hindi:'रघुपति राघव', cat:'bhajan',
-    text:'रघुपति राघव राजा राम\nपतित पावन सीता राम\nसीता राम सीता राम\nभज प्यारे तू सीता राम',
-    translit:'Raghupati Rāghav Rājā Rām\nPatit Pāvan Sītā Rām\nSītā Rām Sītā Rām\nBhaj Pyāre Tū Sītā Rām',
-    meaning:'Lord Rama, purifier of the fallen — Gandhi\'s favorite bhajan' },
-];
-
-let mantraState = { running:false, current:null, startTime:null, timer:null, nodes:null, filter:'all' };
-
-function openMantra() { hapticTap(); renderMantraList(); document.getElementById('mantraOverlay').classList.add('active'); }
-function closeMantra() { if(mantraState.running) stopMantra(); document.getElementById('mantraOverlay').classList.remove('active'); }
-
-function renderMantraList() {
-  const list = document.getElementById('mantraList');
-  list.innerHTML = MANTRAS.map(m =>
-    `<div class="mantra-item" onclick="startMantra('${m.id}')">
-      <div>
-        <div class="mantra-item-name">${m.name}</div>
-        <div class="mantra-item-hindi">${m.hindi}</div>
-      </div>
-      <div class="mantra-item-cat">${m.cat}</div>
-    </div>`
-  ).join('');
-}
-
-function startMantra(id) {
-  const m = MANTRAS.find(x => x.id === id);
-  if (!m) return;
-  hapticMedium();
-  mantraState.running = true;
-  mantraState.current = id;
-  mantraState.startTime = Date.now();
-  requestWakeLock();
-  canvasIntensity = 0.3;
-
-  document.getElementById('mantraPicker').style.display = 'none';
-  document.getElementById('mantraSession').classList.add('visible');
-  document.getElementById('mantraSessionTitle').textContent = m.name;
-  document.getElementById('mantraDevanagari').textContent = m.text;
-  document.getElementById('mantraTranslit').textContent = m.translit;
-  document.getElementById('mantraMeaning').textContent = m.meaning;
-  document.getElementById('mantraElapsed').textContent = '0:00';
-
-  // Start tanpura drone
-  try {
-    const ctx = getAudio();
-    const masterGain = ctx.createGain();
-    masterGain.gain.value = 0;
-    masterGain.connect(ctx.destination);
-
-    // Sa (fundamental) - C3 ~130.8Hz
-    const sa = ctx.createOscillator();
-    sa.type = 'sine'; sa.frequency.value = 130.8;
-    const saGain = ctx.createGain(); saGain.gain.value = 0.15;
-    sa.connect(saGain); saGain.connect(masterGain);
-
-    // Pa (fifth) - G3 ~196Hz
-    const pa = ctx.createOscillator();
-    pa.type = 'sine'; pa.frequency.value = 196;
-    const paGain = ctx.createGain(); paGain.gain.value = 0.08;
-    pa.connect(paGain); paGain.connect(masterGain);
-
-    // Upper Sa - C4 ~261.6Hz
-    const sa2 = ctx.createOscillator();
-    sa2.type = 'sine'; sa2.frequency.value = 261.6;
-    const sa2Gain = ctx.createGain(); sa2Gain.gain.value = 0.06;
-    sa2.connect(sa2Gain); sa2Gain.connect(masterGain);
-
-    // Drone buzz (tanpura characteristic)
-    const buzz = ctx.createOscillator();
-    buzz.type = 'sawtooth'; buzz.frequency.value = 130.8;
-    const buzzGain = ctx.createGain(); buzzGain.gain.value = 0.02;
-    const buzzFilter = ctx.createBiquadFilter();
-    buzzFilter.type = 'lowpass'; buzzFilter.frequency.value = 400;
-    buzz.connect(buzzFilter); buzzFilter.connect(buzzGain); buzzGain.connect(masterGain);
-
-    // Fade in
-    masterGain.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 8);
-
-    sa.start(); pa.start(); sa2.start(); buzz.start();
-    mantraState.nodes = { sa, pa, sa2, buzz, saGain, paGain, sa2Gain, buzzGain, buzzFilter, masterGain };
-  } catch(e) {}
-
-  speakMantra(m.translit);
-  mantraTick();
-}
-
-function mantraTick() {
-  if (!mantraState.running) return;
-  const elapsed = (Date.now() - mantraState.startTime) / 1000;
-  const min = Math.floor(elapsed / 60);
-  const sec = Math.floor(elapsed % 60);
-  document.getElementById('mantraElapsed').textContent = min + ':' + String(sec).padStart(2, '0');
-  mantraState.timer = setTimeout(mantraTick, 500);
-}
-
-function speakMantra(text) {
-  if (!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const lines = text.split('\n').filter(l => l.trim());
-  let lineIdx = 0;
-  function speakNextLine() {
-    if (!mantraState.running) return;
-    const u = new SpeechSynthesisUtterance(lines[lineIdx]);
-    u.rate = 0.7;
-    u.pitch = 0.9;
-    u.lang = 'hi-IN';
-    u.onend = () => {
-      if (!mantraState.running) return;
-      lineIdx = (lineIdx + 1) % lines.length;
-      setTimeout(speakNextLine, 2000);
-    };
-    window.speechSynthesis.speak(u);
-  }
-  mantraState.speechTimer = setTimeout(speakNextLine, 3000);
-}
-
-function setMantraVolume(val) {
-  if (mantraState.nodes && mantraState.nodes.masterGain) mantraState.nodes.masterGain.gain.value = val / 100;
-}
-
-function stopMantra() {
-  window.speechSynthesis && window.speechSynthesis.cancel();
-  clearTimeout(mantraState.speechTimer);
-  mantraState.running = false;
-  clearTimeout(mantraState.timer);
-  canvasIntensity = 0.45;
-
-  if (mantraState.nodes) {
-    try {
-      const ctx = getAudio();
-      const n = mantraState.nodes;
-      n.masterGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 3);
-      setTimeout(() => {
-        try { n.sa.stop(); n.pa.stop(); n.sa2.stop(); n.buzz.stop(); n.masterGain.disconnect(); } catch(e) {}
-      }, 4000);
-    } catch(e) {}
-    mantraState.nodes = null;
-  }
-
-  if (mantraState.startTime) {
-    const elapsed = (Date.now() - mantraState.startTime) / 60000;
-    if (elapsed > 0.5) {
-      const m = MANTRAS.find(x => x.id === mantraState.current);
-      addMinutes(Math.round(elapsed * 10) / 10, 'mantra', m ? m.name : 'Mantra');
-    }
-  }
-
-  document.getElementById('mantraSession').classList.remove('visible');
-  document.getElementById('mantraPicker').style.display = 'block';
-}
-
+// ═══ (mantra removed) ═══
 // ═══ TUTORIAL ═══
-const TUTORIAL = {
-  en: [
-    { icon:'🕉️', title:'Welcome to AWAKE', text:'A meditation app for your spiritual journey. Let us show you how it works.' },
-    { icon:'⚡', title:'Snap Present', text:'Feeling scattered? Tap this button for an instant mindfulness reset. Takes just 30 seconds.' },
-    { icon:'🧘', title:'Just Sit', text:'Classic meditation timer. Tap the screen when your mind wanders — it tracks your focus over time.' },
-    { icon:'🌊', title:'Breathwork', text:'9 breathing techniques from ancient traditions. From calming Nadi Shodhana to energizing Wim Hof.' },
-    { icon:'🎧', title:'Focus States', text:'Binaural beats for deep meditation, sleep, focus, and astral projection. Headphones recommended.' },
-    { icon:'🫧', title:'Yoga Nidra', text:'Guided body scan meditation. Lie down, close your eyes, and follow the voice through your body.' },
-    { icon:'🕉️', title:'Mantra', text:'Chant along with a tanpura drone. 20+ sacred mantras in Sanskrit with transliteration.' },
-  ],
-  hi: [
-    { icon:'🕉️', title:'AWAKE में स्वागत है', text:'आपकी आध्यात्मिक यात्रा के लिए ध्यान ऐप। आइए दिखाते हैं यह कैसे काम करता है।' },
-    { icon:'⚡', title:'वर्तमान में आओ', text:'बिखरा हुआ महसूस कर रहे हैं? तुरंत माइंडफुलनेस रीसेट के लिए यह बटन दबाएं। बस 30 सेकंड।' },
-    { icon:'🧘', title:'बस बैठो', text:'क्लासिक ध्यान टाइमर। जब मन भटके तो स्क्रीन टैप करें — यह समय के साथ आपकी एकाग्रता ट्रैक करता है।' },
-    { icon:'🌊', title:'प्राणायाम', text:'प्राचीन परंपराओं से 9 श्वास तकनीकें। शांत करने वाले नाड़ी शोधन से लेकर ऊर्जावान विम हॉफ तक।' },
-    { icon:'🎧', title:'ध्यान अवस्थाएं', text:'गहरे ध्यान, नींद, एकाग्रता के लिए बाइनॉरल बीट्स। हेडफोन की सिफारिश है।' },
-    { icon:'🫧', title:'योग निद्रा', text:'मार्गदर्शित शरीर स्कैन ध्यान। लेटें, आंखें बंद करें, और आवाज़ का अनुसरण करें।' },
-    { icon:'🕉️', title:'मंत्र', text:'तानपुरा ध्वनि के साथ जप करें। संस्कृत में 20+ पवित्र मंत्र।' },
-  ],
-  gu: [
-    { icon:'🕉️', title:'AWAKE માં સ્વાગત છે', text:'તમારી આધ્યાત્મિક યાત્રા માટે ધ્યાન એપ. ચાલો બતાવીએ આ કેવી રીતે કામ કરે છે.' },
-    { icon:'⚡', title:'હાજર થાઓ', text:'વિખરાયેલું અનુભવો છો? તરત માઇન્ડફુલનેસ રીસેટ માટે આ બટન દબાવો. ફક્ત 30 સેકન્ડ.' },
-    { icon:'🧘', title:'બસ બેસો', text:'ક્લાસિક ધ્યાન ટાઈમર. મન ભટકે ત્યારે સ્ક્રીન ટેપ કરો — તે સમય સાથે તમારી એકાગ્રતા ટ્રેક કરે છે.' },
-    { icon:'🌊', title:'પ્રાણાયામ', text:'પ્રાચીન પરંપરાઓમાંથી 9 શ્વાસ તકનીકો. શાંત કરનાર નાડી શોધનથી ઊર્જાવાન વિમ હોફ સુધી.' },
-    { icon:'🎧', title:'ધ્યાન અવસ્થાઓ', text:'ઊંડા ધ્યાન, ઊંઘ, એકાગ્રતા માટે બાઇનોરલ બીટ્સ. હેડફોન ની ભલામણ છે.' },
-    { icon:'🫧', title:'યોગ નિદ્રા', text:'માર્ગદર્શિત શરીર સ્કેન ધ્યાન. સૂઈ જાઓ, આંખો બંધ કરો, અવાજને અનુસરો.' },
-    { icon:'🕉️', title:'મંત્ર', text:'તાનપુરા ધ્વનિ સાથે જાપ કરો. સંસ્કૃતમાં 20+ પવિત્ર મંત્રો.' },
-  ]
-};
+const TUTORIAL = [
+  { icon:'🕉️', title:'Welcome to AWAKE', text:'A meditation app for your spiritual journey. Let us show you how it works.' },
+  { icon:'⚡', title:'Snap Present', text:'Feeling scattered? Tap this button for an instant mindfulness reset. Takes just 30 seconds.' },
+  { icon:'🧘', title:'Just Sit', text:'Classic meditation timer. Tap the screen when your mind wanders — it tracks your focus over time.' },
+  { icon:'🌊', title:'Breathwork', text:'9 breathing techniques from ancient traditions. From calming Nadi Shodhana to energizing Wim Hof.' },
+  { icon:'🎧', title:'Focus States', text:'Binaural beats for deep meditation, sleep, focus, and astral projection. Headphones recommended.' },
+  { icon:'🫧', title:'Yoga Nidra', text:'Guided body scan meditation. Lie down, close your eyes, and follow the voice through your body.' },
+];
 
 let tutorialStep = 0;
 
@@ -3732,7 +3270,7 @@ function closeTutorial() {
   saveState();
 }
 function showTutorialStep() {
-  const steps = TUTORIAL[currentLang] || TUTORIAL.en;
+  const steps = TUTORIAL;
   const step = steps[tutorialStep];
   document.getElementById('tutorialStep').textContent = `${tutorialStep+1}/${steps.length}`;
   document.getElementById('tutorialIcon').textContent = step.icon;
@@ -3743,7 +3281,7 @@ function showTutorialStep() {
 }
 function tutorialNext() {
   hapticTap();
-  const steps = TUTORIAL[currentLang] || TUTORIAL.en;
+  const steps = TUTORIAL;
   if (tutorialStep >= steps.length-1) { closeTutorial(); return; }
   tutorialStep++;
   showTutorialStep();
@@ -3758,12 +3296,6 @@ checkDailyReset();
 loadCustomPatterns();
 updateAllUI();
 document.getElementById('hapticToggle').checked = !!state.hapticGuidance;
-// Restore language
-if (state.language) { currentLang = state.language; }
-document.querySelectorAll('.lang-btn').forEach(b => {
-  b.classList.toggle('active', b.getAttribute('data-lang') === currentLang);
-});
-applyTranslations();
 // Auto-show tutorial on first launch
 if (!state.tutorialSeen) { setTimeout(() => startTutorial(), 1500); }
 setTimeout(showSoundHint, 2000);
