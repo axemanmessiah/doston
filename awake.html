@@ -88,6 +88,7 @@ html, body {
   position:relative; z-index:1; height:100%;
   overflow-y:auto; -webkit-overflow-scrolling:touch;
   padding: calc(var(--safe-top) + 16px) 20px calc(var(--safe-bottom) + 30px);
+  padding-bottom:80px;
 }
 #app::-webkit-scrollbar { width:0; }
 @media all and (display-mode: standalone) {
@@ -125,49 +126,49 @@ html, body {
 .btn-primary { background: linear-gradient(135deg, var(--accent-glow), #9b8cf8); color:white; box-shadow: 0 4px 24px rgba(124,108,240,0.3), inset 0 1px 0 rgba(255,255,255,0.15); }
 .btn-ghost { background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
 .btn-snap {
-  display:flex; background: linear-gradient(135deg, #c85a20, #a04018); color:white;
-  box-shadow: 0 4px 20px rgba(180,80,30,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
-  width:100%; padding:11px 28px; border-radius:50px;
-  font-size:14px; font-weight:700; letter-spacing:1.5px;
+  display:flex; position:relative; overflow:hidden;
+  width:100%; padding:18px 28px; border-radius:16px;
+  background:linear-gradient(135deg, #c04020, #e06030, #d04828);
+  border:1px solid rgba(255,120,60,0.3);
+  color:#fff; font-size:15px; font-weight:700; letter-spacing:3px;
+  cursor:pointer; transition:all 0.3s;
+  justify-content:center; align-items:center;
+  box-shadow: 0 4px 20px rgba(200,60,30,0.3), 0 0 40px rgba(200,60,30,0.1);
+}
+.btn-snap:active { transform:scale(0.97); }
+.snap-text { position:relative; z-index:1; }
+.snap-glow {
+  position:absolute; top:50%; left:50%; width:200%; height:200%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(255,150,80,0.3) 0%, transparent 60%);
+  animation: snap-breathe 3s ease-in-out infinite;
+}
+@keyframes snap-breathe {
+  0%,100% { opacity:0.3; transform:translate(-50%,-50%) scale(0.8); }
+  50% { opacity:0.7; transform:translate(-50%,-50%) scale(1.2); }
 }
 .stats-row { display:flex; gap:10px; margin-bottom:20px; }
 .stat-chip { flex:1; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding:14px 12px; text-align:center; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow: 0 2px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.04); }
 .stat-value { font-size:24px; font-weight:700; }
 .stat-label { font-size:10px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
-/* Mute toggle */
-.mute-btn {
-  position:fixed; top: calc(var(--safe-top) + 14px); right:20px;
-  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
-  border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
-  cursor:pointer; color:var(--text-secondary); font-size:16px; z-index:50;
-  transition: background 0.3s, color 0.3s;
-  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+/* Bottom bar */
+.bottom-bar {
+  position:fixed; bottom:0; left:0; right:0; z-index:100;
+  display:flex; justify-content:center; gap:24px; padding:12px 20px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background:linear-gradient(to top, rgba(10,10,26,0.95), rgba(10,10,26,0.7), transparent);
+  pointer-events:none;
 }
-.mute-btn.muted { color:var(--text-dim); background:rgba(255,80,80,0.08); border-color:rgba(255,80,80,0.15); }
-
-/* Share button */
-.share-btn {
-  position:fixed; top: calc(var(--safe-top) + 14px); right:64px;
-  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
-  border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
-  cursor:pointer; color:var(--text-secondary); font-size:16px; z-index:50;
-  transition: background 0.3s, color 0.3s;
-  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+.bottom-btn {
+  pointer-events:auto;
+  width:44px; height:44px; border-radius:50%;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1);
+  color:var(--text-secondary); cursor:pointer; transition:all 0.3s;
+  display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
 }
-.share-btn:active { background:rgba(255,255,255,0.12); }
-/* Settings button */
-.settings-btn {
-  position:fixed; top: calc(var(--safe-top) + 14px); right:108px;
-  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
-  border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
-  cursor:pointer; color:var(--text-secondary); font-size:16px; z-index:50;
-  transition: background 0.3s, color 0.3s;
-  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
-}
-.settings-btn:active { background:rgba(255,255,255,0.12); }
+.bottom-btn:active { transform:scale(0.9); background:rgba(255,255,255,0.15); }
+.bottom-btn.muted { color:var(--text-dim); background:rgba(255,80,80,0.08); border-color:rgba(255,80,80,0.15); }
 /* Sound hint */
 .sound-hint {
   position:fixed; bottom: calc(var(--safe-bottom) + 12px); left:50%; transform:translateX(-50%);
@@ -569,10 +570,6 @@ html, body {
   0%,100% { text-shadow: 0 0 30px rgba(124,108,240,0.4), 0 0 60px rgba(124,108,240,0.2); }
   50% { text-shadow: 0 0 40px rgba(124,108,240,0.7), 0 0 80px rgba(124,108,240,0.35), 0 0 120px rgba(108,160,240,0.15); }
 }
-@keyframes pulse-glow {
-  0%,100% { box-shadow: 0 4px 20px rgba(180,80,30,0.35), inset 0 1px 0 rgba(255,255,255,0.1); }
-  50% { box-shadow: 0 4px 30px rgba(180,80,30,0.5), 0 0 50px rgba(180,80,30,0.2), inset 0 1px 0 rgba(255,255,255,0.1); }
-}
 @keyframes pulse-sit {
   0%,100% { box-shadow: 0 0 30px rgba(192,144,240,0.08), inset 0 0 60px rgba(192,144,240,0.03); border-color:rgba(192,144,240,0.12); }
   50% { box-shadow: 0 0 60px rgba(192,144,240,0.15), inset 0 0 80px rgba(192,144,240,0.06); border-color:rgba(192,144,240,0.2); }
@@ -606,58 +603,94 @@ html, body {
 }
 .toggle-switch input:checked + .toggle-slider { background:var(--accent-glow); }
 .toggle-switch input:checked + .toggle-slider:before { transform:translateX(20px); }
+
+/* Language bar */
+.lang-bar { display:flex; gap:8px; justify-content:center; margin-bottom:16px; }
+.lang-btn { padding:8px 20px; border-radius:25px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:var(--text-secondary); font-size:16px; font-weight:500; cursor:pointer; transition:0.3s; }
+.lang-btn.active { background:rgba(124,108,240,0.2); border-color:var(--accent-glow); color:var(--text-primary); }
+
+/* Mantra */
+.mantra-tabs { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; justify-content:center; }
+.mantra-tab { padding:6px 16px; border-radius:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08); color:var(--text-secondary); font-size:13px; cursor:pointer; transition:0.2s; }
+.mantra-tab.active { background:rgba(255,180,60,0.15); border-color:rgba(255,180,60,0.3); color:#f0b43c; }
+.mantra-list { max-height:400px; overflow-y:auto; width:100%; }
+.mantra-item { padding:14px; border-radius:var(--radius-sm); background:var(--bg-card); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; cursor:pointer; transition:0.2s; display:flex; justify-content:space-between; align-items:center; }
+.mantra-item:active { transform:scale(0.98); }
+.mantra-item-name { font-size:15px; color:var(--text-primary); font-weight:500; }
+.mantra-item-hindi { font-size:13px; color:var(--text-dim); margin-top:2px; }
+.mantra-item-cat { font-size:11px; color:rgba(255,180,60,0.6); }
+.mantra-session { display:none; flex-direction:column; align-items:center; gap:16px; width:100%; max-width:360px; }
+.mantra-session.visible { display:flex; }
+.mantra-session-title { font-size:18px; font-weight:300; color:#f0b43c; letter-spacing:1px; }
+.mantra-devanagari { font-size:28px; color:var(--text-primary); text-align:center; line-height:1.8; font-weight:300; max-height:300px; overflow-y:auto; padding:16px; background:rgba(255,180,60,0.04); border:1px solid rgba(255,180,60,0.1); border-radius:var(--radius-sm); width:100%; }
+.mantra-transliteration { font-size:14px; color:var(--text-secondary); text-align:center; line-height:1.8; font-style:italic; max-height:200px; overflow-y:auto; width:100%; }
+.mantra-meaning { font-size:12px; color:var(--text-dim); text-align:center; max-width:300px; }
+
+/* Tutorial */
+.tutorial-card { text-align:center; max-width:320px; padding:30px 20px; }
+.tutorial-step { font-size:12px; color:var(--accent-glow); letter-spacing:2px; margin-bottom:16px; }
+.tutorial-icon { font-size:48px; margin-bottom:16px; }
+.tutorial-title { font-size:22px; font-weight:300; color:var(--text-primary); margin-bottom:12px; }
+.tutorial-text { font-size:15px; color:var(--text-secondary); line-height:1.6; }
 </style>
 </head>
 <body>
 <canvas id="bgCanvas"></canvas>
 <div class="snap-flash" id="snapFlash"></div>
-<button class="settings-btn" id="settingsBtn" onclick="openSettings()" title="Settings">
-  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-</button>
-<button class="share-btn" id="shareBtn" onclick="shareApp()" title="Share AWAKE">
-  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-</button>
-<button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Toggle sound">
-  <svg id="muteIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path id="muteSlash" d="M23 9l-6 6m0-6l6 6" style="display:none"/><path id="soundWaves" d="M15.5 8.5a5 5 0 010 7M19 6a9 9 0 010 12"/></svg>
-</button>
+<div class="bottom-bar" id="bottomBar">
+  <button class="bottom-btn" onclick="openSettings()" title="Settings">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+  </button>
+  <button class="bottom-btn" id="shareBtn" onclick="shareApp()" title="Share">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+  </button>
+  <button class="bottom-btn" id="muteBtn" onclick="toggleMute()" title="Sound">
+    <svg id="muteIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path id="muteSlash" d="M23 9l-6 6m0-6l6 6" style="display:none"/><path id="soundWaves" d="M15.5 8.5a5 5 0 010 7M19 6a9 9 0 010 12"/></svg>
+  </button>
+</div>
 
 <div id="app">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:4px;"><svg viewBox="0 0 100 100" width="40" height="40" style="flex-shrink:0;"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:42px;font-weight:200;letter-spacing:6px;background:linear-gradient(135deg,#7c6cf0,#6ca0f0,#5cc8c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 30px rgba(124,108,240,0.4),0 0 60px rgba(124,108,240,0.2);animation:hero-glow 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(124,108,240,0.3));">AWAKE</span></div>
-  <div class="screen-subtitle" style="margin-bottom:4px;">Loops break. Presence enters.</div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:8px;"><svg viewBox="0 0 100 100" width="80" height="80" style="flex-shrink:0;filter:drop-shadow(0 0 12px rgba(160,128,240,0.35));"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:42px;font-weight:200;letter-spacing:6px;background:linear-gradient(135deg,#7c6cf0,#6ca0f0,#5cc8c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 30px rgba(124,108,240,0.4),0 0 60px rgba(124,108,240,0.2);animation:hero-glow 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(124,108,240,0.3));">AWAKE</span></div>
+  <div class="screen-subtitle" style="margin-bottom:24px;">Loops break. Presence enters.</div>
+  <div class="lang-bar">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en',this)">English</button>
+    <button class="lang-btn" data-lang="hi" onclick="setLang('hi',this)">हिन्दी</button>
+    <button class="lang-btn" data-lang="gu" onclick="setLang('gu',this)">ગુજરાતી</button>
+  </div>
   <div class="daily-quote" id="dailyQuote"></div>
   <div style="margin-bottom:28px;"><span class="a2hs-link" id="a2hsLink" onclick="openA2HS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg> Add to Home Screen</span></div>
 
-  <div class="stats-row">
-    <div class="stat-chip"><div class="stat-value" id="statStreak">0</div><div class="stat-label">Day Streak</div></div>
-    <div class="stat-chip"><div class="stat-value" id="statSessions">0</div><div class="stat-label">Sessions</div></div>
-    <div class="stat-chip"><div class="stat-value" id="statMinutes">0</div><div class="stat-label">Total Min</div></div>
-  </div>
+  <button class="btn btn-snap" onclick="startSnap()" style="margin-bottom:20px;">
+    <span class="snap-text" data-i18n="snap_present">SNAP PRESENT</span>
+    <span class="snap-glow"></span>
+  </button>
 
-  <button class="btn btn-snap" onclick="startSnap()" style="margin-bottom:20px; animation: pulse-glow 3s ease-in-out infinite;">SNAP PRESENT</button>
-
-  <div class="section-label">Practice</div>
+  <div class="section-label" data-i18n="practice">Practice</div>
   <div class="card" onclick="openSitPicker()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(192,144,240,0.12);">🧘</div><div class="card-info"><div class="card-title">Just Sit</div><div class="card-desc">Track the mind wanders</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:rgba(192,144,240,0.12);">🧘</div><div class="card-info"><div class="card-title" data-i18n="just_sit">Just Sit</div><div class="card-desc" data-i18n="just_sit_desc">Track the mind wanders</div></div></div>
   </div>
   <div class="card" onclick="openBreathe()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(96,208,192,0.12);">🌊</div><div class="card-info"><div class="card-title">Breathwork</div><div class="card-desc">Guided breathing — presets or build your own</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:rgba(96,208,192,0.12);">🌊</div><div class="card-info"><div class="card-title" data-i18n="breathwork">Breathwork</div><div class="card-desc" data-i18n="breathwork_desc">Guided breathing — presets or build your own</div></div></div>
   </div>
   <div class="card" onclick="openFocus()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(108,160,240,0.12);">🎧</div><div class="card-info"><div class="card-title">Focus States</div><div class="card-desc">Binaural beats for deep states</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:rgba(108,160,240,0.12);">🎧</div><div class="card-info"><div class="card-title" data-i18n="focus_states">Focus States</div><div class="card-desc" data-i18n="focus_states_desc">Binaural beats for deep states</div></div></div>
   </div>
   <div class="card" onclick="openBodyScan()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(160,120,220,0.12);">🫧</div><div class="card-info"><div class="card-title">Yoga Nidra</div><div class="card-desc">Body scan — rotation of consciousness</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:rgba(160,120,220,0.12);">🫧</div><div class="card-info"><div class="card-title" data-i18n="yoga_nidra">Yoga Nidra</div><div class="card-desc" data-i18n="yoga_nidra_desc">Body scan — rotation of consciousness</div></div></div>
+  </div>
+  <div class="card" onclick="openMantra()">
+    <div class="card-row"><div class="card-icon" style="background:rgba(255,180,60,0.12);"><span style="font-size:20px;">🕉️</span></div><div class="card-info"><div class="card-title" data-i18n="mantra_title">Mantra</div><div class="card-desc" data-i18n="mantra_desc">Chant with tanpura drone</div></div></div>
   </div>
 
-  <div class="section-label" style="margin-top:36px;">Recent Sessions</div>
+  <div class="section-label" style="margin-top:36px;" data-i18n="recent">Recent Sessions</div>
   <div id="journeyHistory"></div>
 
-  <div class="card" onclick="openInsights()" style="margin-top:28px;">
-    <div class="card-row"><div class="card-icon" style="background:rgba(240,160,96,0.12);">📊</div><div class="card-info"><div class="card-title">Insights</div><div class="card-desc">Your practice at a glance</div></div></div>
+  <div class="card" onclick="openInsights()" style="margin-top:28px;background:linear-gradient(135deg, rgba(240,160,96,0.06), rgba(240,120,80,0.04));border-color:rgba(240,160,96,0.12);">
+    <div class="card-row"><div class="card-icon" style="background:linear-gradient(135deg, rgba(240,160,96,0.15), rgba(240,120,80,0.1));"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(240,160,96,0.9)" stroke-width="2" stroke-linecap="round"><path d="M3 20L7 13L11 16L15 8L21 4"/><circle cx="21" cy="4" r="1.5" fill="rgba(240,160,96,0.9)"/></svg></div><div class="card-info"><div class="card-title" data-i18n="insights">Insights</div><div class="card-desc" data-i18n="insights_desc">Your practice at a glance</div></div></div>
   </div>
 
   <div style="margin-top:30px; text-align:center;">
-    <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.4); border-color:rgba(255,80,80,0.1); font-size:10px; padding:6px 14px; letter-spacing:0.3px;">Reset All Progress</button>
+    <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.4); border-color:rgba(255,80,80,0.1); font-size:10px; padding:6px 14px; letter-spacing:0.3px;" data-i18n="reset">Reset All Progress</button>
   </div>
 </div>
 
@@ -962,6 +995,11 @@ html, body {
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
     <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-warm);">Insights</div>
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Your practice at a glance</div>
+    <div class="stats-row" style="margin-bottom:20px;">
+      <div class="stat-chip"><div class="stat-value" id="statStreak">0</div><div class="stat-label" data-i18n="day_streak">Day Streak</div></div>
+      <div class="stat-chip"><div class="stat-value" id="statSessions">0</div><div class="stat-label" data-i18n="sessions">Sessions</div></div>
+      <div class="stat-chip"><div class="stat-value" id="statMinutes">0</div><div class="stat-label" data-i18n="total_min">Total Min</div></div>
+    </div>
     <div class="section-label" style="margin-top:0;">This Week</div>
     <div class="insights-week-grid" id="insightsWeekGrid"></div>
     <div class="sparkline-wrap">
@@ -975,34 +1013,91 @@ html, body {
   </div>
 </div>
 
+<!-- Mantra -->
+<div class="exercise-overlay" id="mantraOverlay">
+  <button class="overlay-close" onclick="closeMantra()">Close ✕</button>
+  <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:#f0b43c;" data-i18n="mantra_heading">Mantra Meditation</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;" data-i18n="mantra_sub">Chant along with tanpura drone</div>
+
+    <div id="mantraPicker" style="width:100%;max-width:360px;">
+      <div class="mantra-tabs">
+        <button class="mantra-tab active" onclick="filterMantras('all',this)" data-i18n="all">All</button>
+        <button class="mantra-tab" onclick="filterMantras('mantra',this)">Mantra</button>
+        <button class="mantra-tab" onclick="filterMantras('chalisa',this)">Chalisa</button>
+        <button class="mantra-tab" onclick="filterMantras('bhajan',this)">Bhajan</button>
+      </div>
+      <div class="mantra-list" id="mantraList"></div>
+    </div>
+
+    <div class="mantra-session" id="mantraSession">
+      <div class="mantra-session-title" id="mantraSessionTitle"></div>
+      <div class="mantra-devanagari" id="mantraDevanagari"></div>
+      <div class="mantra-transliteration" id="mantraTranslit"></div>
+      <div class="mantra-meaning" id="mantraMeaning"></div>
+      <div class="focus-elapsed" id="mantraElapsed">0:00</div>
+      <div style="font-size:12px;color:var(--text-dim);">🔔 Tanpura drone playing</div>
+      <div class="focus-volume-wrap">
+        <label>Vol</label>
+        <input type="range" id="mantraVolume" min="0" max="100" value="50" oninput="setMantraVolume(this.value)">
+      </div>
+      <button class="btn btn-ghost" onclick="stopMantra()" style="margin-top:12px;">End Session</button>
+    </div>
+  </div>
+</div>
+
+<!-- Tutorial -->
+<div class="exercise-overlay" id="tutorialOverlay">
+  <button class="overlay-close" onclick="closeTutorial()">Close ✕</button>
+  <div class="overlay-content">
+    <div class="tutorial-card" id="tutorialCard">
+      <div class="tutorial-step" id="tutorialStep">1/7</div>
+      <div class="tutorial-icon" id="tutorialIcon"></div>
+      <div class="tutorial-title" id="tutorialTitle"></div>
+      <div class="tutorial-text" id="tutorialText"></div>
+      <div style="display:flex;gap:12px;margin-top:24px;">
+        <button class="btn btn-ghost" id="tutPrev" onclick="tutorialPrev()" style="padding:10px 20px;">← Back</button>
+        <button class="btn btn-primary" id="tutNext" onclick="tutorialNext()" style="padding:10px 24px;">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Settings -->
 <div class="exercise-overlay" id="settingsOverlay">
   <button class="overlay-close" onclick="closeSettings()">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
-    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--text-primary);">Settings</div>
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--text-primary);" data-i18n="settings">Settings</div>
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Data & preferences</div>
     <div class="settings-section">
-      <div class="settings-section-label">Preferences</div>
+      <div class="settings-section-label" data-i18n="preferences">Preferences</div>
       <div class="settings-row" style="justify-content:space-between;align-items:center;padding:0 4px;">
         <div>
-          <div style="font-size:14px;color:var(--text-primary);">Haptic Guidance</div>
-          <div style="font-size:11px;color:var(--text-dim);">Vibrations during breathwork & guided sessions</div>
+          <div style="font-size:14px;color:var(--text-primary);" data-i18n="haptic_guidance">Haptic Guidance</div>
+          <div style="font-size:11px;color:var(--text-dim);" data-i18n="haptic_desc">Vibrations during breathwork & guided sessions</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" id="hapticToggle" onchange="toggleHapticGuidance(this.checked)">
           <span class="toggle-slider"></span>
         </label>
       </div>
+      <div class="settings-row" style="justify-content:space-between;align-items:center;padding:0 4px;margin-top:12px;">
+        <div>
+          <div style="font-size:14px;color:var(--text-primary);" data-i18n="how_to_use">How to Use</div>
+          <div style="font-size:11px;color:var(--text-dim);">App walkthrough</div>
+        </div>
+        <button class="btn btn-ghost" onclick="startTutorial()" style="padding:8px 16px;font-size:13px;">▶ Start</button>
+      </div>
     </div>
     <div class="settings-section">
-      <div class="settings-section-label">Data</div>
+      <div class="settings-section-label" data-i18n="data">Data</div>
       <div class="settings-row">
-        <button class="btn btn-ghost" onclick="exportData()">Export Data</button>
-        <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">Import Data</button>
+        <button class="btn btn-ghost" onclick="exportData()" data-i18n="export_data">Export Data</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()" data-i18n="import_data">Import Data</button>
         <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
       </div>
     </div>
-    <div class="settings-version">AWAKE v12.2</div>
+    <div class="settings-version">AWAKE v13</div>
   </div>
 </div>
 
@@ -1034,7 +1129,7 @@ html, body {
 
 <script>
 /* ════════════════════════════════════════════
-   AWAKE v12.2
+   AWAKE v13
    ════════════════════════════════════════════ */
 
 // ═══ DAILY TEACHINGS ═══
@@ -1069,6 +1164,373 @@ const TEACHINGS = [
   "In the middle of difficulty lies opportunity. — Einstein",
   "Who looks outside, dreams. Who looks inside, awakes. — Jung",
   "Silence is the language of God. — Rumi",
+  "The wound is the place where the Light enters you. — Rumi",
+  "Out beyond ideas of wrongdoing and rightdoing there is a field. I'll meet you there. — Rumi",
+  "Don't be satisfied with stories of how things have gone with others. Unfold your own myth. — Rumi",
+  "Let yourself be silently drawn by the strange pull of what you really love. — Rumi",
+  "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself. — Rumi",
+  "Raise your words, not your voice. It is rain that grows flowers, not thunder. — Rumi",
+  "The universe is not outside of you. Look inside yourself; everything that you want, you already are. — Rumi",
+  "Stop acting so small. You are the universe in ecstatic motion. — Rumi",
+  "Travel light, live light, spread the light, be the light. — Yogi Bhajan",
+  "In the silence of the heart God speaks. — Mother Teresa",
+  "Peace comes from within. Do not seek it without. — Buddha",
+  "There is no path to happiness: happiness is the path. — Buddha",
+  "Three things cannot be long hidden: the sun, the moon, and the truth. — Buddha",
+  "The root of suffering is attachment. — Buddha",
+  "In the end, only three things matter: how much you loved, how gently you lived, and how gracefully you let go. — Buddha",
+  "You yourself, as much as anybody in the entire universe, deserve your love and affection. — Buddha",
+  "What we think, we become. — Buddha",
+  "Every morning we are born again. What we do today matters most. — Buddha",
+  "Health is the greatest gift, contentment the greatest wealth, faithfulness the best relationship. — Buddha",
+  "If you light a lamp for somebody, it will also brighten your path. — Buddha",
+  "No one saves us but ourselves. No one can and no one may. We ourselves must walk the path. — Buddha",
+  "Just as a candle cannot burn without fire, men cannot live without a spiritual life. — Buddha",
+  "Better than a thousand hollow words is one word that brings peace. — Buddha",
+  "The way is not in the sky. The way is in the heart. — Buddha",
+  "A man is not called wise because he talks and talks again; but if he is peaceful, loving and fearless then he is in truth called wise. — Buddha",
+  "Thousands of candles can be lighted from a single candle. Happiness never decreases by being shared. — Buddha",
+  "The only real failure in life is not to be true to the best one knows. — Buddha",
+  "Knowing others is intelligence; knowing yourself is true wisdom. — Lao Tzu",
+  "Nature does not hurry, yet everything is accomplished. — Lao Tzu",
+  "A journey of a thousand miles begins with a single step. — Lao Tzu",
+  "The Tao that can be told is not the eternal Tao. — Lao Tzu",
+  "Be content with what you have; rejoice in the way things are. — Lao Tzu",
+  "Silence is a source of great strength. — Lao Tzu",
+  "When I let go of what I am, I become what I might be. — Lao Tzu",
+  "Mastering others is strength. Mastering yourself is true power. — Lao Tzu",
+  "The best fighter is never angry. — Lao Tzu",
+  "Care about what other people think and you will always be their prisoner. — Lao Tzu",
+  "Do the difficult things while they are easy and do the great things while they are small. — Lao Tzu",
+  "He who conquers others is strong; he who conquers himself is mighty. — Lao Tzu",
+  "If you are depressed you are living in the past. If you are anxious you are living in the future. If you are at peace you are living in the present. — Lao Tzu",
+  "Life is a series of natural and spontaneous changes. Don't resist them; that only creates sorrow. — Lao Tzu",
+  "The sage does not hoard. The more he helps others, the more he benefits himself. — Lao Tzu",
+  "Arise, awake, and stop not till the goal is reached. — Swami Vivekananda",
+  "All the powers in the universe are already ours. It is we who have put our hands before our eyes and cry that it is dark. — Swami Vivekananda",
+  "In a conflict between the heart and the brain, follow your heart. — Swami Vivekananda",
+  "Talk to yourself once in a day, otherwise you may miss meeting an intelligent person in this world. — Swami Vivekananda",
+  "You cannot believe in God until you believe in yourself. — Swami Vivekananda",
+  "The greatest sin is to think yourself weak. — Swami Vivekananda",
+  "Strength is life, weakness is death. — Swami Vivekananda",
+  "Take up one idea. Make that one idea your life. — Swami Vivekananda",
+  "We are what our thoughts have made us; so take care about what you think. — Swami Vivekananda",
+  "All differences in this world are of degree, and not of kind, because oneness is the secret of everything. — Swami Vivekananda",
+  "The world is the great gymnasium where we come to make ourselves strong. — Swami Vivekananda",
+  "Truth can be stated in a thousand different ways, yet each one can be true. — Swami Vivekananda",
+  "Happiness is not found in things you possess, but in what you have the courage to release. — Nathaniel Hawthorne",
+  "Silence is the sleep that nourishes wisdom. — Francis Bacon",
+  "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it. — Rumi",
+  "Your heart knows the way. Run in that direction. — Rumi",
+  "The mind is everything. What you think you become. — Buddha",
+  "To understand everything is to forgive everything. — Buddha",
+  "The only Zen you find on the tops of mountains is the Zen you bring up there. — Robert Pirsig",
+  "Realize deeply that the present moment is all you have. Make the NOW the primary focus of your life. — Eckhart Tolle",
+  "Life will give you whatever experience is most helpful for the evolution of your consciousness. — Eckhart Tolle",
+  "Whatever the present moment contains, accept it as if you had chosen it. — Eckhart Tolle",
+  "The primary cause of unhappiness is never the situation but your thoughts about it. — Eckhart Tolle",
+  "Acknowledging the good that you already have in your life is the foundation for all abundance. — Eckhart Tolle",
+  "The past has no power over the present moment. — Eckhart Tolle",
+  "Give up defining yourself. You won't die. You will come to life. — Eckhart Tolle",
+  "Life isn't as serious as the mind makes it out to be. — Eckhart Tolle",
+  "What a liberation to realize that the voice in my head is not who I am. — Eckhart Tolle",
+  "You find peace not by rearranging the circumstances of your life, but by realizing who you are at the deepest level. — Eckhart Tolle",
+  "Awareness is the greatest agent for change. — Eckhart Tolle",
+  "The beginning of freedom is the realization that you are not the thinker. — Eckhart Tolle",
+  "Feelings come and go like clouds in a windy sky. Conscious breathing is my anchor. — Thich Nhat Hanh",
+  "Because you are alive, everything is possible. — Thich Nhat Hanh",
+  "Walk as if you are kissing the Earth with your feet. — Thich Nhat Hanh",
+  "When another person makes you suffer, it is because he suffers deeply within himself, and his suffering is spilling over. — Thich Nhat Hanh",
+  "To be beautiful means to be yourself. You don't need to be accepted by others. You need to accept yourself. — Thich Nhat Hanh",
+  "Sometimes your joy is the source of your smile, but sometimes your smile can be the source of your joy. — Thich Nhat Hanh",
+  "Many people think excitement is happiness. But when you are excited you are not peaceful. True happiness is based on peace. — Thich Nhat Hanh",
+  "Drink your tea slowly and reverently, as if it is the axis on which the world earth revolves. — Thich Nhat Hanh",
+  "People have a hard time letting go of their suffering. Out of a fear of the unknown, they prefer suffering that is familiar. — Thich Nhat Hanh",
+  "Waking up this morning, I smile. Twenty-four brand new hours are before me. — Thich Nhat Hanh",
+  "The miracle is not to walk on water. The miracle is to walk on the green earth. — Thich Nhat Hanh",
+  "We are here to awaken from our illusion of separateness. — Thich Nhat Hanh",
+  "I would rather have questions that can't be answered than answers that can't be questioned. — Richard Feynman",
+  "The only way to make sense out of change is to plunge into it, move with it, and join the dance. — Alan Watts",
+  "You are a function of what the whole universe is doing in the same way that a wave is a function of what the whole ocean is doing. — Alan Watts",
+  "We do not 'come into' this world; we come out of it, as leaves from a tree. — Alan Watts",
+  "To have faith is to trust yourself to the water. When you swim you don't grab hold of the water, because if you do you will sink and drown. — Alan Watts",
+  "The meaning of life is just to be alive. It is so plain and so obvious and so simple. — Alan Watts",
+  "Trying to define yourself is like trying to bite your own teeth. — Alan Watts",
+  "You are an aperture through which the universe is looking at and exploring itself. — Alan Watts",
+  "The menu is not the meal. — Alan Watts",
+  "No valid plans for the future can be made by those who have no capacity for living now. — Alan Watts",
+  "Problems that remain persistently insoluble should always be suspected as questions asked in the wrong way. — Alan Watts",
+  "Every intelligent person wants to know what makes him tick, and yet is at once fascinated and frustrated by the fact that oneself is the most difficult of all things to know. — Alan Watts",
+  "We seldom realize that our most private thoughts and emotions are not actually our own. — Alan Watts",
+  "I have lived with several Zen masters — all of them cats. — Eckhart Tolle",
+  "We are not human beings having a spiritual experience. We are spiritual beings having a human experience. — Teilhard de Chardin",
+  "Your vision will become clear only when you can look into your own heart. — Jung",
+  "Until you make the unconscious conscious, it will direct your life and you will call it fate. — Jung",
+  "Knowing your own darkness is the best method for dealing with the darknesses of other people. — Jung",
+  "The privilege of a lifetime is to become who you truly are. — Jung",
+  "Everything that irritates us about others can lead us to an understanding of ourselves. — Jung",
+  "The creation of something new is not accomplished by the intellect but by the play instinct. — Jung",
+  "You are not a drop in the ocean. You are the entire ocean in a drop. — Rumi",
+  "Respond to every call that excites your spirit. — Rumi",
+  "Wherever you are, and whatever you do, be in love. — Rumi",
+  "Only from the heart can you touch the sky. — Rumi",
+  "Be like a tree and let the dead leaves drop. — Rumi",
+  "Everything in the universe is within you. Ask all from yourself. — Rumi",
+  "Meditation is not evasion; it is a serene encounter with reality. — Thich Nhat Hanh",
+  "The greatest meditation is a mind that lets go. — Ajahn Chah",
+  "If you want to conquer the anxiety of life, live in the moment, live in the breath. — Amit Ray",
+  "You are awareness, disguised as a person. — Eckhart Tolle",
+  "The soul that is attached to anything however much good there may be in it, will not arrive at the liberty of the divine. — St. John of the Cross",
+  "Be melting snow. Wash yourself of yourself. — Rumi",
+  "Suffering is not holding you. You are holding suffering. — Osho",
+  "Experience life in all possible ways — good-bad, bitter-sweet, dark-light, summer-winter. Experience all the dualities. — Osho",
+  "If you love a flower, don't pick it up. Because if you pick it up it dies. — Osho",
+  "Creativity is the greatest rebellion in existence. — Osho",
+  "Be — don't try to become. — Osho",
+  "The less you are, the more you have. The more you are, the less you have. — Osho",
+  "Life begins where fear ends. — Osho",
+  "Each person comes into this world with a specific destiny. — Osho",
+  "Courage is not the absence of fear. It is rather the total presence of fear with the courage to face it. — Osho",
+  "Don't seek, don't search, don't ask, don't knock, don't demand — relax. — Osho",
+  "Truth is not something outside to be discovered, it is something inside to be realized. — Osho",
+  "Drop the idea of becoming someone, because you are already a masterpiece. — Osho",
+  "A certain darkness is needed to see the stars. — Osho",
+  "Happiness happens when you fit with your life, when you fit so harmoniously that whatsoever you are doing is your joy. — Osho",
+  "The real question is not whether life exists after death. The real question is whether you are alive before death. — Osho",
+  "I live my life based on two principles. One, I live as if today were my last day on earth. Two, I live today as if I am going to live forever. — Gandhi",
+  "Be the change you wish to see in the world. — Gandhi",
+  "An ounce of practice is worth more than tons of preaching. — Gandhi",
+  "In a gentle way, you can shake the world. — Gandhi",
+  "The best way to find yourself is to lose yourself in the service of others. — Gandhi",
+  "Happiness is when what you think, what you say, and what you do are in harmony. — Gandhi",
+  "The self is not something ready-made, but something in continuous formation through choice of action. — John Dewey",
+  "Knowing yourself is the beginning of all wisdom. — Aristotle",
+  "He who has a why to live can bear almost any how. — Nietzsche",
+  "Man suffers only because he takes seriously what the gods made for fun. — Alan Watts",
+  "The things you own end up owning you. — Chuck Palahniuk",
+  "The mind, once stretched by a new idea, never returns to its original dimensions. — Ralph Waldo Emerson",
+  "Nothing ever goes away until it has taught us what we need to know. — Pema Chodron",
+  "The most fundamental aggression to ourselves, the most fundamental harm we can do to ourselves, is to remain ignorant by not having the courage to look at ourselves honestly. — Pema Chodron",
+  "You are the sky. Everything else is just the weather. — Pema Chodron",
+  "If we learn to open our hearts, anyone, including the people who drive us crazy, can be our teacher. — Pema Chodron",
+  "Feel the feelings and drop the story. — Pema Chodron",
+  "To be fully alive, fully human, and completely awake is to be continually thrown out of the nest. — Pema Chodron",
+  "The self is only an idea, a mortal idea. — Buddha",
+  "Meditation is the discovery that the point of life is always arrived at in the immediate moment. — Alan Watts",
+  "We can never obtain peace in the outer world until we make peace with ourselves. — Dalai Lama",
+  "If you think you are too small to make a difference, try sleeping with a mosquito. — Dalai Lama",
+  "Happiness is not something ready made. It comes from your own actions. — Dalai Lama",
+  "My religion is very simple. My religion is kindness. — Dalai Lama",
+  "The purpose of our lives is to be happy. — Dalai Lama",
+  "If a problem can be solved it will be. If it can't be solved there is no use worrying about it. — Dalai Lama",
+  "Choose to be optimistic, it feels better. — Dalai Lama",
+  "The goal is not to be better than the other man, but your previous self. — Dalai Lama",
+  "Do not let the behavior of others destroy your inner peace. — Dalai Lama",
+  "If you want others to be happy, practice compassion. If you want to be happy, practice compassion. — Dalai Lama",
+  "I have realized that the past and future are real illusions, that they exist in the present, which is what there is and all there is. — Alan Watts",
+  "Your calm mind is the ultimate weapon against your challenges. — Bryant McGill",
+  "Within you there is a stillness and a sanctuary to which you can retreat at any time and be yourself. — Hermann Hesse",
+  "The mind is its own place, and in itself can make a heaven of hell, a hell of heaven. — John Milton",
+  "Attention is the rarest and purest form of generosity. — Simone Weil",
+  "The soul becomes dyed with the color of its thoughts. — Marcus Aurelius",
+  "Very little is needed to make a happy life; it is all within yourself, in your way of thinking. — Marcus Aurelius",
+  "How much more grievous are the consequences of anger than the causes of it. — Marcus Aurelius",
+  "The best revenge is to be unlike him who performed the injury. — Marcus Aurelius",
+  "Accept the things to which fate binds you, and love the people with whom fate brings you together. — Marcus Aurelius",
+  "Never esteem anything as of advantage to you that will make you break your word or lose your self-respect. — Marcus Aurelius",
+  "You have power over your mind — not outside events. Realize this, and you will find strength. — Marcus Aurelius",
+  "It is not death that a man should fear, but he should fear never beginning to live. — Marcus Aurelius",
+  "Dwell on the beauty of life. Watch the stars, and see yourself running with them. — Marcus Aurelius",
+  "If it is not right, do not do it; if it is not true, do not say it. — Marcus Aurelius",
+  "The impediment to action advances action. What stands in the way becomes the way. — Marcus Aurelius",
+  "Loss is nothing else but change, and change is Nature's delight. — Marcus Aurelius",
+  "We suffer more in imagination than in reality. — Seneca",
+  "It is not that we have a short time to live, but that we waste a great deal of it. — Seneca",
+  "Luck is what happens when preparation meets opportunity. — Seneca",
+  "True happiness is to enjoy the present, without anxious dependence upon the future. — Seneca",
+  "Difficulties strengthen the mind, as labor does the body. — Seneca",
+  "As is a tale, so is life: not how long it is, but how good it is, is what matters. — Seneca",
+  "He who fears death will never do anything worth of a man who is alive. — Seneca",
+  "No man is free who is not master of himself. — Epictetus",
+  "It's not what happens to you, but how you react to it that matters. — Epictetus",
+  "Man is not worried by real problems so much as by his imagined anxieties about real problems. — Epictetus",
+  "Freedom is the only worthy goal in life. It is won by disregarding things that lie beyond our control. — Epictetus",
+  "Make the best use of what is in your power, and take the rest as it happens. — Epictetus",
+  "There is nothing good or evil save in the will. — Epictetus",
+  "God, grant me the serenity to accept the things I cannot change, courage to change the things I can, and wisdom to know the difference. — Reinhold Niebuhr",
+  "The soul usually knows what to do to heal itself. The challenge is to silence the mind. — Caroline Myss",
+  "If the doors of perception were cleansed everything would appear to man as it is, Infinite. — William Blake",
+  "Not till we are lost do we begin to understand ourselves. — Henry David Thoreau",
+  "Rather than being your thoughts and emotions, be the awareness behind them. — Eckhart Tolle",
+  "I close my eyes in order to see. — Paul Gauguin",
+  "The mind that opens to a new idea never returns to its original size. — Albert Einstein",
+  "We must be willing to let go of the life we planned so as to have the life that is waiting for us. — Joseph Campbell",
+  "People say that what we're all seeking is a meaning for life. I think that what we're seeking is an experience of being alive. — Joseph Campbell",
+  "Follow your bliss and the universe will open doors where there were only walls. — Joseph Campbell",
+  "The cave you fear to enter holds the treasure you seek. — Joseph Campbell",
+  "The big question is whether you are going to be able to say a hearty yes to your adventure. — Joseph Campbell",
+  "The privilege of a lifetime is being who you are. — Joseph Campbell",
+  "Meditation is the tongue of the soul and the language of our spirit. — Jeremy Taylor",
+  "Meditation brings wisdom; lack of meditation leaves ignorance. Know well what leads you forward and what holds you back. — Buddha",
+  "Rule your mind or it will rule you. — Horace",
+  "Still your mind in me, still yourself in me, and without a doubt you shall be united with me. — Bhagavad Gita",
+  "Yoga is the journey of the self, through the self, to the self. — Bhagavad Gita",
+  "You have the right to work, but never to the fruit of the work. — Bhagavad Gita",
+  "Set thy heart upon thy work, but never on its reward. — Bhagavad Gita",
+  "There is neither this world nor the world beyond nor happiness for the one who doubts. — Bhagavad Gita",
+  "A person can rise through the efforts of his own mind. — Bhagavad Gita",
+  "For him who has conquered the mind, the mind is the best of friends; but for one who has failed to do so, his mind will be the greatest enemy. — Bhagavad Gita",
+  "Reshape yourself through the power of your will. — Bhagavad Gita",
+  "It is better to live your own destiny imperfectly than to live an imitation of somebody else's life with perfection. — Bhagavad Gita",
+  "When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place. — Bhagavad Gita",
+  "The self is the friend of the self, and the self is the enemy of the self. — Bhagavad Gita",
+  "That one is dear to me who runs not after the pleasant or away from the painful. — Bhagavad Gita",
+  "The happiness which comes from long practice, which leads to the end of suffering, is like poison at first, but like nectar at the end. — Bhagavad Gita",
+  "Calmness, gentleness, silence, self-restraint, and purity: these are the disciplines of the mind. — Bhagavad Gita",
+  "The mind acts like an enemy for those who do not control it. — Bhagavad Gita",
+  "I am the Self seated in the heart of all creatures. I am the beginning, the middle and the end of all beings. — Bhagavad Gita",
+  "The power of God is with you at all times. — Paramahansa Yogananda",
+  "Be as simple as you can be; you will be astonished to see how uncomplicated and happy your life can become. — Paramahansa Yogananda",
+  "Live quietly in the moment and see the beauty of all before you. The future will take care of itself. — Paramahansa Yogananda",
+  "There is a magnet in your heart that will attract true friends. That magnet is unselfishness, thinking of others first. — Paramahansa Yogananda",
+  "You must not let your life run in the ordinary way; do something that nobody else has done. — Paramahansa Yogananda",
+  "The season of failure is the best time for sowing the seeds of success. — Paramahansa Yogananda",
+  "Remain calm, serene, always in command of yourself. You will then find out how easy it is to get along. — Paramahansa Yogananda",
+  "Happiness depends on what you can give, not on what you can get. — Swami Chinmayananda",
+  "When you are inspired by some great purpose, all your thoughts break their bonds. — Patanjali",
+  "Undisturbed calmness of mind is attained by cultivating friendliness toward the happy, compassion for the unhappy, delight in the virtuous, and indifference toward the wicked. — Patanjali",
+  "The Self in you is the same as the Self Universal. Whatever is Self is Truth. — Sri Aurobindo",
+  "All life is Yoga. — Sri Aurobindo",
+  "Hidden nature is secret God. — Sri Aurobindo",
+  "What we call the future is the Creator's best creation. — Sri Aurobindo",
+  "In each of us, there is a stream of tendencies, desires, and passions. — Sri Aurobindo",
+  "Silence is the first door to spiritual eminence. — Ramana Maharshi",
+  "Your own Self-Realization is the greatest service you can render the world. — Ramana Maharshi",
+  "Happiness is your nature. It is not wrong to desire it. What is wrong is seeking it outside when it is inside. — Ramana Maharshi",
+  "The mind is only a bundle of thoughts. The thoughts arise because there is the thinker. The thinker is the ego. — Ramana Maharshi",
+  "You need not aspire for or get any new state. Get rid of your present thoughts, that is all. — Ramana Maharshi",
+  "The degree of freedom from unwanted thoughts and the degree of concentration on a single thought are the measures to gauge spiritual progress. — Ramana Maharshi",
+  "If you go on working with the light available, you will meet your Master, as he himself will be seeking you. — Ramana Maharshi",
+  "Peace is the inner nature of humankind. If you find it within yourself, you will then find it everywhere. — Ramana Maharshi",
+  "The question 'Who am I?' is the axe with which to cut off the ego. — Ramana Maharshi",
+  "Be still. Stillness reveals itself to itself. — Ramana Maharshi",
+  "God dwells in you, as you, and you don't have to 'do' anything to be God-realized or Self-realized. — Robert Adams",
+  "The whole secret of existence is to have no fear. — Swami Vivekananda",
+  "Meditation is not a way of making your mind quiet. It is a way of entering into the quiet that is already there. — Deepak Chopra",
+  "In the midst of movement and chaos, keep stillness inside of you. — Deepak Chopra",
+  "Every time you are tempted to react in the same old way, ask if you want to be a prisoner of the past or a pioneer of the future. — Deepak Chopra",
+  "The use of love is to heal. When it flows without effort from the depth of the Self, love creates health. — Deepak Chopra",
+  "Do not try to save the whole world or do anything grandiose. Instead, create a clearing in the dense forest of your life. — Martha Postlethwaite",
+  "The most precious gift we can offer anyone is our attention. — Thich Nhat Hanh",
+  "Without great solitude no serious work is possible. — Pablo Picasso",
+  "All man's miseries derive from not being able to sit quietly in a room alone. — Blaise Pascal",
+  "Quiet the mind, and the soul will speak. — Ma Jaya Sati Bhagavati",
+  "The present moment is filled with joy and happiness. If you are attentive, you will see it. — Thich Nhat Hanh",
+  "Don't believe everything you think. — Byron Katie",
+  "A mind that is stretched by a new experience can never go back to its old dimensions. — Oliver Wendell Holmes",
+  "When you are content to be simply yourself and don't compare or compete, everybody will respect you. — Lao Tzu",
+  "In the depth of winter, I finally learned that within me there lay an invincible summer. — Albert Camus",
+  "He who would learn to fly one day must first learn to walk and run and climb and dance; one cannot fly into flying. — Nietzsche",
+  "Not everything that is faced can be changed, but nothing can be changed until it is faced. — James Baldwin",
+  "If you correct your mind, the rest of your life will fall into place. — Lao Tzu",
+  "Your body is precious. It is our vehicle for awakening. Treat it with care. — Buddha",
+  "You can search throughout the entire universe for someone who is more deserving of your love and affection than you are yourself, and that person is not to be found anywhere. — Buddha",
+  "मन के हारे हार है मन के जीते जीत — हिंदी कहावत",
+  "जो होना है सो होना है, जो नहीं होना वो कभी नहीं — कबीर",
+  "बुरा जो देखन मैं चला, बुरा न मिलिया कोय, जो दिल खोजा आपना, मुझसे बुरा न कोय — कबीर",
+  "साईं इतना दीजिए, जा मे कुटुम समाय, मैं भी भूखा न रहूँ, साधु न भूखा जाय — कबीर",
+  "धीरे-धीरे रे मना, धीरे सब कुछ होय, माली सींचे सौ घड़ा, ऋतु आए फल होय — कबीर",
+  "जैसे तिल में तेल है, ज्यों चकमक में आग, तेरा साईं तुझ में है, तू जाग सके तो जाग — कबीर",
+  "पोथी पढ़ि पढ़ि जग मुआ, पंडित भया न कोय, ढाई आखर प्रेम का, पढ़े सो पंडित होय — कबीर",
+  "चलती चक्की देख कर, दिया कबीरा रोय, दो पाटन के बीच में, साबुत बचा न कोय — कबीर",
+  "माटी कहे कुम्हार से, तू क्या रौंदे मोय, एक दिन ऐसा आएगा, मैं रौंदूंगी तोय — कबीर",
+  "दुःख में सुमिरन सब करे, सुख में करे न कोय, जो सुख में सुमिरन करे, दुःख काहे को होय — कबीर",
+  "इक ओंकार सतिनामु — गुरु नानक",
+  "Nanak naam chardi kala, tere bhane sarbat da bhala. — Guru Nanak",
+  "Before becoming a Muslim, a Hindu, a Sikh, or a Christian, let's become a human first. — Guru Nanak",
+  "Burn worldly love, rub the ashes and make ink of it, make the heart the pen, the intellect the writer. — Guru Nanak",
+  "Dwell in peace in the home of your own being, and the Messenger of Death will not be able to touch you. — Guru Nanak",
+  "I am neither male nor female, nor am I sexless. I am the Peaceful One, whose form is self-effulgent, powerful radiance. — Shankaracharya",
+  "Brahma satyam jagan mithya, jivo brahmaiva naparah — The Absolute alone is real, the world is appearance, the individual soul is none other than the Absolute. — Shankaracharya",
+  "Who am I? Not the body, because it is decaying; not the mind, because the brain will decay with the body; not the personality, because it changes every moment. Then who am I? — Shankaracharya",
+  "tat tvam asi — Thou art That. — Chandogya Upanishad",
+  "aham brahmasmi — I am Brahman. — Brihadaranyaka Upanishad",
+  "sarvam khalvidam brahma — All this is truly Brahman. — Chandogya Upanishad",
+  "ayam atma brahma — This Self is Brahman. — Mandukya Upanishad",
+  "prajnanam brahma — Consciousness is Brahman. — Aitareya Upanishad",
+  "From the unreal lead me to the real, from darkness lead me to light, from death lead me to immortality. — Brihadaranyaka Upanishad",
+  "As a man thinketh in his heart, so is he. — Proverbs 23:7",
+  "He who experiences the unity of life sees his own self in all beings. — Buddha",
+  "When the student is ready, the teacher will appear. When the student is truly ready, the teacher will disappear. — Lao Tzu",
+  "Row, row, row your boat, gently down the stream. Merrily, merrily, merrily, merrily, life is but a dream. — Traditional",
+  "Knowing is not enough; we must apply. Willing is not enough; we must do. — Goethe",
+  "Simplicity, patience, compassion — these three are your greatest treasures. — Lao Tzu",
+  "Empty yourself of everything. Let the mind become still. — Lao Tzu",
+  "The snow goose need not bathe to make itself white. Neither need you do anything but be yourself. — Lao Tzu",
+  "Those who flow as life flows know they need no other force. — Lao Tzu",
+  "Act without expectation. — Lao Tzu",
+  "If you realize that all things change, there is nothing you will try to hold on to. — Lao Tzu",
+  "Stop thinking, and end your problems. — Lao Tzu",
+  "At the center of your being you have the answer; you know who you are and you know what you want. — Lao Tzu",
+  "There is no greater wealth than contentment. — Lao Tzu",
+  "The one who plants trees, knowing he will never sit in their shade, has at least started to understand the meaning of life. — Rabindranath Tagore",
+  "Let your life lightly dance on the edges of Time like dew on the tip of a leaf. — Rabindranath Tagore",
+  "Faith is the bird that feels the light and sings when the dawn is still dark. — Rabindranath Tagore",
+  "You can't cross the sea merely by standing and staring at the water. — Rabindranath Tagore",
+  "The butterfly counts not months but moments, and has time enough. — Rabindranath Tagore",
+  "Don't limit a child to your own learning, for he was born in another time. — Rabindranath Tagore",
+  "Depth of friendship does not depend on length of acquaintance. — Rabindranath Tagore",
+  "I slept and dreamt that life was joy. I awoke and saw that life was service. I acted and behold, service was joy. — Rabindranath Tagore",
+  "Die to everything of yesterday so that your mind is always fresh, always young, innocent, full of vigor and passion. — Jiddu Krishnamurti",
+  "It is no measure of health to be well adjusted to a profoundly sick society. — Jiddu Krishnamurti",
+  "The ability to observe without evaluating is the highest form of intelligence. — Jiddu Krishnamurti",
+  "In oneself lies the whole world, and if you know how to look and learn, the door is there and the key is in your hand. — Jiddu Krishnamurti",
+  "Freedom from the desire for an answer is essential to the understanding of a problem. — Jiddu Krishnamurti",
+  "When you call yourself an Indian or a Muslim or a Christian or a European, you are being violent. — Jiddu Krishnamurti",
+  "Truth is a pathless land. — Jiddu Krishnamurti",
+  "The ending of sorrow is the beginning of wisdom. — Jiddu Krishnamurti",
+  "The real voyage of discovery consists not in seeking new landscapes, but in having new eyes. — Marcel Proust",
+  "The only thing I know is that I know nothing. — Socrates",
+  "Education is the kindling of a flame, not the filling of a vessel. — Socrates",
+  "Strong minds discuss ideas, average minds discuss events, weak minds discuss people. — Socrates",
+  "I cannot teach anybody anything. I can only make them think. — Socrates",
+  "Prayer is not asking. It is a longing of the soul. — Gandhi",
+  "Where there is love there is life. — Gandhi",
+  "Strength does not come from physical capacity. It comes from an indomitable will. — Gandhi",
+  "The more you know, the less you need. — Aboriginal Proverb",
+  "We are all visitors to this time, this place. We are just passing through. Our purpose here is to observe, to learn, to grow, to love. — Aboriginal Proverb",
+  "Wisdom is not a product of schooling but of the lifelong attempt to acquire it. — Albert Einstein",
+  "Everything should be made as simple as possible, but not simpler. — Albert Einstein",
+  "Imagination is more important than knowledge. — Albert Einstein",
+  "The true sign of intelligence is not knowledge but imagination. — Albert Einstein",
+  "Man must evolve for all human conflict a method which rejects revenge, aggression, and retaliation. — Martin Luther King Jr.",
+  "Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that. — Martin Luther King Jr.",
+  "Injustice anywhere is a threat to justice everywhere. — Martin Luther King Jr.",
+  "The measure of a man is not where he stands in moments of comfort and convenience, but where he stands at times of challenge and controversy. — Martin Luther King Jr.",
+  "Between stimulus and response there is a space. In that space is our freedom and power to choose our response. — Viktor Frankl",
+  "When we are no longer able to change a situation, we are challenged to change ourselves. — Viktor Frankl",
+  "Everything can be taken from a man but one thing: the last of the human freedoms — to choose one's attitude in any given set of circumstances. — Viktor Frankl",
+  "Those who have a why to live can bear with almost any how. — Viktor Frankl",
+  "Live as if you were to die tomorrow. Learn as if you were to live forever. — Gandhi",
+  "The best time to plant a tree was twenty years ago. The second best time is now. — Chinese Proverb",
+  "Fall seven times and stand up eight. — Japanese Proverb",
+  "A calm sea does not make a skilled sailor. — African Proverb",
+  "He who asks a question is a fool for five minutes; he who does not ask remains a fool forever. — Chinese Proverb",
+  "The frog does not drink up the pond in which it lives. — Native American Proverb",
+  "Sitting quietly, doing nothing, spring comes, and the grass grows by itself. — Matsuo Basho",
+  "Do not seek to follow in the footsteps of the wise; seek what they sought. — Matsuo Basho",
+  "Every day is a journey, and the journey itself is home. — Matsuo Basho",
+  "In the beginner's mind there are many possibilities, but in the expert's mind there are few. — Shunryu Suzuki",
+  "When you do something, you should burn yourself up completely, like a good bonfire, leaving no trace of yourself. — Shunryu Suzuki",
+  "The world is its own magic. — Shunryu Suzuki",
+  "If your mind is empty, it is always ready for anything, it is open to everything. — Shunryu Suzuki",
+  "The most important point is to accept yourself and stand on your two feet. — Shunryu Suzuki",
+  "To live is the rarest thing in the world. Most people exist, that is all. — Oscar Wilde",
+  "Be yourself; everyone else is already taken. — Oscar Wilde",
+  "To live a pure unselfish life, one must count nothing as one's own in the midst of abundance. — Buddha",
+  "Patience is not the ability to wait, but the ability to keep a good attitude while waiting. — Joyce Meyer",
+  "Don't judge each day by the harvest you reap but by the seeds that you plant. — Robert Louis Stevenson",
+  "We cannot direct the wind, but we can adjust the sails. — Dolly Parton",
 ];
 
 function getDailyQuote() {
@@ -1081,9 +1543,9 @@ function getDailyQuote() {
 
 // ═══ HAPTICS ENGINE ═══
 function haptic(ms){try{if(navigator.vibrate)navigator.vibrate(ms);}catch(e){}}
-function hapticTap(){haptic(12);}
-function hapticMedium(){haptic(25);}
-function hapticHeavy(){haptic(40);}
+function hapticTap(){haptic(30);}
+function hapticMedium(){haptic(60);}
+function hapticHeavy(){haptic(100);}
 function hapticPattern(pattern){try{if(navigator.vibrate)navigator.vibrate(pattern);}catch(e){}}
 
 // ═══ SOUND ENGINE ═══
@@ -1233,7 +1695,9 @@ function defaultState() {
     history:[], customPatterns:[], muted:false,
     dailyMinutes:0, dailyDate:null,
     streakFreezeUsed: false,
-    hapticGuidance: false
+    hapticGuidance: false,
+    language: 'en',
+    tutorialSeen: false
   };
 }
 function loadState() {
@@ -1285,7 +1749,7 @@ function shareApp(){
   hapticTap();
   const shareData={title:'AWAKE',text:'Loops break. Presence enters.',url:'https://doston.app'};
   if(navigator.share){navigator.share(shareData).catch(()=>{});}
-  else{navigator.clipboard.writeText('https://doston.app').then(()=>{const b=document.getElementById('shareBtn');b.style.color='var(--accent-glow)';setTimeout(()=>b.style.color='',1500);}).catch(()=>{});}
+  else{navigator.clipboard.writeText('https://doston.app').then(()=>{const b=document.getElementById('shareBtn');if(b){b.style.color='var(--accent-glow)';setTimeout(()=>b.style.color='',1500);}}).catch(()=>{});}
 }
 
 // ═══ FIRST VISIT & SOUND HINT ═══
@@ -1343,7 +1807,7 @@ function importData(input) {
 let wakeLock = null;
 async function requestWakeLock() { try { if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } } catch(e) {} }
 function releaseWakeLock() { if (wakeLock) { wakeLock.release().catch(()=>{}); wakeLock = null; } }
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && (sitState.running || breathState.running || focusState.running)) requestWakeLock(); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && (sitState.running || breathState.running || focusState.running || (typeof mantraState!=='undefined' && mantraState.running))) requestWakeLock(); });
 
 // ═══ UI ═══
 function updateAllUI() {
@@ -1359,8 +1823,8 @@ function updateAllUI() {
 function renderHistory() {
   const c = document.getElementById('journeyHistory');
   if (!state.history.length) { c.innerHTML='<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:14px;">No sessions yet.</div>'; return; }
-  const icons = {snap:'⚡',breath:'🌊',sit:'🧘',focus:'🎧'};
-  const colors = {snap:'rgba(240,160,96,0.12)',breath:'rgba(96,208,192,0.12)',sit:'rgba(192,144,240,0.12)',focus:'rgba(108,160,240,0.12)'};
+  const icons = {snap:'⚡',breath:'🌊',sit:'🧘',focus:'🎧',mantra:'🕉️'};
+  const colors = {snap:'rgba(240,160,96,0.12)',breath:'rgba(96,208,192,0.12)',sit:'rgba(192,144,240,0.12)',focus:'rgba(108,160,240,0.12)',mantra:'rgba(255,180,60,0.12)'};
   c.innerHTML = state.history.slice(0,20).map(h => {
     const d = new Date(h.date);
     const wanderInfo = h.wanders !== undefined ? `<div class="history-wanders">${h.wanders} wander${h.wanders!==1?'s':''}</div>` : '';
@@ -1457,7 +1921,7 @@ function closeSnap() {
   snapRunning=false; clearTimeout(snapTimer);
   document.getElementById('snapOverlay').classList.remove('active');
   document.getElementById('snapOverlay').style.backgroundColor = '';
-  canvasIntensity=0.15;
+  canvasIntensity=0.45;
   if(snapStep>=snapSteps.length-1){addMinutes(1,'snap','Snap Present');playBowl(440,3);}
   releaseWakeLock();
 }
@@ -1550,7 +2014,7 @@ function logWander() {
   setTimeout(() => { label.textContent="I'm Back"; sub.textContent='tap when you notice'; }, 1500);
 }
 function completeSit() {
-  sitState.running=false; clearTimeout(sitState.timer); canvasIntensity = 0.15;
+  sitState.running=false; clearTimeout(sitState.timer); canvasIntensity = 0.45;
   if(sitState.intervalTimer){clearInterval(sitState.intervalTimer);sitState.intervalTimer=null;}
   stopAmbientSound();
   const mins=Math.round((sitState.elapsed/60)*10)/10, actualMins=Math.min(mins,sitState.duration);
@@ -1597,7 +2061,7 @@ function closeSit(){
   sitState.running=false;clearTimeout(sitState.timer);
   if(sitState.intervalTimer){clearInterval(sitState.intervalTimer);sitState.intervalTimer=null;}
   stopAmbientSound();
-  releaseWakeLock();canvasIntensity=0.15;
+  releaseWakeLock();canvasIntensity=0.45;
 }
 
 // ═══ BREATHWORK ═══
@@ -1871,7 +2335,7 @@ function finishWimSession() {
   const pat = BREATH_PATTERNS[wimState.patternKey];
   const mins = Math.round((Date.now() - breathState.startTime) / 60000 * 10) / 10;
   breathState.running = false;
-  canvasIntensity = 0.15;
+  canvasIntensity = 0.45;
   playBowl(440, 3);
   if (mins > 0.25) {
     const extra = wimState.retentionTimes.length ? { retentionTimes: wimState.retentionTimes } : {};
@@ -1919,7 +2383,7 @@ function stopBreath(){
     document.getElementById('breathContainer').querySelector('.breath-orb-wrap').style.display = '';
     document.getElementById('breathControls').style.display = '';
   }
-  breathState.running=false;clearTimeout(breathState.timer);canvasIntensity=0.15;
+  breathState.running=false;clearTimeout(breathState.timer);canvasIntensity=0.45;
   document.getElementById('breathOrb').className='breath-orb';
   document.getElementById('breathOrb').style.background='';
   document.getElementById('breathOrb').style.boxShadow='';
@@ -1956,7 +2420,7 @@ function runBreathPhase(){
   phaseEl.textContent=phase.p;phaseEl.style.color=phaseColor;
   document.getElementById('breathCycle').textContent=`Cycle ${breathState.cycle+1} of ${pat.cycles}`;
   breathState.count=phase.t;document.getElementById('breathTimer').textContent=breathState.count;
-  playTick();if(state.hapticGuidance){const phase=pat.phases[breathState.phase];const pL=phase.p.toLowerCase();if(pL.includes('inhale')||pL==='in')hapticPattern([30,50,30,50,30]);else if(pL.includes('exhale')||pL.includes('out'))hapticPattern([50,30,50]);else if(pL.includes('hold'))haptic(80);}else{haptic(15);}breathCountdown();
+  playTick();if(state.hapticGuidance){const phase=pat.phases[breathState.phase];const pL=phase.p.toLowerCase();if(pL.includes('inhale')||pL==='in')hapticPattern([80,60,80,60,80]);else if(pL.includes('exhale')||pL.includes('out'))hapticPattern([100,50,100]);else if(pL.includes('hold'))haptic(200);}else{haptic(15);}breathCountdown();
 }
 function breathCountdown(){if(!breathState.running)return;if(breathState.count<=0){nextBreathPhase();return;}document.getElementById('breathTimer').textContent=breathState.count;breathState.timer=setTimeout(()=>{breathState.count--;breathCountdown();},1000);}
 function nextBreathPhase(){const pat=BREATH_PATTERNS[breathState.pattern];breathState.phase++;if(breathState.phase>=pat.phases.length){breathState.phase=0;breathState.cycle++;if(breathState.cycle>=pat.cycles){stopBreath();closeBreathe();return;}}runBreathPhase();}
@@ -2101,7 +2565,7 @@ function stopFocusSession() {
     if (guideEl) { guideEl.style.display = 'none'; guideEl.textContent = ''; }
   }
   clearTimeout(focusState.timer);
-  canvasIntensity = 0.15;
+  canvasIntensity = 0.45;
 
   if (focusState.nodes) {
     try {
@@ -2467,91 +2931,127 @@ function renderMilestones() {
 
 // ═══ SACRED GEOMETRY CANVAS ═══
 const canvas = document.getElementById('bgCanvas'), bctx = canvas.getContext('2d');
-let canvasIntensity = 0.15;
+let canvasIntensity = 0.45;
 let geoTime = 0;
 
 function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 resizeCanvas(); window.addEventListener('resize', resizeCanvas);
 
+function hslToRgb(h,s,l){let r,g,b;if(s===0){r=g=b=l;}else{const hue2rgb=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;};const q=l<0.5?l*(1+s):l+s-l*s;const p=2*l-q;r=hue2rgb(p,q,h+1/3);g=hue2rgb(p,q,h);b=hue2rgb(p,q,h-1/3);}return[Math.round(r*255),Math.round(g*255),Math.round(b*255)];}
+
 function drawSacredGeometry() {
   const w = canvas.width, h = canvas.height;
-  const driftX = Math.sin(geoTime * 0.12) * w * 0.03 + Math.sin(geoTime * 0.07) * w * 0.015;
-  const driftY = Math.cos(geoTime * 0.09) * h * 0.025 + Math.cos(geoTime * 0.13) * h * 0.012;
+  const driftX = Math.sin(geoTime * 0.08) * w * 0.03 + Math.sin(geoTime * 0.05) * w * 0.015;
+  const driftY = Math.cos(geoTime * 0.06) * h * 0.025 + Math.cos(geoTime * 0.09) * h * 0.012;
   const cx = w / 2 + driftX, cy = h / 2 + driftY;
   const baseR = Math.min(w, h) * 0.3;
   const t = geoTime;
   const intensity = canvasIntensity;
 
+  // Breathing scale pulse (~8s cycle)
+  const breathScale = 1 + Math.sin(t * 0.785) * 0.04;
+
   bctx.clearRect(0, 0, w, h);
   bctx.globalAlpha = 1;
 
-  const pulse = 1 + Math.sin(t * 0.8) * 0.06 * intensity + Math.sin(t * 0.3) * 0.03;
-  const slowBreath = Math.sin(t * 0.25) * 0.5 + 0.5;
+  const pulse = breathScale * (1 + Math.sin(t * 0.5) * 0.06 * intensity + Math.sin(t * 0.2) * 0.03);
+  const slowBreath = Math.sin(t * 0.18) * 0.5 + 0.5;
+
+  // Color shifting: slowly cycle hue
+  const hueShift = (t * 0.008) % 1; // very slow full cycle
+  const baseHue = 0.72 + Math.sin(t * 0.02) * 0.08; // oscillate around purple/blue
+  const [cr, cg, cb] = hslToRgb((baseHue + hueShift * 0.1) % 1, 0.7, 0.65);
+  const [cr2, cg2, cb2] = hslToRgb((baseHue + hueShift * 0.1 + 0.05) % 1, 0.6, 0.72);
 
   const petalCount = 6;
-  const layers = 3;
-  const baseAlpha = 0.04 + intensity * 0.12;
+  const layers = 5;
+  const baseAlpha = 0.06 + intensity * 0.18;
 
-  const ambGrad = bctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 1.2);
-  ambGrad.addColorStop(0, `rgba(124,108,240,${0.03 + intensity * 0.06})`);
-  ambGrad.addColorStop(0.5, `rgba(124,108,240,${0.01 + intensity * 0.02})`);
-  ambGrad.addColorStop(1, 'rgba(124,108,240,0)');
+  const ambGrad = bctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 1.4);
+  ambGrad.addColorStop(0, `rgba(${cr},${cg},${cb},${0.06 + intensity * 0.1})`);
+  ambGrad.addColorStop(0.5, `rgba(${cr},${cg},${cb},${0.03 + intensity * 0.05})`);
+  ambGrad.addColorStop(1, `rgba(${cr},${cg},${cb},0)`);
   bctx.fillStyle = ambGrad;
-  bctx.beginPath(); bctx.arc(cx, cy, baseR * 1.2, 0, Math.PI * 2); bctx.fill();
+  bctx.beginPath(); bctx.arc(cx, cy, baseR * 1.4, 0, Math.PI * 2); bctx.fill();
 
-  bctx.strokeStyle = `rgba(124,108,240,${baseAlpha * 1.2})`;
-  bctx.lineWidth = 0.8;
+  bctx.strokeStyle = `rgba(${cr},${cg},${cb},${baseAlpha * 1.4})`;
+  bctx.lineWidth = 1.2;
   const centralR = baseR * 0.33 * pulse;
   bctx.beginPath(); bctx.arc(cx, cy, centralR, 0, Math.PI * 2); bctx.stroke();
 
+  // Primary rotating layers
   for (let layer = 1; layer <= layers; layer++) {
-    const layerR = baseR * 0.33 * layer * pulse;
-    const rotation = t * 0.15 * (layer % 2 === 0 ? 1 : -1);
-    const layerAlpha = baseAlpha * (1 - (layer - 1) * 0.2);
-    const layerPulse = 1 + Math.sin(t * 0.6 + layer * 1.2) * 0.04;
+    const layerR = baseR * 0.28 * layer * pulse;
+    const rotation = t * 0.06 * (layer % 2 === 0 ? 1 : -1);
+    const layerAlpha = baseAlpha * (1 - (layer - 1) * 0.12);
+    const layerPulse = 1 + Math.sin(t * 0.4 + layer * 1.2) * 0.04;
+    const lHue = (baseHue + layer * 0.02 + hueShift * 0.1) % 1;
+    const [lr, lg, lb] = hslToRgb(lHue, 0.65, 0.65);
 
     const circlesInLayer = petalCount * layer;
     for (let i = 0; i < circlesInLayer; i++) {
       const angle = (i / circlesInLayer) * Math.PI * 2 + rotation;
-      const individualDrift = Math.sin(t * 0.4 + i * 0.7) * 3;
+      const individualDrift = Math.sin(t * 0.3 + i * 0.7) * 3;
       const px = cx + Math.cos(angle) * (layerR + individualDrift);
       const py = cy + Math.sin(angle) * (layerR + individualDrift);
-      const petalR = centralR * (0.9 - layer * 0.1) * layerPulse;
-      const flicker = layerAlpha + Math.sin(t * 1.5 + i * 2.1) * 0.02;
+      const petalR = centralR * (0.9 - layer * 0.08) * layerPulse;
+      const flicker = layerAlpha + Math.sin(t * 1.0 + i * 2.1) * 0.02;
 
-      bctx.strokeStyle = `rgba(124,108,240,${Math.max(0, flicker)})`;
-      bctx.lineWidth = 0.6;
+      bctx.strokeStyle = `rgba(${lr},${lg},${lb},${Math.max(0, flicker)})`;
+      bctx.lineWidth = 0.9;
       bctx.beginPath(); bctx.arc(px, py, petalR, 0, Math.PI * 2); bctx.stroke();
     }
 
-    bctx.strokeStyle = `rgba(124,108,240,${layerAlpha * 0.6})`;
-    bctx.lineWidth = 0.4;
+    bctx.strokeStyle = `rgba(${lr},${lg},${lb},${layerAlpha * 0.8})`;
+    bctx.lineWidth = 0.6;
     bctx.beginPath(); bctx.arc(cx, cy, layerR, 0, Math.PI * 2); bctx.stroke();
   }
 
-  const seedCount = 12;
+  // Counter-rotating second layer set (ghost layer)
+  for (let layer = 1; layer <= 3; layer++) {
+    const layerR = baseR * 0.35 * layer * pulse;
+    const rotation = -t * 0.04 + Math.PI * 0.25;
+    const layerAlpha = baseAlpha * 0.5 * (1 - (layer - 1) * 0.15);
+    const lHue2 = (baseHue + 0.15 + hueShift * 0.1) % 1;
+    const [g2r, g2g, g2b] = hslToRgb(lHue2, 0.5, 0.7);
+
+    const circlesInLayer = petalCount * layer;
+    for (let i = 0; i < circlesInLayer; i++) {
+      const angle = (i / circlesInLayer) * Math.PI * 2 + rotation;
+      const px = cx + Math.cos(angle) * layerR;
+      const py = cy + Math.sin(angle) * layerR;
+      const petalR = centralR * (0.7 - layer * 0.1);
+      const flicker = layerAlpha + Math.sin(t * 0.8 + i * 1.8) * 0.01;
+
+      bctx.strokeStyle = `rgba(${g2r},${g2g},${g2b},${Math.max(0, flicker)})`;
+      bctx.lineWidth = 0.4;
+      bctx.beginPath(); bctx.arc(px, py, petalR, 0, Math.PI * 2); bctx.stroke();
+    }
+  }
+
+  const seedCount = 18;
   const seedR = baseR * 1.1 * pulse;
-  const seedRotation = t * 0.05;
+  const seedRotation = t * 0.03;
   for (let i = 0; i < seedCount; i++) {
     const angle = (i / seedCount) * Math.PI * 2 + seedRotation;
-    const wobble = Math.sin(t * 0.3 + i * 1.5) * 6;
+    const wobble = Math.sin(t * 0.2 + i * 1.5) * 6;
     const px = cx + Math.cos(angle) * (seedR + wobble);
     const py = cy + Math.sin(angle) * (seedR + wobble);
     const r = baseR * 0.08;
-    const alpha = 0.02 + intensity * 0.06 + Math.sin(t * 1.2 + i) * 0.02;
-    bctx.strokeStyle = `rgba(156,140,248,${alpha})`;
+    const alpha = 0.02 + intensity * 0.06 + Math.sin(t * 0.8 + i) * 0.02;
+    bctx.strokeStyle = `rgba(${cr2},${cg2},${cb2},${alpha})`;
     bctx.lineWidth = 0.5;
     bctx.beginPath(); bctx.arc(px, py, r, 0, Math.PI * 2); bctx.stroke();
   }
 
-  const lineCount = 6;
-  const lineRotation = t * 0.08;
+  const lineCount = 8;
+  const lineRotation = t * 0.04;
   for (let i = 0; i < lineCount; i++) {
     const angle = (i / lineCount) * Math.PI + lineRotation;
-    const lenBreath = 1 + Math.sin(t * 0.5 + i * 0.8) * 0.1;
+    const lenBreath = 1 + Math.sin(t * 0.3 + i * 0.8) * 0.1;
     const len = baseR * 1.3 * pulse * lenBreath;
     const alpha = 0.015 + intensity * 0.04;
-    bctx.strokeStyle = `rgba(124,108,240,${alpha})`;
+    bctx.strokeStyle = `rgba(${cr},${cg},${cb},${alpha})`;
     bctx.lineWidth = 0.3;
     bctx.beginPath();
     bctx.moveTo(cx + Math.cos(angle) * 10, cy + Math.sin(angle) * 10);
@@ -2561,26 +3061,26 @@ function drawSacredGeometry() {
     bctx.stroke();
   }
 
-  const glowAlpha = 0.1 + intensity * 0.25 + Math.sin(t * 1.5) * 0.05 + slowBreath * 0.04;
-  const glowR = baseR * (0.15 + slowBreath * 0.03);
+  const glowAlpha = 0.15 + intensity * 0.35 + Math.sin(t * 1.0) * 0.06 + slowBreath * 0.06;
+  const glowR = baseR * (0.2 + slowBreath * 0.05);
   const grad = bctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
-  grad.addColorStop(0, `rgba(180,160,255,${glowAlpha * 1.2})`);
-  grad.addColorStop(0.5, `rgba(140,120,248,${glowAlpha * 0.5})`);
-  grad.addColorStop(1, 'rgba(124,108,240,0)');
+  grad.addColorStop(0, `rgba(${cr2},${cg2},${cb2},${glowAlpha * 1.2})`);
+  grad.addColorStop(0.5, `rgba(${cr},${cg},${cb},${glowAlpha * 0.5})`);
+  grad.addColorStop(1, `rgba(${cr},${cg},${cb},0)`);
   bctx.fillStyle = grad;
   bctx.beginPath(); bctx.arc(cx, cy, glowR, 0, Math.PI * 2); bctx.fill();
 
-  for (let i = 0; i < 8; i++) {
-    const pAngle = t * 0.2 + i * (Math.PI * 2 / 8);
-    const pDist = baseR * (0.5 + Math.sin(t * 0.15 + i * 3) * 0.4);
+  for (let i = 0; i < 12; i++) {
+    const pAngle = t * 0.12 + i * (Math.PI * 2 / 12);
+    const pDist = baseR * (0.5 + Math.sin(t * 0.1 + i * 3) * 0.4);
     const px = cx + Math.cos(pAngle) * pDist;
     const py = cy + Math.sin(pAngle) * pDist;
-    const pAlpha = (0.08 + intensity * 0.15) * (0.5 + Math.sin(t * 2 + i * 1.7) * 0.5);
-    bctx.fillStyle = `rgba(180,160,255,${pAlpha})`;
-    bctx.beginPath(); bctx.arc(px, py, 1.5, 0, Math.PI * 2); bctx.fill();
+    const pAlpha = (0.12 + intensity * 0.22) * (0.5 + Math.sin(t * 1.5 + i * 1.7) * 0.5);
+    bctx.fillStyle = `rgba(${cr2},${cg2},${cb2},${pAlpha})`;
+    bctx.beginPath(); bctx.arc(px, py, 2, 0, Math.PI * 2); bctx.fill();
   }
 
-  geoTime += 0.016;
+  geoTime += 0.012;
   requestAnimationFrame(drawSacredGeometry);
 }
 drawSacredGeometry();
@@ -2685,11 +3185,10 @@ function startBodyScan() {
   document.getElementById('nidraElapsed').textContent = '0:00';
   canvasIntensity = 0.3;
 
-  // Start Theta binaural bed (6Hz)
+  // Start Theta tone bed (6Hz beat) — mono so it works on speakers
   try {
     const ctx = getAudio();
     const oL = ctx.createOscillator(), oR = ctx.createOscillator();
-    const merger = ctx.createChannelMerger(2);
     const gainL = ctx.createGain(), gainR = ctx.createGain();
     const masterGain = ctx.createGain();
     oL.type = 'sine'; oR.type = 'sine';
@@ -2698,24 +3197,23 @@ function startBodyScan() {
     gainR.gain.setValueAtTime(0, ctx.currentTime);
     gainL.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 15);
     gainR.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 15);
-    oL.connect(gainL); gainL.connect(merger, 0, 0);
-    oR.connect(gainR); gainR.connect(merger, 0, 1);
+    // Mono output: both tones to both channels (creates audible 6Hz amplitude modulation on any speaker)
+    oL.connect(gainL); gainL.connect(masterGain);
+    oR.connect(gainR); gainR.connect(masterGain);
     masterGain.gain.value = 0.5;
-    merger.connect(masterGain); masterGain.connect(ctx.destination);
+    masterGain.connect(ctx.destination);
     oL.start(); oR.start();
 
-    // Pink noise bed
+    // Pink noise bed (mono)
     const bufferSize = 2 * ctx.sampleRate;
-    const noiseBuffer = ctx.createBuffer(2, bufferSize, ctx.sampleRate);
-    for (let ch = 0; ch < 2; ch++) {
-      const data = noiseBuffer.getChannelData(ch);
-      let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
-      for (let i = 0; i < bufferSize; i++) {
-        const w = Math.random()*2-1;
-        b0=0.99886*b0+w*0.0555179;b1=0.99332*b1+w*0.0750759;b2=0.96900*b2+w*0.1538520;
-        b3=0.86650*b3+w*0.3104856;b4=0.55000*b4+w*0.5329522;b5=-0.7616*b5-w*0.0168980;
-        data[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.08;b6=w*0.115926;
-      }
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = noiseBuffer.getChannelData(0);
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+    for (let i = 0; i < bufferSize; i++) {
+      const w = Math.random()*2-1;
+      b0=0.99886*b0+w*0.0555179;b1=0.99332*b1+w*0.0750759;b2=0.96900*b2+w*0.1538520;
+      b3=0.86650*b3+w*0.3104856;b4=0.55000*b4+w*0.5329522;b5=-0.7616*b5-w*0.0168980;
+      data[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.08;b6=w*0.115926;
     }
     const noiseSrc = ctx.createBufferSource();
     noiseSrc.buffer = noiseBuffer; noiseSrc.loop = true;
@@ -2724,7 +3222,7 @@ function startBodyScan() {
     noiseGain.gain.linearRampToValueAtTime(0.015, ctx.currentTime + 15);
     noiseSrc.connect(noiseGain); noiseGain.connect(masterGain);
     noiseSrc.start();
-    nidraState.nodes = { oL, oR, gainL, gainR, merger, masterGain, noiseSrc, noiseGain };
+    nidraState.nodes = { oL, oR, gainL, gainR, merger:null, masterGain, noiseSrc, noiseGain };
   } catch(e) {}
 
   // Schedule prompts (scale timing to duration)
@@ -2788,7 +3286,7 @@ function stopBodyScan() {
   clearTimeout(nidraState.timer);
   nidraState.promptTimers.forEach(t => clearTimeout(t));
   nidraState.promptTimers = [];
-  canvasIntensity = 0.15;
+  canvasIntensity = 0.45;
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   const scanText = document.getElementById('nidraScanText');
   if (scanText) { scanText.classList.remove('visible'); scanText.textContent = ''; }
@@ -2814,11 +3312,364 @@ function stopBodyScan() {
   document.getElementById('nidraPicker').style.display = 'block';
 }
 
+// ═══ INTERNATIONALIZATION ═══
+const I18N = {
+  en: {
+    subtitle: 'Loops break. Presence enters.',
+    add_home: 'Add to Home Screen',
+    snap_present: 'SNAP PRESENT',
+    practice: 'Practice',
+    just_sit: 'Just Sit', just_sit_desc: 'Track the mind wanders',
+    breathwork: 'Breathwork', breathwork_desc: 'Guided breathing — presets or build your own',
+    focus_states: 'Focus States', focus_states_desc: 'Binaural beats for deep states',
+    yoga_nidra: 'Yoga Nidra', yoga_nidra_desc: 'Body scan — rotation of consciousness',
+    mantra_title: 'Mantra', mantra_desc: 'Chant with tanpura drone',
+    mantra_heading: 'Mantra Meditation', mantra_sub: 'Chant along with tanpura drone',
+    insights: 'Insights', insights_desc: 'Your practice at a glance',
+    recent: 'Recent Sessions',
+    day_streak: 'Day Streak', sessions: 'Sessions', total_min: 'Total Min',
+    settings: 'Settings', preferences: 'Preferences', data: 'Data',
+    haptic_guidance: 'Haptic Guidance', haptic_desc: 'Vibrations during breathwork & guided sessions',
+    export_data: 'Export Data', import_data: 'Import Data',
+    how_to_use: 'How to Use', reset: 'Reset All Progress',
+    all: 'All',
+  },
+  hi: {
+    subtitle: 'चक्र टूटें। उपस्थिति आए।',
+    add_home: 'होम स्क्रीन पर जोड़ें',
+    snap_present: 'वर्तमान में आओ',
+    practice: 'अभ्यास',
+    just_sit: 'बस बैठो', just_sit_desc: 'मन की भटकन पर नज़र रखें',
+    breathwork: 'प्राणायाम', breathwork_desc: 'श्वास अभ्यास — तैयार या अपना बनाएं',
+    focus_states: 'ध्यान अवस्थाएं', focus_states_desc: 'गहरी अवस्थाओं के लिए बाइनॉरल बीट्स',
+    yoga_nidra: 'योग निद्रा', yoga_nidra_desc: 'शरीर स्कैन — चेतना का घूर्णन',
+    mantra_title: 'मंत्र', mantra_desc: 'तानपुरा ध्वनि के साथ जप करें',
+    mantra_heading: 'मंत्र ध्यान', mantra_sub: 'तानपुरा ध्वनि के साथ जप करें',
+    insights: 'अंतर्दृष्टि', insights_desc: 'आपके अभ्यास की झलक',
+    recent: 'हाल के सत्र',
+    day_streak: 'दिन लगातार', sessions: 'सत्र', total_min: 'कुल मिनट',
+    settings: 'सेटिंग्स', preferences: 'प्राथमिकताएं', data: 'डेटा',
+    haptic_guidance: 'स्पर्श मार्गदर्शन', haptic_desc: 'श्वास अभ्यास के दौरान कंपन',
+    export_data: 'डेटा निर्यात', import_data: 'डेटा आयात',
+    how_to_use: 'उपयोग कैसे करें', reset: 'सभी प्रगति रीसेट करें',
+    all: 'सभी',
+  },
+  gu: {
+    subtitle: 'ચક્ર તૂટે. હાજરી આવે.',
+    add_home: 'હોમ સ્ક્રીન પર ઉમેરો',
+    snap_present: 'હાજર થાઓ',
+    practice: 'અભ્યાસ',
+    just_sit: 'બસ બેસો', just_sit_desc: 'મનની ભટકણ પર નજર રાખો',
+    breathwork: 'પ્રાણાયામ', breathwork_desc: 'શ્વાસ અભ્યાસ — તૈયાર અથવા તમારું બનાવો',
+    focus_states: 'ધ્યાન અવસ્થાઓ', focus_states_desc: 'ઊંડી અવસ્થાઓ માટે બાઇનોરલ બીટ્સ',
+    yoga_nidra: 'યોગ નિદ્રા', yoga_nidra_desc: 'શરીર સ્કેન — ચેતનાનું પરિભ્રમણ',
+    mantra_title: 'મંત્ર', mantra_desc: 'તાનપુરા ધ્વનિ સાથે જાપ કરો',
+    mantra_heading: 'મંત્ર ધ્યાન', mantra_sub: 'તાનપુરા ધ્વનિ સાથે જાપ કરો',
+    insights: 'અંતર્દૃષ્ટિ', insights_desc: 'તમારા અભ્યાસની ઝલક',
+    recent: 'તાજેતરના સત્રો',
+    day_streak: 'દિવસ સતત', sessions: 'સત્રો', total_min: 'કુલ મિનિટ',
+    settings: 'સેટિંગ્સ', preferences: 'પસંદગીઓ', data: 'ડેટા',
+    haptic_guidance: 'સ્પર્શ માર્ગદર્શન', haptic_desc: 'શ્વાસ અભ્યાસ દરમિયાન કંપન',
+    export_data: 'ડેટા નિકાસ', import_data: 'ડેટા આયાત',
+    how_to_use: 'ઉપયોગ કેવી રીતે કરવો', reset: 'બધી પ્રગતિ રીસેટ કરો',
+    all: 'બધા',
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang, btn) {
+  hapticTap();
+  currentLang = lang;
+  state.language = lang;
+  saveState();
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  applyTranslations();
+}
+
+function applyTranslations() {
+  const t = I18N[currentLang] || I18N.en;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+  const sub = document.querySelector('.screen-subtitle');
+  if (sub) sub.textContent = t.subtitle;
+  const snap = document.querySelector('.snap-text');
+  if (snap) snap.textContent = t.snap_present;
+}
+
+// ═══ MANTRA MEDITATION ═══
+const MANTRAS = [
+  { id:'om', name:'Om', hindi:'ॐ', cat:'mantra', text:'ॐ', translit:'Oṃ', meaning:'The primordial sound of the universe' },
+  { id:'gayatri', name:'Gayatri Mantra', hindi:'गायत्री मंत्र', cat:'mantra',
+    text:'ॐ भूर्भुवः स्वः\nतत्सवितुर्वरेण्यं\nभर्गो देवस्य धीमहि\nधियो यो नः प्रचोदयात्',
+    translit:'Om Bhūr Bhuvaḥ Svaḥ\nTat Savitur Vareṇyaṃ\nBhargo Devasya Dhīmahi\nDhiyo Yo Naḥ Prachodayāt',
+    meaning:'We meditate on the glory of the Creator who has created the Universe, who is fit to be worshipped, who is the embodiment of Knowledge and Light, who removes all sins and ignorance. May He enlighten our intellect.' },
+  { id:'mahamantra', name:'Hare Krishna Mahamantra', hindi:'हरे कृष्ण महामंत्र', cat:'mantra',
+    text:'हरे कृष्ण हरे कृष्ण\nकृष्ण कृष्ण हरे हरे\nहरे राम हरे राम\nराम राम हरे हरे',
+    translit:'Hare Kṛṣṇa Hare Kṛṣṇa\nKṛṣṇa Kṛṣṇa Hare Hare\nHare Rāma Hare Rāma\nRāma Rāma Hare Hare',
+    meaning:'O Lord Krishna, O Lord Rama, please engage me in your devotional service' },
+  { id:'shiva', name:'Om Namah Shivaya', hindi:'ॐ नमः शिवाय', cat:'mantra',
+    text:'ॐ नमः शिवाय', translit:'Oṃ Namaḥ Śivāya', meaning:'I bow to Lord Shiva, the auspicious one' },
+  { id:'ganesh', name:'Ganesh Mantra', hindi:'गणेश मंत्र', cat:'mantra',
+    text:'ॐ गं गणपतये नमः', translit:'Oṃ Gaṃ Gaṇapataye Namaḥ', meaning:'Salutations to Lord Ganesha, remover of obstacles' },
+  { id:'mrityunjaya', name:'Maha Mrityunjaya', hindi:'महामृत्युंजय मंत्र', cat:'mantra',
+    text:'ॐ त्र्यम्बकं यजामहे\nसुगन्धिं पुष्टिवर्धनम्\nउर्वारुकमिव बन्धनान्\nमृत्योर्मुक्षीय माऽमृतात्',
+    translit:'Oṃ Tryambakaṃ Yajāmahe\nSugandhiṃ Puṣṭi-vardhanam\nUrvārukam iva Bandhanān\nMṛtyor Mukṣīya Māmṛtāt',
+    meaning:'We worship the three-eyed Lord Shiva who nourishes all. May He liberate us from death for the sake of immortality.' },
+  { id:'lakshmi', name:'Lakshmi Mantra', hindi:'लक्ष्मी मंत्र', cat:'mantra',
+    text:'ॐ श्रीं महालक्ष्म्यै नमः', translit:'Oṃ Śrīṃ Mahālakṣmyai Namaḥ', meaning:'Salutations to Goddess Lakshmi, bestower of wealth and prosperity' },
+  { id:'saraswati', name:'Saraswati Mantra', hindi:'सरस्वती मंत्र', cat:'mantra',
+    text:'ॐ ऐं सरस्वत्यै नमः', translit:'Oṃ Aiṃ Sarasvatyai Namaḥ', meaning:'Salutations to Goddess Saraswati, bestower of knowledge' },
+  { id:'durga', name:'Durga Mantra', hindi:'दुर्गा मंत्र', cat:'mantra',
+    text:'ॐ दुं दुर्गायै नमः', translit:'Oṃ Duṃ Durgāyai Namaḥ', meaning:'Salutations to Goddess Durga, the invincible one' },
+  { id:'hanuman', name:'Hanuman Mantra', hindi:'हनुमान मंत्र', cat:'mantra',
+    text:'ॐ हं हनुमते नमः', translit:'Oṃ Haṃ Hanumate Namaḥ', meaning:'Salutations to Lord Hanuman' },
+  { id:'vishnu', name:'Vishnu Mantra', hindi:'विष्णु मंत्र', cat:'mantra',
+    text:'ॐ नमो भगवते वासुदेवाय', translit:'Oṃ Namo Bhagavate Vāsudevāya', meaning:'I bow to Lord Vasudeva (Krishna/Vishnu)' },
+  { id:'peace', name:'Shanti Mantra', hindi:'शांति मंत्र', cat:'mantra',
+    text:'ॐ सर्वे भवन्तु सुखिनः\nसर्वे सन्तु निरामयाः\nसर्वे भद्राणि पश्यन्तु\nमा कश्चिद्दुःखभाग्भवेत्\nॐ शान्तिः शान्तिः शान्तिः',
+    translit:'Oṃ Sarve Bhavantu Sukhinaḥ\nSarve Santu Nirāmayāḥ\nSarve Bhadrāṇi Paśyantu\nMā Kaścid Duḥkha Bhāg Bhavet\nOṃ Śāntiḥ Śāntiḥ Śāntiḥ',
+    meaning:'May all be happy, may all be free from illness, may all see auspiciousness, may none suffer. Om peace, peace, peace.' },
+  { id:'asato', name:'Asato Ma Sadgamaya', hindi:'असतो मा', cat:'mantra',
+    text:'ॐ असतो मा सद्गमय\nतमसो मा ज्योतिर्गमय\nमृत्योर्मा अमृतं गमय\nॐ शान्तिः शान्तिः शान्तिः',
+    translit:'Oṃ Asato Mā Sadgamaya\nTamaso Mā Jyotir Gamaya\nMṛtyor Māmṛtaṃ Gamaya\nOṃ Śāntiḥ Śāntiḥ Śāntiḥ',
+    meaning:'Lead me from the unreal to the real, from darkness to light, from death to immortality.' },
+  { id:'chalisa', name:'Hanuman Chalisa', hindi:'हनुमान चालीसा', cat:'chalisa',
+    text:'श्रीगुरु चरन सरोज रज\nनिज मनु मुकुरु सुधारि\nबरनउँ रघुबर बिमल जसु\nजो दायकु फल चारि\n\nजय हनुमान ज्ञान गुन सागर\nजय कपीस तिहुँ लोक उजागर',
+    translit:'Śrī Guru Carana Saroja Raja\nNija Manu Mukuru Sudhāri\nBaranauṃ Raghubara Bimala Jasu\nJo Dāyaku Phala Cāri\n\nJai Hanumān Gyāna Guna Sāgara\nJai Kapīsa Tihũ Loka Ujāgara',
+    meaning:'After cleansing the mirror of my mind with the pollen-dust of holy Guru\'s lotus feet, I describe the unblemished glory of Sri Rama. Victory to Hanuman, ocean of wisdom and virtue.' },
+  { id:'soham', name:'So Ham', hindi:'सोहम्', cat:'mantra',
+    text:'सोहम्\nसोऽहम्', translit:'So Haṃ\nSo\'ham', meaning:'I am That — identifying the self with the universal' },
+  { id:'lokah', name:'Lokah Samastah', hindi:'लोकाः समस्ताः', cat:'mantra',
+    text:'लोकाः समस्ताः सुखिनो भवन्तु', translit:'Lokāḥ Samastāḥ Sukhino Bhavantu', meaning:'May all beings everywhere be happy and free' },
+  { id:'moola', name:'Moola Mantra', hindi:'मूल मंत्र', cat:'mantra',
+    text:'ॐ सत् चित् आनन्द परब्रह्म\nपुरुषोत्तम परमात्मा\nश्री भगवती समेत\nश्री भगवते नमः',
+    translit:'Oṃ Sat Cit Ānanda Parabrahma\nPuruṣottama Paramātmā\nŚrī Bhagavatī Sametha\nŚrī Bhagavate Namaḥ',
+    meaning:'Supreme Being in its manifestation as truth, consciousness, and bliss' },
+  { id:'buddha', name:'Buddhist Refuge', hindi:'बुद्ध शरण', cat:'mantra',
+    text:'बुद्धं शरणं गच्छामि\nधम्मं शरणं गच्छामि\nसंघं शरणं गच्छामि',
+    translit:'Buddhaṃ Śaraṇaṃ Gacchāmi\nDhammaṃ Śaraṇaṃ Gacchāmi\nSaṃghaṃ Śaraṇaṃ Gacchāmi',
+    meaning:'I take refuge in the Buddha, the Dharma, and the Sangha' },
+  { id:'waheguru', name:'Waheguru', hindi:'वाहेगुरु', cat:'mantra',
+    text:'वाहेगुरु वाहेगुरु\nवाहेगुरु वाहे जी', translit:'Wāhegurū Wāhegurū\nWāhegurū Wāhe Jī', meaning:'Wonderful Lord — Sikh meditation mantra' },
+  { id:'raghupati', name:'Raghupati Raghav', hindi:'रघुपति राघव', cat:'bhajan',
+    text:'रघुपति राघव राजा राम\nपतित पावन सीता राम\nसीता राम सीता राम\nभज प्यारे तू सीता राम',
+    translit:'Raghupati Rāghav Rājā Rām\nPatit Pāvan Sītā Rām\nSītā Rām Sītā Rām\nBhaj Pyāre Tū Sītā Rām',
+    meaning:'Lord Rama, purifier of the fallen — Gandhi\'s favorite bhajan' },
+];
+
+let mantraState = { running:false, current:null, startTime:null, timer:null, nodes:null, filter:'all' };
+
+function openMantra() { hapticTap(); renderMantraList(); document.getElementById('mantraOverlay').classList.add('active'); }
+function closeMantra() { if(mantraState.running) stopMantra(); document.getElementById('mantraOverlay').classList.remove('active'); }
+
+function filterMantras(cat, btn) {
+  hapticTap();
+  mantraState.filter = cat;
+  document.querySelectorAll('.mantra-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderMantraList();
+}
+
+function renderMantraList() {
+  const list = document.getElementById('mantraList');
+  const filtered = mantraState.filter === 'all' ? MANTRAS : MANTRAS.filter(m => m.cat === mantraState.filter);
+  list.innerHTML = filtered.map(m =>
+    `<div class="mantra-item" onclick="startMantra('${m.id}')">
+      <div>
+        <div class="mantra-item-name">${m.name}</div>
+        <div class="mantra-item-hindi">${m.hindi}</div>
+      </div>
+      <div class="mantra-item-cat">${m.cat}</div>
+    </div>`
+  ).join('');
+}
+
+function startMantra(id) {
+  const m = MANTRAS.find(x => x.id === id);
+  if (!m) return;
+  hapticMedium();
+  mantraState.running = true;
+  mantraState.current = id;
+  mantraState.startTime = Date.now();
+  requestWakeLock();
+  canvasIntensity = 0.3;
+
+  document.getElementById('mantraPicker').style.display = 'none';
+  document.getElementById('mantraSession').classList.add('visible');
+  document.getElementById('mantraSessionTitle').textContent = m.name;
+  document.getElementById('mantraDevanagari').textContent = m.text;
+  document.getElementById('mantraTranslit').textContent = m.translit;
+  document.getElementById('mantraMeaning').textContent = m.meaning;
+  document.getElementById('mantraElapsed').textContent = '0:00';
+
+  // Start tanpura drone
+  try {
+    const ctx = getAudio();
+    const masterGain = ctx.createGain();
+    masterGain.gain.value = 0;
+    masterGain.connect(ctx.destination);
+
+    // Sa (fundamental) - C3 ~130.8Hz
+    const sa = ctx.createOscillator();
+    sa.type = 'sine'; sa.frequency.value = 130.8;
+    const saGain = ctx.createGain(); saGain.gain.value = 0.15;
+    sa.connect(saGain); saGain.connect(masterGain);
+
+    // Pa (fifth) - G3 ~196Hz
+    const pa = ctx.createOscillator();
+    pa.type = 'sine'; pa.frequency.value = 196;
+    const paGain = ctx.createGain(); paGain.gain.value = 0.08;
+    pa.connect(paGain); paGain.connect(masterGain);
+
+    // Upper Sa - C4 ~261.6Hz
+    const sa2 = ctx.createOscillator();
+    sa2.type = 'sine'; sa2.frequency.value = 261.6;
+    const sa2Gain = ctx.createGain(); sa2Gain.gain.value = 0.06;
+    sa2.connect(sa2Gain); sa2Gain.connect(masterGain);
+
+    // Drone buzz (tanpura characteristic)
+    const buzz = ctx.createOscillator();
+    buzz.type = 'sawtooth'; buzz.frequency.value = 130.8;
+    const buzzGain = ctx.createGain(); buzzGain.gain.value = 0.02;
+    const buzzFilter = ctx.createBiquadFilter();
+    buzzFilter.type = 'lowpass'; buzzFilter.frequency.value = 400;
+    buzz.connect(buzzFilter); buzzFilter.connect(buzzGain); buzzGain.connect(masterGain);
+
+    // Fade in
+    masterGain.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 8);
+
+    sa.start(); pa.start(); sa2.start(); buzz.start();
+    mantraState.nodes = { sa, pa, sa2, buzz, saGain, paGain, sa2Gain, buzzGain, buzzFilter, masterGain };
+  } catch(e) {}
+
+  mantraTick();
+}
+
+function mantraTick() {
+  if (!mantraState.running) return;
+  const elapsed = (Date.now() - mantraState.startTime) / 1000;
+  const min = Math.floor(elapsed / 60);
+  const sec = Math.floor(elapsed % 60);
+  document.getElementById('mantraElapsed').textContent = min + ':' + String(sec).padStart(2, '0');
+  mantraState.timer = setTimeout(mantraTick, 500);
+}
+
+function setMantraVolume(val) {
+  if (mantraState.nodes && mantraState.nodes.masterGain) mantraState.nodes.masterGain.gain.value = val / 100;
+}
+
+function stopMantra() {
+  mantraState.running = false;
+  clearTimeout(mantraState.timer);
+  canvasIntensity = 0.45;
+
+  if (mantraState.nodes) {
+    try {
+      const ctx = getAudio();
+      const n = mantraState.nodes;
+      n.masterGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 3);
+      setTimeout(() => {
+        try { n.sa.stop(); n.pa.stop(); n.sa2.stop(); n.buzz.stop(); n.masterGain.disconnect(); } catch(e) {}
+      }, 4000);
+    } catch(e) {}
+    mantraState.nodes = null;
+  }
+
+  if (mantraState.startTime) {
+    const elapsed = (Date.now() - mantraState.startTime) / 60000;
+    if (elapsed > 0.5) {
+      const m = MANTRAS.find(x => x.id === mantraState.current);
+      addMinutes(Math.round(elapsed * 10) / 10, 'mantra', m ? m.name : 'Mantra');
+    }
+  }
+
+  document.getElementById('mantraSession').classList.remove('visible');
+  document.getElementById('mantraPicker').style.display = 'block';
+}
+
+// ═══ TUTORIAL ═══
+const TUTORIAL = {
+  en: [
+    { icon:'🕉️', title:'Welcome to AWAKE', text:'A meditation app for your spiritual journey. Let us show you how it works.' },
+    { icon:'⚡', title:'Snap Present', text:'Feeling scattered? Tap this button for an instant mindfulness reset. Takes just 30 seconds.' },
+    { icon:'🧘', title:'Just Sit', text:'Classic meditation timer. Tap the screen when your mind wanders — it tracks your focus over time.' },
+    { icon:'🌊', title:'Breathwork', text:'9 breathing techniques from ancient traditions. From calming Nadi Shodhana to energizing Wim Hof.' },
+    { icon:'🎧', title:'Focus States', text:'Binaural beats for deep meditation, sleep, focus, and astral projection. Headphones recommended.' },
+    { icon:'🫧', title:'Yoga Nidra', text:'Guided body scan meditation. Lie down, close your eyes, and follow the voice through your body.' },
+    { icon:'🕉️', title:'Mantra', text:'Chant along with a tanpura drone. 20+ sacred mantras in Sanskrit with transliteration.' },
+  ],
+  hi: [
+    { icon:'🕉️', title:'AWAKE में स्वागत है', text:'आपकी आध्यात्मिक यात्रा के लिए ध्यान ऐप। आइए दिखाते हैं यह कैसे काम करता है।' },
+    { icon:'⚡', title:'वर्तमान में आओ', text:'बिखरा हुआ महसूस कर रहे हैं? तुरंत माइंडफुलनेस रीसेट के लिए यह बटन दबाएं। बस 30 सेकंड।' },
+    { icon:'🧘', title:'बस बैठो', text:'क्लासिक ध्यान टाइमर। जब मन भटके तो स्क्रीन टैप करें — यह समय के साथ आपकी एकाग्रता ट्रैक करता है।' },
+    { icon:'🌊', title:'प्राणायाम', text:'प्राचीन परंपराओं से 9 श्वास तकनीकें। शांत करने वाले नाड़ी शोधन से लेकर ऊर्जावान विम हॉफ तक।' },
+    { icon:'🎧', title:'ध्यान अवस्थाएं', text:'गहरे ध्यान, नींद, एकाग्रता के लिए बाइनॉरल बीट्स। हेडफोन की सिफारिश है।' },
+    { icon:'🫧', title:'योग निद्रा', text:'मार्गदर्शित शरीर स्कैन ध्यान। लेटें, आंखें बंद करें, और आवाज़ का अनुसरण करें।' },
+    { icon:'🕉️', title:'मंत्र', text:'तानपुरा ध्वनि के साथ जप करें। संस्कृत में 20+ पवित्र मंत्र।' },
+  ],
+  gu: [
+    { icon:'🕉️', title:'AWAKE માં સ્વાગત છે', text:'તમારી આધ્યાત્મિક યાત્રા માટે ધ્યાન એપ. ચાલો બતાવીએ આ કેવી રીતે કામ કરે છે.' },
+    { icon:'⚡', title:'હાજર થાઓ', text:'વિખરાયેલું અનુભવો છો? તરત માઇન્ડફુલનેસ રીસેટ માટે આ બટન દબાવો. ફક્ત 30 સેકન્ડ.' },
+    { icon:'🧘', title:'બસ બેસો', text:'ક્લાસિક ધ્યાન ટાઈમર. મન ભટકે ત્યારે સ્ક્રીન ટેપ કરો — તે સમય સાથે તમારી એકાગ્રતા ટ્રેક કરે છે.' },
+    { icon:'🌊', title:'પ્રાણાયામ', text:'પ્રાચીન પરંપરાઓમાંથી 9 શ્વાસ તકનીકો. શાંત કરનાર નાડી શોધનથી ઊર્જાવાન વિમ હોફ સુધી.' },
+    { icon:'🎧', title:'ધ્યાન અવસ્થાઓ', text:'ઊંડા ધ્યાન, ઊંઘ, એકાગ્રતા માટે બાઇનોરલ બીટ્સ. હેડફોન ની ભલામણ છે.' },
+    { icon:'🫧', title:'યોગ નિદ્રા', text:'માર્ગદર્શિત શરીર સ્કેન ધ્યાન. સૂઈ જાઓ, આંખો બંધ કરો, અવાજને અનુસરો.' },
+    { icon:'🕉️', title:'મંત્ર', text:'તાનપુરા ધ્વનિ સાથે જાપ કરો. સંસ્કૃતમાં 20+ પવિત્ર મંત્રો.' },
+  ]
+};
+
+let tutorialStep = 0;
+
+function startTutorial() {
+  hapticTap();
+  tutorialStep = 0;
+  document.getElementById('tutorialOverlay').classList.add('active');
+  showTutorialStep();
+}
+function closeTutorial() {
+  document.getElementById('tutorialOverlay').classList.remove('active');
+  state.tutorialSeen = true;
+  saveState();
+}
+function showTutorialStep() {
+  const steps = TUTORIAL[currentLang] || TUTORIAL.en;
+  const step = steps[tutorialStep];
+  document.getElementById('tutorialStep').textContent = `${tutorialStep+1}/${steps.length}`;
+  document.getElementById('tutorialIcon').textContent = step.icon;
+  document.getElementById('tutorialTitle').textContent = step.title;
+  document.getElementById('tutorialText').textContent = step.text;
+  document.getElementById('tutPrev').style.visibility = tutorialStep === 0 ? 'hidden' : 'visible';
+  document.getElementById('tutNext').textContent = tutorialStep === steps.length-1 ? '✓ Done' : 'Next →';
+}
+function tutorialNext() {
+  hapticTap();
+  const steps = TUTORIAL[currentLang] || TUTORIAL.en;
+  if (tutorialStep >= steps.length-1) { closeTutorial(); return; }
+  tutorialStep++;
+  showTutorialStep();
+}
+function tutorialPrev() {
+  hapticTap();
+  if (tutorialStep > 0) { tutorialStep--; showTutorialStep(); }
+}
+
 // ═══ INIT ═══
 checkDailyReset();
 loadCustomPatterns();
 updateAllUI();
 document.getElementById('hapticToggle').checked = !!state.hapticGuidance;
+// Restore language
+if (state.language) { currentLang = state.language; }
+document.querySelectorAll('.lang-btn').forEach(b => {
+  b.classList.toggle('active', b.getAttribute('data-lang') === currentLang);
+});
+applyTranslations();
+// Auto-show tutorial on first launch
+if (!state.tutorialSeen) { setTimeout(() => startTutorial(), 1500); }
 setTimeout(showSoundHint, 2000);
 </script>
 </body>
