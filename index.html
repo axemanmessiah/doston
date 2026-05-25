@@ -866,8 +866,20 @@ const BREATH_PATTERNS = {
 };
 function loadCustomPatterns(){if(state.customPatterns&&state.customPatterns.length){state.customPatterns.forEach((cp,i)=>{BREATH_PATTERNS['custom_'+i]=cp;});renderSavedCustomButtons();}}
 function renderSavedCustomButtons(){
-  const c=document.getElementById('breathPatterns');c.querySelectorAll('.saved-custom-btn').forEach(b=>b.remove());const cb=document.getElementById('customPatternBtn');
-  state.customPatterns.forEach((cp,i)=>{const btn=document.createElement('button');btn.className='breath-pattern-btn saved-custom-btn';btn.dataset.pattern='custom_'+i;btn.textContent=cp.name;c.insertBefore(btn,cb);btn.addEventListener('click',()=>selectBreathPattern(btn));});
+  const c=document.getElementById('breathPatterns');c.querySelectorAll('.saved-custom-wrap').forEach(b=>b.remove());const cb=document.getElementById('customPatternBtn');
+  state.customPatterns.forEach((cp,i)=>{
+    const wrap=document.createElement('span');wrap.className='saved-custom-wrap';wrap.style.cssText='position:relative;display:inline-block;';
+    const btn=document.createElement('button');btn.className='breath-pattern-btn saved-custom-btn';btn.dataset.pattern='custom_'+i;btn.textContent=cp.name;btn.style.paddingRight='22px';
+    btn.addEventListener('click',()=>selectBreathPattern(btn));
+    const del=document.createElement('span');del.textContent='×';del.style.cssText='position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:rgba(255,60,60,0.8);color:#fff;border-radius:50%;font-size:11px;line-height:16px;text-align:center;cursor:pointer;z-index:2;';
+    del.onclick=(e)=>{e.stopPropagation();deleteCustomPattern(i);};
+    wrap.appendChild(btn);wrap.appendChild(del);c.insertBefore(wrap,cb);
+  });
+}
+function deleteCustomPattern(i){
+  state.customPatterns.splice(i,1);delete BREATH_PATTERNS['custom_'+i];
+  state.customPatterns.forEach((cp,j)=>{BREATH_PATTERNS['custom_'+j]=cp;});
+  saveState();renderSavedCustomButtons();
 }
 let breathState={running:false,pattern:'box',cycle:0,phase:0,count:0,timer:null,startTime:null};
 function selectBreathPattern(btn){
