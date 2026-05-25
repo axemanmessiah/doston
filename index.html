@@ -6,8 +6,38 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0a0a1a">
-<title>DOSTON</title>
-<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRE9TVE9OIiwic2hvcnRfbmFtZSI6IkRPU1RPTiIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMGEwYTFhIiwidGhlbWVfY29sb3IiOiIjMGEwYTFhIn0=">
+<title>AWAKE</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23141430'/%3E%3Cstop offset='100%25' stop-color='%230a0a1a'/%3E%3C/radialGradient%3E%3CradialGradient id='c' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23c8b8ff'/%3E%3Cstop offset='40%25' stop-color='%237c6cf0' stop-opacity='0.6'/%3E%3Cstop offset='100%25' stop-color='%237c6cf0' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='108' fill='url(%23g)'/%3E%3Ccircle cx='256' cy='256' r='160' fill='none' stroke='%237c6cf0' stroke-width='1.5' opacity='0.2'/%3E%3Ccircle cx='256' cy='256' r='120' fill='none' stroke='%237c6cf0' stroke-width='2' opacity='0.3'/%3E%3Ccircle cx='256' cy='256' r='80' fill='none' stroke='%237c6cf0' stroke-width='2.5' opacity='0.4'/%3E%3Ccircle cx='256' cy='176' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='256' cy='336' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='186.7' cy='216' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='325.3' cy='216' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='186.7' cy='296' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='325.3' cy='296' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='256' cy='256' r='30' fill='url(%23c)'/%3E%3Ccircle cx='256' cy='256' r='8' fill='%23e8e0ff'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23141430'/%3E%3Cstop offset='100%25' stop-color='%230a0a1a'/%3E%3C/radialGradient%3E%3CradialGradient id='c' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23c8b8ff'/%3E%3Cstop offset='40%25' stop-color='%237c6cf0' stop-opacity='0.6'/%3E%3Cstop offset='100%25' stop-color='%237c6cf0' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='108' fill='url(%23g)'/%3E%3Ccircle cx='256' cy='256' r='160' fill='none' stroke='%237c6cf0' stroke-width='1.5' opacity='0.2'/%3E%3Ccircle cx='256' cy='256' r='120' fill='none' stroke='%237c6cf0' stroke-width='2' opacity='0.3'/%3E%3Ccircle cx='256' cy='256' r='80' fill='none' stroke='%237c6cf0' stroke-width='2.5' opacity='0.4'/%3E%3Ccircle cx='256' cy='176' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='256' cy='336' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='186.7' cy='216' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='325.3' cy='216' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='186.7' cy='296' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='325.3' cy='296' r='80' fill='none' stroke='%239b8cf8' stroke-width='1.5' opacity='0.35'/%3E%3Ccircle cx='256' cy='256' r='30' fill='url(%23c)'/%3E%3Ccircle cx='256' cy='256' r='8' fill='%23e8e0ff'/%3E%3C/svg%3E">
+<script>
+// Generate PWA manifest with icon dynamically
+(function(){
+  const c=document.createElement('canvas');c.width=512;c.height=512;const x=c.getContext('2d');
+  // Background with subtle radial gradient
+  const bg=x.createRadialGradient(256,256,0,256,256,280);
+  bg.addColorStop(0,'#141430');bg.addColorStop(1,'#0a0a1a');
+  x.fillStyle=bg;x.beginPath();x.roundRect(0,0,512,512,[108]);x.fill();
+  // Sacred geometry — Flower of Life
+  const cx=256,cy=256,r=80;
+  function circle(px,py,rad,color,alpha,w){x.strokeStyle=color;x.globalAlpha=alpha;x.lineWidth=w;x.beginPath();x.arc(px,py,rad,0,Math.PI*2);x.stroke();}
+  // Outer rings
+  circle(cx,cy,160,'#7c6cf0',0.2,1.5);circle(cx,cy,120,'#7c6cf0',0.3,2);circle(cx,cy,r,'#7c6cf0',0.4,2.5);
+  // 6 petals of flower of life
+  const petals=[[cx,cy-r],[cx,cy+r],[cx-r*0.866,cy-r*0.5],[cx+r*0.866,cy-r*0.5],[cx-r*0.866,cy+r*0.5],[cx+r*0.866,cy+r*0.5]];
+  petals.forEach(p=>circle(p[0],p[1],r,'#9b8cf8',0.35,1.5));
+  // Center glow
+  const glow=x.createRadialGradient(cx,cy,0,cx,cy,30);
+  glow.addColorStop(0,'rgba(200,184,255,1)');glow.addColorStop(0.4,'rgba(124,108,240,0.6)');glow.addColorStop(1,'rgba(124,108,240,0)');
+  x.globalAlpha=1;x.fillStyle=glow;x.beginPath();x.arc(cx,cy,30,0,Math.PI*2);x.fill();
+  x.fillStyle='#e8e0ff';x.beginPath();x.arc(cx,cy,8,0,Math.PI*2);x.fill();
+  const iconUrl=c.toDataURL('image/png');
+  const manifest={name:'AWAKE',short_name:'AWAKE',start_url:'.',display:'standalone',background_color:'#0a0a1a',theme_color:'#0a0a1a',icons:[{src:iconUrl,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
+  const blob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
+  const mLink=document.querySelector('link[rel="manifest"]');
+  if(mLink)mLink.remove();
+  const link=document.createElement('link');link.rel='manifest';link.href=URL.createObjectURL(blob);document.head.appendChild(link);
+})();
+</script>
 <style>
 :root {
   --bg-deep: #0a0a1a;
@@ -19,6 +49,9 @@
   --accent-glow: #7c6cf0;
   --accent-warm: #f0a060;
   --accent-breath: #60d0c0;
+  --breath-inhale: #60d0c0;
+  --breath-exhale: #f0a060;
+  --breath-hold: #c090f0;
   --accent-sit: #c090f0;
   --radius: 16px;
   --radius-sm: 10px;
@@ -85,6 +118,27 @@ html, body {
 }
 .mute-btn.muted { color:var(--text-dim); background:rgba(255,80,80,0.08); border-color:rgba(255,80,80,0.15); }
 
+/* Share button */
+.share-btn {
+  position:fixed; top: calc(var(--safe-top) + 14px); right:64px;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+  border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--text-secondary); font-size:16px; z-index:50;
+  transition: background 0.3s, color 0.3s;
+}
+.share-btn:active { background:rgba(255,255,255,0.12); }
+/* Sound hint */
+.sound-hint {
+  position:fixed; bottom: calc(var(--safe-bottom) + 12px); left:50%; transform:translateX(-50%);
+  background:rgba(124,108,240,0.12); border:1px solid rgba(124,108,240,0.2);
+  border-radius:20px; padding:6px 16px; font-size:11px; color:var(--text-secondary);
+  z-index:40; opacity:0; transition: opacity 0.5s; pointer-events:none;
+  white-space:nowrap;
+}
+.sound-hint.show { opacity:1; }
+/* Streak flame */
+.streak-flame { display:inline; margin-left:2px; }
+
 /* Breathwork overlay */
 .breath-container { display:flex; flex-direction:column; align-items:center; padding:30px 0; }
 .breath-orb-wrap { position:relative; width:200px; height:200px; margin-bottom:30px; }
@@ -127,6 +181,20 @@ html, body {
   width:60px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
   border-radius:8px; padding:10px 8px; color:var(--text-primary); font-size:14px;
   font-family:inherit; outline:none; text-align:center;
+}
+.stepper { display:flex; align-items:center; gap:0; }
+.stepper-btn {
+  width:36px; height:36px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.06);
+  color:var(--text-primary); font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition: background 0.2s;
+}
+.stepper-btn:active { background:rgba(255,255,255,0.15); }
+.stepper-btn:first-child { border-radius:8px 0 0 8px; }
+.stepper-btn:last-child { border-radius:0 8px 8px 0; }
+.stepper-val {
+  width:44px; height:36px; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,0.04); border-top:1px solid rgba(255,255,255,0.12);
+  border-bottom:1px solid rgba(255,255,255,0.12); font-size:15px; font-weight:600; color:var(--text-primary);
 }
 .phase-row .sec-label { font-size:12px; color:var(--text-dim); flex-shrink:0; }
 .phase-remove {
@@ -226,6 +294,37 @@ html, body {
 .sit-stat-val { font-size:28px; font-weight:700; }
 .sit-stat-label { font-size:10px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
 
+/* Add to Home Screen modal */
+.a2hs-link {
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:11px; color:var(--accent-glow); opacity:0.7;
+  cursor:pointer; transition: opacity 0.3s;
+  margin-left:12px; vertical-align:middle;
+}
+.a2hs-link:hover { opacity:1; }
+.a2hs-link svg { width:14px; height:14px; }
+.a2hs-modal {
+  position:fixed; inset:0; z-index:300; background:rgba(0,0,0,0.85);
+  display:none; align-items:center; justify-content:center; padding:20px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+}
+.a2hs-modal.active { display:flex; }
+.a2hs-card {
+  background:#111128; border:1px solid rgba(124,108,240,0.2); border-radius:20px;
+  max-width:380px; width:100%; padding:32px 28px; text-align:center;
+  position:relative; max-height:90vh; overflow-y:auto;
+}
+.a2hs-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text-secondary); font-size:20px; cursor:pointer; }
+.a2hs-message {
+  font-size:20px; font-weight:600; line-height:1.4; color:var(--text-primary);
+  margin-bottom:8px;
+}
+.a2hs-sub { font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:24px; }
+.a2hs-divider { height:1px; background:rgba(255,255,255,0.06); margin:20px 0; }
+.a2hs-platform { text-align:left; margin-bottom:16px; }
+.a2hs-platform-title { font-size:13px; font-weight:600; color:var(--accent-glow); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.a2hs-step { font-size:13px; color:var(--text-secondary); line-height:1.6; padding-left:4px; margin-bottom:4px; }
+
 /* Wander timeline */
 .wander-timeline { width:100%; max-width:300px; margin-bottom:24px; }
 .wander-tl-label { font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
@@ -269,14 +368,17 @@ html, body {
 <body>
 <canvas id="bgCanvas"></canvas>
 <div class="snap-flash" id="snapFlash"></div>
+<button class="share-btn" id="shareBtn" onclick="shareApp()" title="Share AWAKE">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+</button>
 <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Toggle sound">
   <svg id="muteIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path id="muteSlash" d="M23 9l-6 6m0-6l6 6" style="display:none"/><path id="soundWaves" d="M15.5 8.5a5 5 0 010 7M19 6a9 9 0 010 12"/></svg>
 </button>
 
 <div id="app">
-  <div style="margin-bottom:8px;"><span style="font-size:13px;color:var(--text-secondary);">Welcome back</span></div>
-  <div class="screen-title">DOSTON</div>
-  <div class="screen-subtitle">Dost on. Be here.</div>
+  <div style="margin-bottom:8px;"><span style="font-size:13px;color:var(--text-secondary);" id="welcomeGreeting">Welcome back</span></div>
+  <div class="screen-title">AWAKE <span class="a2hs-link" id="a2hsLink" onclick="openA2HS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg> Add to Home Screen</span></div>
+  <div class="screen-subtitle">Break the loop. Enter the present.</div>
 
   <div class="stats-row">
     <div class="stat-chip"><div class="stat-value" id="statStreak">0</div><div class="stat-label">Day Streak</div></div>
@@ -334,7 +436,7 @@ html, body {
         <button class="btn btn-ghost" onclick="addCustomPhase()">+ Add Phase</button>
         <button class="btn btn-primary" onclick="saveCustomPattern()">Save & Use</button>
       </div>
-      <div class="cycles-row"><label>Cycles:</label><input type="number" id="customCycles" value="6" min="1" max="99"></div>
+      <div class="cycles-row"><label>Cycles:</label><div class="stepper"><button class="stepper-btn" onclick="stepCycles(-1)">−</button><div class="stepper-val" id="customCyclesVal">6</div><button class="stepper-btn" onclick="stepCycles(1)">+</button></div></div>
     </div>
     <div class="breath-container">
       <div class="breath-phase" id="breathPhase">Ready</div>
@@ -363,11 +465,11 @@ html, body {
     <div class="interval-selector">
       <span class="interval-label">Bells:</span>
       <button class="interval-pill active" data-int="0" onclick="selectInterval(0,this)">Off</button>
-      <button class="interval-pill" data-int="5" onclick="selectInterval(5,this)">5m</button>
-      <button class="interval-pill" data-int="10" onclick="selectInterval(10,this)">10m</button>
-      <button class="interval-pill" data-int="15" onclick="selectInterval(15,this)">15m</button>
+      <button class="interval-pill" data-int="2" onclick="selectInterval(2,this)">2m</button>
+      <button class="interval-pill" data-int="4" onclick="selectInterval(4,this)">4m</button>
+      <button class="interval-pill" data-int="6" onclick="selectInterval(6,this)">6m</button>
     </div>
-    <button class="btn btn-primary" onclick="startSit()" style="margin-top:8px;">Begin Sitting</button>
+    <button class="btn btn-primary" onclick="startSit()" style="margin-top:8px;">Begin</button>
   </div>
   <div id="sitActive" style="display:none; flex-direction:column; align-items:center;">
     <div class="sit-timer-display" id="sitTimerDisplay">0:00</div>
@@ -377,7 +479,7 @@ html, body {
       <span id="sitBtnLabel">I'm Back</span>
       <span class="sit-btn-sub" id="sitBtnSub">tap when you notice</span>
     </button>
-    <div class="welcome-msg" id="welcomeMsg">Welcome back</div>
+    <div class="welcome-msg" id="welcomeMsg" style="display:none;"></div>
   </div>
   <div class="sit-complete" id="sitComplete">
     <div class="sit-complete-title" id="sitCompleteTitle">Session Complete</div>
@@ -398,9 +500,34 @@ html, body {
 </div>
 
 
+<!-- Add to Home Screen -->
+<div class="a2hs-modal" id="a2hsModal">
+  <div class="a2hs-card">
+    <button class="a2hs-close" onclick="closeA2HS()">✕</button>
+    <div class="a2hs-message">The mind is the only prison.<br>Presence is the only key.</div>
+    <div class="a2hs-sub">You're stepping onto a path that every tradition, every sage has pointed toward — freedom from the noise inside your own head. No gurus needed. Just you, showing up, again and again. Stay awake.</div>
+    <div class="a2hs-divider"></div>
+    <div class="a2hs-platform" id="a2hsIOS">
+      <div class="a2hs-platform-title">🍎 iPhone / iPad</div>
+      <div class="a2hs-step">1. Tap the <strong>Share</strong> button (square with arrow) at the bottom of Safari</div>
+      <div class="a2hs-step">2. Scroll down and tap <strong>"Add to Home Screen"</strong></div>
+      <div class="a2hs-step">3. Tap <strong>"Add"</strong> in the top right</div>
+    </div>
+    <div class="a2hs-platform" id="a2hsAndroid">
+      <div class="a2hs-platform-title">🤖 Android</div>
+      <div class="a2hs-step">1. Tap the <strong>⋮ menu</strong> (three dots) in Chrome</div>
+      <div class="a2hs-step">2. Tap <strong>"Add to Home screen"</strong></div>
+      <div class="a2hs-step">3. Tap <strong>"Add"</strong> to confirm</div>
+    </div>
+    <div style="margin-top:20px;">
+      <button class="btn btn-primary" onclick="closeA2HS()">Got it</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ════════════════════════════════════════════
-   DOSTON v7
+   AWAKE v8
    ════════════════════════════════════════════ */
 
 // ═══ SOUND ENGINE ═══
@@ -465,6 +592,35 @@ function updateMuteUI() {
   else { btn.classList.remove('muted'); slash.style.display = 'none'; waves.style.display = ''; }
 }
 
+// ═══ SHARE ═══
+function shareApp(){
+  const shareData={title:'AWAKE',text:'Break the loop. Enter the present.',url:'https://doston.app'};
+  if(navigator.share){navigator.share(shareData).catch(()=>{});}
+  else{navigator.clipboard.writeText('https://doston.app').then(()=>{const b=document.getElementById('shareBtn');b.style.color='var(--accent-glow)';setTimeout(()=>b.style.color='',1500);}).catch(()=>{});}
+}
+
+// ═══ FIRST VISIT & SOUND HINT ═══
+function checkFirstVisit(){
+  const g=document.getElementById('welcomeGreeting');
+  if(!g)return;
+  if(state.totalSessions===0&&!state.lastSessionDate){
+    g.textContent='Welcome';
+  } else { g.textContent='Welcome back'; }
+}
+function showSoundHint(){
+  if(state.muted||state.totalSessions>2)return;
+  const hint=document.createElement('div');hint.className='sound-hint';hint.textContent='🔔 Best with sound on';
+  document.body.appendChild(hint);
+  setTimeout(()=>hint.classList.add('show'),500);
+  setTimeout(()=>{hint.classList.remove('show');setTimeout(()=>hint.remove(),500);},4000);
+}
+
+// ═══ ADD TO HOME SCREEN ═══
+function openA2HS(){document.getElementById('a2hsModal').classList.add('active');}
+function closeA2HS(){document.getElementById('a2hsModal').classList.remove('active');}
+// Hide the link if already installed as PWA
+if(window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone){const l=document.getElementById('a2hsLink');if(l)l.style.display='none';}
+
 // ═══ WAKE LOCK ═══
 let wakeLock = null;
 async function requestWakeLock() { try { if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } } catch(e) {} }
@@ -475,11 +631,12 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 function updateAllUI() {
   checkDailyReset();
 
-  document.getElementById('statStreak').textContent = state.streak;
+  const streakEl=document.getElementById('statStreak');
+  streakEl.innerHTML = state.streak + (state.streak>0?' <span class="streak-flame" style="color:#f0a060;">🔥</span>':'');
   document.getElementById('statSessions').textContent = state.totalSessions;
   document.getElementById('statMinutes').textContent = Math.floor(state.totalMinutes);
 
-  renderHistory(); updateMuteUI();
+  checkFirstVisit(); renderHistory(); updateMuteUI();
 }
 
 function renderHistory() {
@@ -647,12 +804,12 @@ function logWander() {
   sitState.wanders++; sitState.wanderTimes.push(Math.round(sitState.elapsed));
   document.getElementById('sitWanderText').textContent = `Mind wanders: ${sitState.wanders}`;
   const msg = WELCOME_MESSAGES[Math.floor(Math.random()*WELCOME_MESSAGES.length)];
-  const flash=document.getElementById('welcomeFlash'), welcomeEl=document.getElementById('welcomeMsg');
+  const flash=document.getElementById('welcomeFlash');
   const label=document.getElementById('sitBtnLabel'), sub=document.getElementById('sitBtnSub');
-  flash.classList.add('active'); label.textContent=msg; sub.textContent=''; welcomeEl.textContent=msg; welcomeEl.classList.add('show');
+  flash.classList.add('active'); label.textContent=msg; sub.textContent='';
   playWelcomeBack(); if(navigator.vibrate) navigator.vibrate([20,40,20]);
   setTimeout(() => flash.classList.remove('active'), 300);
-  setTimeout(() => { label.textContent="I'm Back"; sub.textContent='tap when you notice'; welcomeEl.classList.remove('show'); }, 1500);
+  setTimeout(() => { label.textContent="I'm Back"; sub.textContent='tap when you notice'; }, 1500);
 }
 function completeSit() {
   sitState.running=false; clearTimeout(sitState.timer); canvasIntensity = 0.15;
@@ -707,15 +864,18 @@ document.querySelectorAll('.breath-pattern-btn').forEach(btn=>{btn.addEventListe
 let customPhases=[{label:'Inhale',seconds:4},{label:'Hold',seconds:4},{label:'Exhale',seconds:4},{label:'Hold',seconds:4}];
 function initCustomBuilder(){renderCustomPhases();}
 function renderCustomPhases(){
-  document.getElementById('customPhases').innerHTML=customPhases.map((ph,i)=>`<div class="phase-row"><input type="text" value="${ph.label}" placeholder="e.g. Inhale" onchange="customPhases[${i}].label=this.value"><input type="number" value="${ph.seconds}" min="1" max="60" onchange="customPhases[${i}].seconds=parseInt(this.value)||1"><span class="sec-label">sec</span>${customPhases.length>1?`<button class="phase-remove" onclick="removeCustomPhase(${i})">×</button>`:''}</div>`).join('');
+  document.getElementById('customPhases').innerHTML=customPhases.map((ph,i)=>`<div class="phase-row"><input type="text" value="${ph.label}" placeholder="e.g. Inhale" onchange="customPhases[${i}].label=this.value"><div class="stepper"><button class="stepper-btn" onclick="stepPhase(${i},-1)">−</button><div class="stepper-val" id="phaseVal${i}">${ph.seconds}</div><button class="stepper-btn" onclick="stepPhase(${i},1)">+</button></div><span class="sec-label">sec</span>${customPhases.length>1?`<button class="phase-remove" onclick="removeCustomPhase(${i})">×</button>`:''}</div>`).join('');
 }
+function stepPhase(i,dir){customPhases[i].seconds=Math.max(1,Math.min(60,customPhases[i].seconds+dir));const el=document.getElementById('phaseVal'+i);if(el)el.textContent=customPhases[i].seconds;}
 function addCustomPhase(){customPhases.push({label:'',seconds:4});renderCustomPhases();const ii=document.querySelectorAll('#customPhases input[type="text"]');if(ii.length)ii[ii.length-1].focus();}
 function removeCustomPhase(i){customPhases.splice(i,1);renderCustomPhases();}
+let customCyclesCount=6;
+function stepCycles(dir){customCyclesCount=Math.max(1,Math.min(99,customCyclesCount+dir));document.getElementById('customCyclesVal').textContent=customCyclesCount;}
 function saveCustomPattern(){
   const rows=document.querySelectorAll('#customPhases .phase-row'),phases=[];
-  rows.forEach(r=>{const l=r.querySelector('input[type="text"]').value.trim()||'Phase';const s=parseInt(r.querySelector('input[type="number"]').value)||4;phases.push({p:l,t:s});});
+  rows.forEach((r,i)=>{const l=r.querySelector('input[type="text"]').value.trim()||'Phase';const s=customPhases[i]?customPhases[i].seconds:4;phases.push({p:l,t:s});});
   if(!phases.length)return;
-  const cycles=parseInt(document.getElementById('customCycles').value)||6;
+  const cycles=customCyclesCount;
   const obj={name:`Custom ${phases.map(p=>p.t).join('-')}`,phases,cycles};
   state.customPatterns.push(obj);saveState();
   const key='custom_'+(state.customPatterns.length-1);BREATH_PATTERNS[key]=obj;
@@ -745,12 +905,13 @@ function stopBreath(){
 function runBreathPhase(){
   if(!breathState.running)return;
   const pat=BREATH_PATTERNS[breathState.pattern],phase=pat.phases[breathState.phase];
-  const orb=document.getElementById('breathOrb'),pL=phase.p.toLowerCase();
+  const orb=document.getElementById('breathOrb'),pL=phase.p.toLowerCase(),phaseEl=document.getElementById('breathPhase');
   orb.className='breath-orb';
-  if(pL.includes('inhale')||pL==='in'||pL.includes('breathe in'))orb.classList.add('expand');
-  else if(pL.includes('exhale')||pL.includes('out')||pL.includes('release'))orb.classList.add('contract');
-  else if(pL.includes('hold')||pL.includes('retain')||pL.includes('pause')){if(breathState.phase>0){const prev=pat.phases[breathState.phase-1].p.toLowerCase();orb.classList.add(prev.includes('inhale')||prev==='in'?'hold-big':'hold-small');}else orb.classList.add('hold-big');}
-  document.getElementById('breathPhase').textContent=phase.p;
+  let phaseColor='var(--accent-breath)';
+  if(pL.includes('inhale')||pL==='in'||pL.includes('breathe in')){orb.classList.add('expand');phaseColor='var(--breath-inhale)';orb.style.background=`radial-gradient(circle at 40% 35%, var(--breath-inhale), #2a6060)`;orb.style.boxShadow='0 0 60px rgba(96,208,192,0.3)';}
+  else if(pL.includes('exhale')||pL.includes('out')||pL.includes('release')){orb.classList.add('contract');phaseColor='var(--breath-exhale)';orb.style.background=`radial-gradient(circle at 40% 35%, var(--breath-exhale), #604020)`;orb.style.boxShadow='0 0 60px rgba(240,160,96,0.3)';}
+  else if(pL.includes('hold')||pL.includes('retain')||pL.includes('pause')){phaseColor='var(--breath-hold)';orb.style.background=`radial-gradient(circle at 40% 35%, var(--breath-hold), #3a2060)`;orb.style.boxShadow='0 0 60px rgba(192,144,240,0.3)';if(breathState.phase>0){const prev=pat.phases[breathState.phase-1].p.toLowerCase();orb.classList.add(prev.includes('inhale')||prev==='in'?'hold-big':'hold-small');}else orb.classList.add('hold-big');}
+  phaseEl.textContent=phase.p;phaseEl.style.color=phaseColor;
   document.getElementById('breathCycle').textContent=`Cycle ${breathState.cycle+1} of ${pat.cycles}`;
   breathState.count=phase.t;document.getElementById('breathTimer').textContent=breathState.count;
   playTick();if(navigator.vibrate)navigator.vibrate(20);breathCountdown();
@@ -887,6 +1048,7 @@ function confirmReset() {
 checkDailyReset();
 loadCustomPatterns();
 updateAllUI();
+setTimeout(showSoundHint, 2000);
 </script>
 </body>
 </html>
