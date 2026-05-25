@@ -14,7 +14,7 @@
 (function(){
   try{
   var c=document.createElement('canvas');c.width=512;c.height=512;var x=c.getContext('2d');
-  var cx=256,cy=256,r=120;
+  var cx=256,cy=256,r=105;
   // Deep purple background — plain fillRect, no roundRect needed
   x.fillStyle='#0e0a28';x.fillRect(0,0,512,512);
   var bg=x.createRadialGradient(256,215,0,256,256,332);
@@ -114,11 +114,13 @@ html, body {
 .section-label { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); margin-bottom:12px; margin-top:28px; }
 .section-label:first-of-type { margin-top:0; }
 .card {
-  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius); padding:20px; margin-bottom:12px;
   cursor:pointer; transition: background 0.3s, transform 0.2s, border-color 0.3s;
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.04);
 }
-.card:active { transform:scale(0.97); background:var(--bg-card-hover); }
+.card:active { transform:scale(0.97); background:rgba(255,255,255,0.07); }
 .card-title { font-size:17px; font-weight:600; margin-bottom:4px; }
 .card-desc { font-size:13px; color:var(--text-secondary); line-height:1.4; }
 .card-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-size:22px; }
@@ -132,34 +134,39 @@ html, body {
   transition: transform 0.2s, box-shadow 0.3s;
 }
 .btn:active { transform:scale(0.95); }
-.btn-primary { background: linear-gradient(135deg, var(--accent-glow), #9b8cf8); color:white; box-shadow: 0 4px 24px rgba(124,108,240,0.3); }
-.btn-ghost { background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); }
+.btn-primary { background: linear-gradient(135deg, var(--accent-glow), #9b8cf8); color:white; box-shadow: 0 4px 24px rgba(124,108,240,0.3), inset 0 1px 0 rgba(255,255,255,0.15); }
+.btn-ghost { background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
 .btn-snap {
-  background: radial-gradient(circle at 30% 30%, #f0a060, #e06040); color:white;
-  box-shadow: 0 4px 20px rgba(240,160,96,0.3); width:100%; padding:14px;
-  font-size:17px; font-weight:700; letter-spacing:1.5px;
+  background: linear-gradient(135deg, #c85a20, #a04018); color:white;
+  box-shadow: 0 4px 20px rgba(180,80,30,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+  width:auto; padding:14px 36px; border-radius:50px;
+  font-size:15px; font-weight:700; letter-spacing:1.5px;
 }
 .stats-row { display:flex; gap:10px; margin-bottom:20px; }
-.stat-chip { flex:1; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-sm); padding:14px 12px; text-align:center; }
+.stat-chip { flex:1; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding:14px 12px; text-align:center; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow: 0 2px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.04); }
 .stat-value { font-size:24px; font-weight:700; }
 .stat-label { font-size:10px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
 /* Mute toggle */
 .mute-btn {
   position:fixed; top: calc(var(--safe-top) + 14px); right:20px;
-  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
   border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
   cursor:pointer; color:var(--text-secondary); font-size:16px; z-index:50;
   transition: background 0.3s, color 0.3s;
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .mute-btn.muted { color:var(--text-dim); background:rgba(255,80,80,0.08); border-color:rgba(255,80,80,0.15); }
 
 /* Share button */
 .share-btn {
   position:fixed; top: calc(var(--safe-top) + 14px); right:64px;
-  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
   border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
   cursor:pointer; color:var(--text-secondary); font-size:16px; z-index:50;
   transition: background 0.3s, color 0.3s;
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .share-btn:active { background:rgba(255,255,255,0.12); }
 /* Sound hint */
@@ -179,14 +186,26 @@ html, body {
 .breath-orb-wrap { position:relative; width:200px; height:200px; margin-bottom:30px; }
 .breath-orb {
   width:100%; height:100%; border-radius:50%;
-  background: radial-gradient(circle at 40% 35%, var(--accent-breath), #2a6060);
-  box-shadow: 0 0 60px rgba(96,208,192,0.3);
+  background: radial-gradient(circle at 35% 30%, rgba(160,240,220,0.9), var(--accent-breath) 40%, #1a5050 80%, #0a2828);
+  box-shadow: 0 0 80px rgba(96,208,192,0.4), 0 0 160px rgba(96,208,192,0.15), inset 0 -20px 40px rgba(0,0,0,0.3), inset 0 8px 20px rgba(255,255,255,0.15);
   transition: transform 3s ease-in-out, box-shadow 3s ease-in-out;
   display:flex; align-items:center; justify-content:center;
+  position:relative;
 }
-.breath-orb.expand { transform:scale(1.3); box-shadow: 0 0 100px rgba(96,208,192,0.5); }
+.breath-orb::before {
+  content:''; position:absolute; top:12%; left:20%; width:35%; height:25%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.35), transparent);
+  border-radius:50%; filter:blur(8px); pointer-events:none;
+}
+.breath-orb::after {
+  content:''; position:absolute; inset:-20px; border-radius:50%;
+  background: radial-gradient(circle, rgba(96,208,192,0.12), transparent 70%);
+  animation: orb-pulse 4s ease-in-out infinite; pointer-events:none;
+}
+@keyframes orb-pulse { 0%,100% { transform:scale(1); opacity:0.5; } 50% { transform:scale(1.15); opacity:1; } }
+.breath-orb.expand { transform:scale(1.3); box-shadow: 0 0 120px rgba(96,208,192,0.5), 0 0 240px rgba(96,208,192,0.2), inset 0 -20px 40px rgba(0,0,0,0.3), inset 0 8px 20px rgba(255,255,255,0.15); }
 .breath-orb.hold-big { transform:scale(1.3); }
-.breath-orb.contract { transform:scale(0.7); box-shadow: 0 0 20px rgba(96,208,192,0.12); }
+.breath-orb.contract { transform:scale(0.7); box-shadow: 0 0 30px rgba(96,208,192,0.15), inset 0 -15px 30px rgba(0,0,0,0.4), inset 0 5px 15px rgba(255,255,255,0.1); }
 .breath-orb.hold-small { transform:scale(0.7); }
 .breath-timer { font-size:48px; font-weight:200; color:white; }
 .breath-phase { font-size:20px; font-weight:300; letter-spacing:2px; text-transform:uppercase; color:var(--accent-breath); margin-bottom:8px; }
@@ -258,35 +277,39 @@ html, body {
 /* Overlays (shared) */
 .exercise-overlay {
   position:fixed; inset:0; z-index:200; background: var(--bg-deep);
-  display:none; flex-direction:column;
+  display:flex; flex-direction:column;
   padding: calc(var(--safe-top) + 20px) 20px calc(var(--safe-bottom) + 20px);
-  transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease, opacity 0.35s ease, transform 0.35s ease;
+  opacity:0; transform:translateY(20px) scale(0.98); pointer-events:none;
 }
-.exercise-overlay.active { display:flex; }
+.exercise-overlay.active { opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
 .overlay-close { align-self:flex-end; background:none; border:none; color:var(--text-secondary); font-size:14px; font-weight:500; padding:8px 16px; cursor:pointer; z-index:10; position:relative; }
 .overlay-content { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow-y:auto; }
 
 /* Just Sit overlay */
 .sit-overlay {
   position:fixed; inset:0; z-index:200; background: var(--bg-deep);
-  display:none; flex-direction:column; align-items:center; justify-content:center;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
   padding: calc(var(--safe-top) + 20px) 20px calc(var(--safe-bottom) + 20px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  opacity:0; transform:translateY(20px) scale(0.98); pointer-events:none;
 }
-.sit-overlay.active { display:flex; }
+.sit-overlay.active { opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
 .sit-close { position:absolute; top: calc(var(--safe-top) + 16px); right:20px; background:none; border:none; color:var(--text-secondary); font-size:14px; font-weight:500; padding:8px 16px; cursor:pointer; z-index:5; }
 .sit-timer-display { font-size:72px; font-weight:200; letter-spacing:-2px; margin-bottom:8px; }
 .sit-wander-count { font-size:14px; color:var(--text-secondary); margin-bottom:40px; }
 .sit-left-btn {
-  width: 180px; height: 180px; border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, rgba(192,144,240,0.25), rgba(192,144,240,0.08));
-  border: 2px solid rgba(192,144,240,0.3);
+  width: 100%; flex:1; min-height:200px; border-radius: var(--radius);
+  background: radial-gradient(circle at 50% 50%, rgba(192,144,240,0.1), rgba(192,144,240,0.02));
+  border: 1px solid rgba(192,144,240,0.15);
   color: var(--accent-sit); font-size:16px; font-weight:600;
-  cursor:pointer; transition: transform 0.15s, box-shadow 0.3s, background 0.3s;
+  cursor:pointer; transition: transform 0.1s, box-shadow 0.3s, background 0.15s;
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-  position:relative; overflow:hidden;
+  position:relative; overflow:hidden; margin-top:20px;
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
 }
-.sit-left-btn:active { transform:scale(0.92); background: rgba(192,144,240,0.2); box-shadow: 0 0 40px rgba(192,144,240,0.3); }
-.sit-left-btn .sit-btn-sub { font-size:11px; color:var(--text-secondary); font-weight:400; }
+.sit-left-btn:active { transform:scale(0.98); background: rgba(192,144,240,0.15); box-shadow: 0 0 60px rgba(192,144,240,0.25); }
+.sit-left-btn .sit-btn-sub { font-size:12px; color:var(--text-secondary); font-weight:400; }
 .sit-duration-pills { display:flex; gap:10px; margin-bottom:20px; }
 .sit-pill {
   padding:10px 20px; border-radius:24px;
@@ -307,8 +330,8 @@ html, body {
 
 /* Welcome back flash */
 .welcome-flash {
-  position:absolute; inset:0; border-radius:50%; pointer-events:none;
-  background: radial-gradient(circle, rgba(192,144,240,0.6), transparent 70%);
+  position:absolute; inset:0; border-radius:var(--radius); pointer-events:none;
+  background: radial-gradient(circle, rgba(192,144,240,0.4), transparent 70%);
   opacity:0; transition: opacity 0.15s ease-out;
 }
 .welcome-flash.active { opacity:1; }
@@ -340,15 +363,20 @@ html, body {
 .a2hs-link svg { width:14px; height:14px; }
 .a2hs-modal {
   position:fixed; inset:0; z-index:300; background:rgba(0,0,0,0.85);
-  display:none; align-items:center; justify-content:center; padding:20px;
+  display:flex; align-items:center; justify-content:center; padding:20px;
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  transition: opacity 0.3s ease; opacity:0; pointer-events:none;
 }
-.a2hs-modal.active { display:flex; }
+.a2hs-modal.active { opacity:1; pointer-events:auto; }
 .a2hs-card {
-  background:#111128; border:1px solid rgba(124,108,240,0.2); border-radius:20px;
+  background:rgba(17,17,40,0.85); border:1px solid rgba(124,108,240,0.2); border-radius:20px;
   max-width:380px; width:100%; padding:32px 28px; text-align:center;
   position:relative; max-height:90vh; overflow-y:auto;
+  backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1); transform:scale(0.9);
 }
+.a2hs-modal.active .a2hs-card { transform:scale(1); }
 .a2hs-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text-secondary); font-size:20px; cursor:pointer; }
 .a2hs-message {
   font-size:20px; font-weight:600; line-height:1.4; color:var(--text-primary);
@@ -391,12 +419,12 @@ html, body {
 .history-wanders { font-size:11px; color:var(--accent-sit); }
 
 @keyframes pulse-glow {
-  0%,100% { box-shadow: 0 0 30px rgba(240,160,96,0.3); }
-  50% { box-shadow: 0 0 60px rgba(240,160,96,0.6); }
+  0%,100% { box-shadow: 0 4px 20px rgba(180,80,30,0.35), inset 0 1px 0 rgba(255,255,255,0.1); }
+  50% { box-shadow: 0 4px 30px rgba(180,80,30,0.5), 0 0 50px rgba(180,80,30,0.2), inset 0 1px 0 rgba(255,255,255,0.1); }
 }
 @keyframes pulse-sit {
-  0%,100% { box-shadow: 0 0 20px rgba(192,144,240,0.15); }
-  50% { box-shadow: 0 0 50px rgba(192,144,240,0.3); }
+  0%,100% { box-shadow: 0 0 30px rgba(192,144,240,0.08), inset 0 0 60px rgba(192,144,240,0.03); border-color:rgba(192,144,240,0.12); }
+  50% { box-shadow: 0 0 60px rgba(192,144,240,0.15), inset 0 0 80px rgba(192,144,240,0.06); border-color:rgba(192,144,240,0.2); }
 }
 </style>
 </head>
@@ -421,7 +449,7 @@ html, body {
     <div class="stat-chip"><div class="stat-value" id="statMinutes">0</div><div class="stat-label">Total Min</div></div>
   </div>
 
-  <button class="btn btn-snap" onclick="startSnap()" style="margin-bottom:20px; animation: pulse-glow 3s ease-in-out infinite;">SNAP PRESENT</button>
+  <div style="text-align:center;margin-bottom:20px;"><button class="btn btn-snap" onclick="startSnap()" style="animation: pulse-glow 3s ease-in-out infinite;">SNAP PRESENT</button></div>
 
   <div class="section-label">Practice</div>
   <div class="card" onclick="openSitPicker()">
@@ -506,15 +534,14 @@ html, body {
     </div>
     <button class="btn btn-primary" onclick="startSit()" style="margin-top:8px;">Begin</button>
   </div>
-  <div id="sitActive" style="display:none; flex-direction:column; align-items:center;">
+  <div id="sitActive" style="display:none; flex-direction:column; align-items:center; width:100%; flex:1;">
     <div class="sit-timer-display" id="sitTimerDisplay">0:00</div>
     <div class="sit-wander-count" id="sitWanderText">Mind wanders: 0</div>
     <button class="sit-left-btn" id="sitLeftBtn" onclick="logWander()" style="animation: pulse-sit 4s ease-in-out infinite;">
       <div class="welcome-flash" id="welcomeFlash"></div>
-      <span id="sitBtnLabel">I'm Back</span>
-      <span class="sit-btn-sub" id="sitBtnSub">tap when you notice</span>
+      <span id="sitBtnLabel" style="font-size:22px;">I'm Back</span>
+      <span class="sit-btn-sub" id="sitBtnSub">tap anywhere when you notice</span>
     </button>
-    <div class="welcome-msg" id="welcomeMsg" style="display:none;"></div>
   </div>
   <div class="sit-complete" id="sitComplete">
     <div class="sit-complete-title" id="sitCompleteTitle">Session Complete</div>
@@ -964,9 +991,9 @@ function runBreathPhase(){
   const orb=document.getElementById('breathOrb'),pL=phase.p.toLowerCase(),phaseEl=document.getElementById('breathPhase');
   orb.className='breath-orb';
   let phaseColor='var(--accent-breath)';
-  if(pL.includes('inhale')||pL==='in'||pL.includes('breathe in')){orb.classList.add('expand');phaseColor='var(--breath-inhale)';orb.style.background=`radial-gradient(circle at 40% 35%, var(--breath-inhale), #2a6060)`;orb.style.boxShadow='0 0 60px rgba(96,208,192,0.3)';}
-  else if(pL.includes('exhale')||pL.includes('out')||pL.includes('release')){orb.classList.add('contract');phaseColor='var(--breath-exhale)';orb.style.background=`radial-gradient(circle at 40% 35%, var(--breath-exhale), #604020)`;orb.style.boxShadow='0 0 60px rgba(240,160,96,0.3)';}
-  else if(pL.includes('hold')||pL.includes('retain')||pL.includes('pause')){phaseColor='var(--breath-hold)';orb.style.background=`radial-gradient(circle at 40% 35%, var(--breath-hold), #3a2060)`;orb.style.boxShadow='0 0 60px rgba(192,144,240,0.3)';if(breathState.phase>0){const prev=pat.phases[breathState.phase-1].p.toLowerCase();orb.classList.add(prev.includes('inhale')||prev==='in'?'hold-big':'hold-small');}else orb.classList.add('hold-big');}
+  if(pL.includes('inhale')||pL==='in'||pL.includes('breathe in')){orb.classList.add('expand');phaseColor='var(--breath-inhale)';orb.style.background=`radial-gradient(circle at 35% 30%, rgba(160,240,220,0.9), var(--breath-inhale) 40%, #1a5050 80%, #0a2828)`;orb.style.boxShadow='0 0 100px rgba(96,208,192,0.45), 0 0 200px rgba(96,208,192,0.15), inset 0 -20px 40px rgba(0,0,0,0.3), inset 0 8px 20px rgba(255,255,255,0.15)';}
+  else if(pL.includes('exhale')||pL.includes('out')||pL.includes('release')){orb.classList.add('contract');phaseColor='var(--breath-exhale)';orb.style.background=`radial-gradient(circle at 35% 30%, rgba(255,200,140,0.9), var(--breath-exhale) 40%, #604020 80%, #2a1a0a)`;orb.style.boxShadow='0 0 100px rgba(240,160,96,0.4), 0 0 200px rgba(240,160,96,0.12), inset 0 -20px 40px rgba(0,0,0,0.3), inset 0 8px 20px rgba(255,255,255,0.12)';}
+  else if(pL.includes('hold')||pL.includes('retain')||pL.includes('pause')){phaseColor='var(--breath-hold)';orb.style.background=`radial-gradient(circle at 35% 30%, rgba(220,180,255,0.9), var(--breath-hold) 40%, #3a2060 80%, #1a0a30)`;orb.style.boxShadow='0 0 100px rgba(192,144,240,0.4), 0 0 200px rgba(192,144,240,0.12), inset 0 -20px 40px rgba(0,0,0,0.3), inset 0 8px 20px rgba(255,255,255,0.12)';if(breathState.phase>0){const prev=pat.phases[breathState.phase-1].p.toLowerCase();orb.classList.add(prev.includes('inhale')||prev==='in'?'hold-big':'hold-small');}else orb.classList.add('hold-big');}
   phaseEl.textContent=phase.p;phaseEl.style.color=phaseColor;
   document.getElementById('breathCycle').textContent=`Cycle ${breathState.cycle+1} of ${pat.cycles}`;
   breathState.count=phase.t;document.getElementById('breathTimer').textContent=breathState.count;
@@ -987,7 +1014,10 @@ resizeCanvas(); window.addEventListener('resize', resizeCanvas);
 
 function drawSacredGeometry() {
   const w = canvas.width, h = canvas.height;
-  const cx = w / 2, cy = h / 2;
+  // Floating center — drifts gently in a lissajous pattern
+  const driftX = Math.sin(geoTime * 0.12) * w * 0.03 + Math.sin(geoTime * 0.07) * w * 0.015;
+  const driftY = Math.cos(geoTime * 0.09) * h * 0.025 + Math.cos(geoTime * 0.13) * h * 0.012;
+  const cx = w / 2 + driftX, cy = h / 2 + driftY;
   const baseR = Math.min(w, h) * 0.3;
   const t = geoTime;
   const intensity = canvasIntensity;
@@ -995,74 +1025,79 @@ function drawSacredGeometry() {
   bctx.clearRect(0, 0, w, h);
   bctx.globalAlpha = 1;
 
-  // Breathing pulse
-  const pulse = 1 + Math.sin(t * 0.8) * 0.06 * intensity;
+  // Multi-frequency breathing pulse
+  const pulse = 1 + Math.sin(t * 0.8) * 0.06 * intensity + Math.sin(t * 0.3) * 0.03;
+  const slowBreath = Math.sin(t * 0.25) * 0.5 + 0.5; // 0-1 slow cycle
 
-  // Draw Flower of Life
   const petalCount = 6;
   const layers = 3;
   const baseAlpha = 0.04 + intensity * 0.12;
+
+  // Soft ambient glow behind everything
+  const ambGrad = bctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 1.2);
+  ambGrad.addColorStop(0, `rgba(124,108,240,${0.03 + intensity * 0.06})`);
+  ambGrad.addColorStop(0.5, `rgba(124,108,240,${0.01 + intensity * 0.02})`);
+  ambGrad.addColorStop(1, 'rgba(124,108,240,0)');
+  bctx.fillStyle = ambGrad;
+  bctx.beginPath(); bctx.arc(cx, cy, baseR * 1.2, 0, Math.PI * 2); bctx.fill();
 
   // Central circle
   bctx.strokeStyle = `rgba(124,108,240,${baseAlpha * 1.2})`;
   bctx.lineWidth = 0.8;
   const centralR = baseR * 0.33 * pulse;
-  bctx.beginPath();
-  bctx.arc(cx, cy, centralR, 0, Math.PI * 2);
-  bctx.stroke();
+  bctx.beginPath(); bctx.arc(cx, cy, centralR, 0, Math.PI * 2); bctx.stroke();
 
   // Rotating petal layers
   for (let layer = 1; layer <= layers; layer++) {
     const layerR = baseR * 0.33 * layer * pulse;
     const rotation = t * 0.15 * (layer % 2 === 0 ? 1 : -1);
     const layerAlpha = baseAlpha * (1 - (layer - 1) * 0.2);
+    // Each layer breathes slightly differently
+    const layerPulse = 1 + Math.sin(t * 0.6 + layer * 1.2) * 0.04;
 
-    // Ring of circles (Flower of Life pattern)
     const circlesInLayer = petalCount * layer;
     for (let i = 0; i < circlesInLayer; i++) {
       const angle = (i / circlesInLayer) * Math.PI * 2 + rotation;
-      const px = cx + Math.cos(angle) * layerR;
-      const py = cy + Math.sin(angle) * layerR;
-      const petalR = centralR * (0.9 - layer * 0.1);
+      const individualDrift = Math.sin(t * 0.4 + i * 0.7) * 3;
+      const px = cx + Math.cos(angle) * (layerR + individualDrift);
+      const py = cy + Math.sin(angle) * (layerR + individualDrift);
+      const petalR = centralR * (0.9 - layer * 0.1) * layerPulse;
+      const flicker = layerAlpha + Math.sin(t * 1.5 + i * 2.1) * 0.02;
 
-      bctx.strokeStyle = `rgba(124,108,240,${layerAlpha})`;
+      bctx.strokeStyle = `rgba(124,108,240,${Math.max(0, flicker)})`;
       bctx.lineWidth = 0.6;
-      bctx.beginPath();
-      bctx.arc(px, py, petalR, 0, Math.PI * 2);
-      bctx.stroke();
+      bctx.beginPath(); bctx.arc(px, py, petalR, 0, Math.PI * 2); bctx.stroke();
     }
 
     // Connecting ring
     bctx.strokeStyle = `rgba(124,108,240,${layerAlpha * 0.6})`;
     bctx.lineWidth = 0.4;
-    bctx.beginPath();
-    bctx.arc(cx, cy, layerR, 0, Math.PI * 2);
-    bctx.stroke();
+    bctx.beginPath(); bctx.arc(cx, cy, layerR, 0, Math.PI * 2); bctx.stroke();
   }
 
-  // Outer seed circles — slowly rotating
+  // Outer seed circles — slowly rotating + individual floating
   const seedCount = 12;
   const seedR = baseR * 1.1 * pulse;
   const seedRotation = t * 0.05;
   for (let i = 0; i < seedCount; i++) {
     const angle = (i / seedCount) * Math.PI * 2 + seedRotation;
-    const px = cx + Math.cos(angle) * seedR;
-    const py = cy + Math.sin(angle) * seedR;
+    const wobble = Math.sin(t * 0.3 + i * 1.5) * 6;
+    const px = cx + Math.cos(angle) * (seedR + wobble);
+    const py = cy + Math.sin(angle) * (seedR + wobble);
     const r = baseR * 0.08;
     const alpha = 0.02 + intensity * 0.06 + Math.sin(t * 1.2 + i) * 0.02;
     bctx.strokeStyle = `rgba(156,140,248,${alpha})`;
     bctx.lineWidth = 0.5;
-    bctx.beginPath();
-    bctx.arc(px, py, r, 0, Math.PI * 2);
-    bctx.stroke();
+    bctx.beginPath(); bctx.arc(px, py, r, 0, Math.PI * 2); bctx.stroke();
   }
 
-  // Radiating lines from center (vesica piscis hints)
+  // Radiating lines — slow rotation with length breathing
   const lineCount = 6;
   const lineRotation = t * 0.08;
   for (let i = 0; i < lineCount; i++) {
     const angle = (i / lineCount) * Math.PI + lineRotation;
-    const len = baseR * 1.3 * pulse;
+    const lenBreath = 1 + Math.sin(t * 0.5 + i * 0.8) * 0.1;
+    const len = baseR * 1.3 * pulse * lenBreath;
     const alpha = 0.015 + intensity * 0.04;
     bctx.strokeStyle = `rgba(124,108,240,${alpha})`;
     bctx.lineWidth = 0.3;
@@ -1074,15 +1109,26 @@ function drawSacredGeometry() {
     bctx.stroke();
   }
 
-  // Center glow dot
-  const glowAlpha = 0.1 + intensity * 0.25 + Math.sin(t * 1.5) * 0.05;
-  const grad = bctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 0.15);
-  grad.addColorStop(0, `rgba(156,140,248,${glowAlpha})`);
-  grad.addColorStop(1, 'rgba(156,140,248,0)');
+  // Center glow — pulsing with multiple frequencies
+  const glowAlpha = 0.1 + intensity * 0.25 + Math.sin(t * 1.5) * 0.05 + slowBreath * 0.04;
+  const glowR = baseR * (0.15 + slowBreath * 0.03);
+  const grad = bctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+  grad.addColorStop(0, `rgba(180,160,255,${glowAlpha * 1.2})`);
+  grad.addColorStop(0.5, `rgba(140,120,248,${glowAlpha * 0.5})`);
+  grad.addColorStop(1, 'rgba(124,108,240,0)');
   bctx.fillStyle = grad;
-  bctx.beginPath();
-  bctx.arc(cx, cy, baseR * 0.15, 0, Math.PI * 2);
-  bctx.fill();
+  bctx.beginPath(); bctx.arc(cx, cy, glowR, 0, Math.PI * 2); bctx.fill();
+
+  // Tiny floating particles
+  for (let i = 0; i < 8; i++) {
+    const pAngle = t * 0.2 + i * (Math.PI * 2 / 8);
+    const pDist = baseR * (0.5 + Math.sin(t * 0.15 + i * 3) * 0.4);
+    const px = cx + Math.cos(pAngle) * pDist;
+    const py = cy + Math.sin(pAngle) * pDist;
+    const pAlpha = (0.08 + intensity * 0.15) * (0.5 + Math.sin(t * 2 + i * 1.7) * 0.5);
+    bctx.fillStyle = `rgba(180,160,255,${pAlpha})`;
+    bctx.beginPath(); bctx.arc(px, py, 1.5, 0, Math.PI * 2); bctx.fill();
+  }
 
   geoTime += 0.016;
   requestAnimationFrame(drawSacredGeometry);
