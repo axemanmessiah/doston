@@ -513,6 +513,26 @@ html, body {
   background:var(--accent-focus); cursor:pointer;
 }
 .focus-volume-wrap label { font-size:11px; color:var(--text-dim); }
+.guided-section { margin-top:24px; width:100%; max-width:320px; }
+.guided-section-label { font-size:13px; font-weight:600; color:var(--text-secondary); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px; }
+.guided-card {
+  width:100%; padding:16px; border-radius:var(--radius-sm); margin-bottom:10px;
+  background:linear-gradient(135deg, rgba(108,160,240,0.08), rgba(124,108,240,0.08));
+  border:1px solid rgba(108,160,240,0.15);
+  cursor:pointer; transition: all 0.3s; text-align:left;
+  display:flex; align-items:center; gap:14px;
+}
+.guided-card:active { transform:scale(0.97); }
+.guided-card-icon { font-size:28px; flex-shrink:0; }
+.guided-card-info { flex:1; }
+.guided-card-name { font-size:15px; font-weight:600; color:var(--text-primary); }
+.guided-card-meta { font-size:12px; color:var(--accent-focus); margin-top:2px; }
+.guided-card-desc { font-size:12px; color:var(--text-secondary); margin-top:4px; }
+#focusGuideText {
+  display:none; font-size:18px; font-weight:300; color:rgba(255,255,255,0.85);
+  text-align:center; max-width:280px; line-height:1.5;
+  transition: opacity 0.5s ease; min-height:54px;
+}
 
 /* Insights overlay */
 .insights-week-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; width:100%; max-width:320px; margin-bottom:20px; text-align:center; }
@@ -545,6 +565,10 @@ html, body {
 .settings-row .btn { flex:1; font-size:13px; padding:12px 16px; }
 .settings-version { font-size:11px; color:var(--text-dim); text-align:center; margin-top:20px; }
 
+@keyframes hero-glow {
+  0%,100% { text-shadow: 0 0 30px rgba(124,108,240,0.4), 0 0 60px rgba(124,108,240,0.2); }
+  50% { text-shadow: 0 0 40px rgba(124,108,240,0.7), 0 0 80px rgba(124,108,240,0.35), 0 0 120px rgba(108,160,240,0.15); }
+}
 @keyframes pulse-glow {
   0%,100% { box-shadow: 0 4px 20px rgba(180,80,30,0.35), inset 0 1px 0 rgba(255,255,255,0.1); }
   50% { box-shadow: 0 4px 30px rgba(180,80,30,0.5), 0 0 50px rgba(180,80,30,0.2), inset 0 1px 0 rgba(255,255,255,0.1); }
@@ -569,7 +593,7 @@ html, body {
 </button>
 
 <div id="app">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;"><svg viewBox="0 0 100 100" width="28" height="28" style="flex-shrink:0;"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:22px;font-weight:600;letter-spacing:-0.5px;color:var(--text-primary);">AWAKE</span></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:4px;"><svg viewBox="0 0 100 100" width="40" height="40" style="flex-shrink:0;"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:42px;font-weight:200;letter-spacing:6px;background:linear-gradient(135deg,#7c6cf0,#6ca0f0,#5cc8c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 30px rgba(124,108,240,0.4),0 0 60px rgba(124,108,240,0.2);animation:hero-glow 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(124,108,240,0.3));">AWAKE</span></div>
   <div class="screen-subtitle" style="margin-bottom:4px;">Loops break. Presence enters.</div>
   <div class="daily-quote" id="dailyQuote"></div>
   <div style="margin-bottom:28px;"><span class="a2hs-link" id="a2hsLink" onclick="openA2HS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg> Add to Home Screen</span></div>
@@ -748,24 +772,44 @@ html, body {
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Binaural beats for deep states</div>
     <div id="focusPicker" style="width:100%; max-width:320px;">
       <div class="focus-level-btn active" data-focus="alpha" onclick="selectFocusLevel('alpha',this)">
-        <div class="focus-level-name">Alpha Rest</div>
-        <div class="focus-level-desc">Relaxed awareness</div>
-        <div class="focus-level-hz">10Hz binaural beat</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:24px;">🧘</span>
+          <div>
+            <div class="focus-level-name">Calm & Relax</div>
+            <div class="focus-level-desc" style="color:var(--text-dim);font-style:italic;">Wind down after a stressful day</div>
+            <div class="focus-level-hz">Alpha · 10Hz binaural beat</div>
+          </div>
+        </div>
       </div>
       <div class="focus-level-btn" data-focus="theta" onclick="selectFocusLevel('theta',this)">
-        <div class="focus-level-name">Theta Deep</div>
-        <div class="focus-level-desc">Deep meditation</div>
-        <div class="focus-level-hz">6Hz binaural beat</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:24px;">🌊</span>
+          <div>
+            <div class="focus-level-name">Deep Meditation</div>
+            <div class="focus-level-desc" style="color:var(--text-dim);font-style:italic;">Go deeper in your practice</div>
+            <div class="focus-level-hz">Theta · 6Hz binaural beat</div>
+          </div>
+        </div>
       </div>
       <div class="focus-level-btn" data-focus="delta" onclick="selectFocusLevel('delta',this)">
-        <div class="focus-level-name">Delta Drift</div>
-        <div class="focus-level-desc">Body asleep, mind awake</div>
-        <div class="focus-level-hz">4Hz binaural beat</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:24px;">😴</span>
+          <div>
+            <div class="focus-level-name">Can't Sleep</div>
+            <div class="focus-level-desc" style="color:var(--text-dim);font-style:italic;">Fall asleep naturally</div>
+            <div class="focus-level-hz">Delta · 4Hz binaural beat</div>
+          </div>
+        </div>
       </div>
       <div class="focus-level-btn" data-focus="gamma" onclick="selectFocusLevel('gamma',this)">
-        <div class="focus-level-name">Gamma Focus</div>
-        <div class="focus-level-desc">Heightened clarity</div>
-        <div class="focus-level-hz">40Hz binaural beat</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:24px;">⚡</span>
+          <div>
+            <div class="focus-level-name">Sharp Focus</div>
+            <div class="focus-level-desc" style="color:var(--text-dim);font-style:italic;">Study, work, or creative flow</div>
+            <div class="focus-level-hz">Gamma · 40Hz binaural beat</div>
+          </div>
+        </div>
       </div>
       <div class="focus-timer-pills">
         <button class="focus-pill" data-fdur="15" onclick="selectFocusDur(15,this)">15m</button>
@@ -778,9 +822,38 @@ html, body {
         <div style="font-size:11px; color:var(--text-dim); margin-top:4px;">Different frequencies in each ear create the beat</div>
       </div>
       <div style="text-align:center;"><button class="btn btn-primary" onclick="startFocusSession()" style="background:linear-gradient(135deg, var(--accent-focus), #8cb0f8);">Begin Session</button></div>
+
+      <div class="guided-section">
+        <div class="guided-section-label">✨ Guided Journeys</div>
+        <div class="guided-card" onclick="startGuidedFocus('first')">
+          <div class="guided-card-icon">🌅</div>
+          <div class="guided-card-info">
+            <div class="guided-card-name">First Journey</div>
+            <div class="guided-card-meta">15 min · Alpha waves</div>
+            <div class="guided-card-desc">A gentle introduction to binaural meditation</div>
+          </div>
+        </div>
+        <div class="guided-card" onclick="startGuidedFocus('deep')">
+          <div class="guided-card-icon">🌀</div>
+          <div class="guided-card-info">
+            <div class="guided-card-name">Deep Dive</div>
+            <div class="guided-card-meta">20 min · Theta waves</div>
+            <div class="guided-card-desc">Sink into profound stillness</div>
+          </div>
+        </div>
+        <div class="guided-card" onclick="startGuidedFocus('sleep')">
+          <div class="guided-card-icon">🌙</div>
+          <div class="guided-card-info">
+            <div class="guided-card-name">Sleep Gateway</div>
+            <div class="guided-card-meta">30 min · Delta waves</div>
+            <div class="guided-card-desc">Drift into deep, restful sleep</div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="focus-session-display" id="focusSession">
-      <div class="focus-level-label" id="focusSessionLabel">ALPHA REST</div>
+      <div class="focus-level-label" id="focusSessionLabel">CALM & RELAX</div>
+      <div id="focusGuideText"></div>
       <div class="focus-vis" id="focusVis"></div>
       <div class="focus-elapsed" id="focusElapsed">0:00</div>
       <div style="font-size:12px; color:var(--text-dim);" id="focusRemaining"></div>
@@ -1786,10 +1859,10 @@ function nextBreathPhase(){const pat=BREATH_PATTERNS[breathState.pattern];breath
 
 // ═══ FOCUS STATES (BINAURAL BEATS) ═══
 const FOCUS_LEVELS = {
-  alpha: { name:'Alpha Rest', desc:'Relaxed awareness', baseFreq:200, beatFreq:10 },
-  theta: { name:'Theta Deep', desc:'Deep meditation', baseFreq:150, beatFreq:6 },
-  delta: { name:'Delta Drift', desc:'Body asleep, mind awake', baseFreq:120, beatFreq:4 },
-  gamma: { name:'Gamma Focus', desc:'Heightened clarity', baseFreq:300, beatFreq:40 },
+  alpha: { name:'Calm & Relax', useCase:'Wind down after a stressful day', desc:'Alpha waves (10Hz) — gentle relaxation', baseFreq:200, beatFreq:10 },
+  theta: { name:'Deep Meditation', useCase:'Go deeper in your practice', desc:'Theta waves (6Hz) — meditative trance', baseFreq:150, beatFreq:6 },
+  delta: { name:'Can\'t Sleep', useCase:'Fall asleep naturally', desc:'Delta waves (4Hz) — sleep onset', baseFreq:120, beatFreq:4 },
+  gamma: { name:'Sharp Focus', useCase:'Study, work, or creative flow', desc:'Gamma waves (40Hz) — peak concentration', baseFreq:300, beatFreq:40 },
 };
 let focusState = { running:false, level:'alpha', duration:30, startTime:null, timer:null, nodes:null };
 
@@ -1808,6 +1881,7 @@ function selectFocusDur(dur, btn) {
 function openFocus() { hapticTap(); document.getElementById('focusOverlay').classList.add('active'); }
 function closeFocus() {
   if (focusState.running) stopFocusSession();
+  if (guidedState.active) { guidedState.active = false; if ('speechSynthesis' in window) window.speechSynthesis.cancel(); }
   document.getElementById('focusOverlay').classList.remove('active');
 }
 
@@ -1913,6 +1987,14 @@ function setFocusVolume(val) {
 
 function stopFocusSession() {
   focusState.running = false;
+  // Clean up guided session
+  if (guidedState.active) {
+    guidedState.active = false;
+    guidedState.session = null;
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    const guideEl = document.getElementById('focusGuideText');
+    if (guideEl) { guideEl.style.display = 'none'; guideEl.textContent = ''; }
+  }
   clearTimeout(focusState.timer);
   canvasIntensity = 0.15;
 
@@ -1943,6 +2025,129 @@ function stopFocusSession() {
   document.getElementById('focusSession').classList.remove('visible');
   document.getElementById('focusPicker').style.display = '';
   releaseWakeLock();
+}
+
+// ═══ GUIDED FOCUS SESSIONS ═══
+const GUIDED_SESSIONS = {
+  first: {
+    name: 'First Journey', level: 'alpha', duration: 15,
+    prompts: [
+      { t:0, text:'Close your eyes. Let your breath settle.', speak:true },
+      { t:30, text:'Notice the gentle tones in each ear.', speak:true },
+      { t:60, text:'Let the sound wash over you. No effort needed.', speak:true },
+      { t:120, text:'Your mind may wander. That\'s okay. Just return to the sound.', speak:true },
+      { t:240, text:'Settle deeper. Let go of any tension.', speak:true },
+      { t:420, text:'You\'re doing beautifully. Just be here.', speak:true },
+      { t:600, text:'Allow yourself to simply exist in this moment.', speak:true },
+      { t:780, text:'Begin to notice your breath again.', speak:true },
+      { t:840, text:'Gently return. Take your time.', speak:true },
+    ]
+  },
+  deep: {
+    name: 'Deep Dive', level: 'theta', duration: 20,
+    prompts: [
+      { t:0, text:'Find a comfortable position. Close your eyes.', speak:true },
+      { t:30, text:'Take three deep breaths. Slow and full.', speak:true },
+      { t:60, text:'Feel the tones pulling you inward.', speak:true },
+      { t:120, text:'Release every thought as it arises. No judgment.', speak:true },
+      { t:240, text:'Sink deeper. Let your body become heavy.', speak:true },
+      { t:420, text:'You are safe. You are held. Go deeper.', speak:true },
+      { t:600, text:'In this space, there is nothing to do.', speak:true },
+      { t:780, text:'Rest in the stillness between thoughts.', speak:true },
+      { t:960, text:'Like floating in warm, dark water.', speak:true },
+      { t:1080, text:'Slowly now, begin to resurface.', speak:true },
+      { t:1140, text:'Bring your awareness back to your breath.', speak:true },
+    ]
+  },
+  sleep: {
+    name: 'Sleep Gateway', level: 'delta', duration: 30,
+    prompts: [
+      { t:0, text:'Lie down. Close your eyes. Let everything go.', speak:true },
+      { t:30, text:'Feel the weight of your body on the surface beneath you.', speak:true },
+      { t:60, text:'The tones will guide you into sleep. No effort.', speak:true },
+      { t:120, text:'Release your jaw. Soften your forehead. Relax your hands.', speak:true },
+      { t:240, text:'Each exhale takes you deeper into rest.', speak:true },
+      { t:420, text:'You don\'t need to follow these words. Just let them wash over you.', speak:true },
+      { t:600, text:'Drifting now. Gently. Slowly.', speak:true },
+      { t:900, text:'Let sleep come naturally. It\'s safe to let go.', speak:true },
+      { t:1200, text:'', speak:false },
+    ]
+  }
+};
+
+let guidedState = { active:false, session:null, promptIdx:0, promptTimer:null, speechSynth:null };
+
+function startGuidedFocus(key) {
+  const session = GUIDED_SESSIONS[key];
+  if (!session) return;
+  hapticTap();
+
+  // Set up focus state for the binaural engine
+  focusState.level = session.level;
+  focusState.duration = session.duration;
+
+  // Set guided state
+  guidedState.active = true;
+  guidedState.session = key;
+  guidedState.promptIdx = 0;
+
+  // Start the binaural session
+  startFocusSession();
+
+  // Show guide text area
+  const guideEl = document.getElementById('focusGuideText');
+  if (guideEl) guideEl.style.display = 'block';
+
+  // Schedule prompts
+  scheduleGuidedPrompts(key);
+}
+
+function scheduleGuidedPrompts(key) {
+  const session = GUIDED_SESSIONS[key];
+  if (!session) return;
+
+  session.prompts.forEach(prompt => {
+    const timer = setTimeout(() => {
+      if (!guidedState.active) return;
+      showGuidedPrompt(prompt.text);
+      if (prompt.speak && prompt.text) speakPrompt(prompt.text);
+    }, prompt.t * 1000);
+  });
+}
+
+function showGuidedPrompt(text) {
+  const el = document.getElementById('focusGuideText');
+  if (!el) return;
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.textContent = text;
+    el.style.opacity = '1';
+  }, 300);
+  if (text) {
+    setTimeout(() => { el.style.opacity = '0.4'; }, 6000);
+  }
+}
+
+function speakPrompt(text) {
+  if (!('speechSynthesis' in window)) return;
+  try {
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.rate = 0.85;
+    utt.pitch = 0.9;
+    utt.volume = 0.7;
+    // Prefer a calm-sounding voice
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Karen') || v.name.includes('Moira'));
+    if (preferred) utt.voice = preferred;
+    window.speechSynthesis.speak(utt);
+  } catch(e) {}
+}
+
+// Preload voices
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 
 // ═══ INSIGHTS ═══
