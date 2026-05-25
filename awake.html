@@ -10,61 +10,47 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='42%25' r='65%25'%3E%3Cstop offset='0%25' stop-color='%233a2878'/%3E%3Cstop offset='50%25' stop-color='%231e1450'/%3E%3Cstop offset='100%25' stop-color='%230e0a28'/%3E%3C/radialGradient%3E%3CradialGradient id='glow' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='15%25' stop-color='%23ece0ff'/%3E%3Cstop offset='35%25' stop-color='%23c8a8ff' stop-opacity='0.9'/%3E%3Cstop offset='60%25' stop-color='%237c5cf0' stop-opacity='0.3'/%3E%3Cstop offset='100%25' stop-color='%235030c0' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='core' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='40%25' stop-color='%23e8d8ff'/%3E%3Cstop offset='80%25' stop-color='%23b090f8' stop-opacity='0.5'/%3E%3Cstop offset='100%25' stop-color='%238060e0' stop-opacity='0'/%3E%3C/radialGradient%3E%3ClinearGradient id='sheen' x1='0' y1='0' x2='0.4' y2='1'%3E%3Cstop offset='0%25' stop-color='%23ffffff' stop-opacity='0.25'/%3E%3Cstop offset='30%25' stop-color='%23ffffff' stop-opacity='0.1'/%3E%3Cstop offset='50%25' stop-color='%23ffffff' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='108' fill='url(%23bg)'/%3E%3Ccircle cx='256' cy='256' r='210' fill='none' stroke='%23c0b0ff' stroke-width='1.5' opacity='0.2'/%3E%3Ccircle cx='256' cy='256' r='175' fill='none' stroke='%23d0c0ff' stroke-width='1.8' opacity='0.25'/%3E%3Ccircle cx='256' cy='256' r='120' fill='none' stroke='%23e8deff' stroke-width='3.5' opacity='0.85'/%3E%3Ccircle cx='256' cy='136' r='120' fill='none' stroke='%23d8c8ff' stroke-width='3' opacity='0.7'/%3E%3Ccircle cx='256' cy='376' r='120' fill='none' stroke='%23d8c8ff' stroke-width='3' opacity='0.7'/%3E%3Ccircle cx='152' cy='196' r='120' fill='none' stroke='%23d8c8ff' stroke-width='3' opacity='0.7'/%3E%3Ccircle cx='360' cy='196' r='120' fill='none' stroke='%23d8c8ff' stroke-width='3' opacity='0.7'/%3E%3Ccircle cx='152' cy='316' r='120' fill='none' stroke='%23d8c8ff' stroke-width='3' opacity='0.7'/%3E%3Ccircle cx='360' cy='316' r='120' fill='none' stroke='%23d8c8ff' stroke-width='3' opacity='0.7'/%3E%3Ccircle cx='256' cy='256' r='120' fill='none' stroke='%23ffffff' stroke-width='2' opacity='0.15'/%3E%3Ccircle cx='256' cy='256' r='100' fill='url(%23glow)' opacity='0.6'/%3E%3Ccircle cx='256' cy='256' r='70' fill='url(%23glow)'/%3E%3Ccircle cx='256' cy='256' r='35' fill='url(%23core)'/%3E%3Ccircle cx='256' cy='256' r='15' fill='%23ffffff'/%3E%3Ccircle cx='256' cy='256' r='6' fill='%23ffffff'/%3E%3Crect width='512' height='512' rx='108' fill='url(%23sheen)'/%3E%3C/svg%3E">
 <link id="appleTouchIcon" rel="apple-touch-icon" href="">
 <script>
-// Generate PWA icon as PNG — NO roundRect (iOS clips icons automatically)
+// Generate PWA icon as PNG
 (function(){
   try{
   var c=document.createElement('canvas');c.width=512;c.height=512;var x=c.getContext('2d');
   var cx=256,cy=256,r=105;
-  // Deep purple background — plain fillRect, no roundRect needed
   x.fillStyle='#0e0a28';x.fillRect(0,0,512,512);
   var bg=x.createRadialGradient(256,215,0,256,256,332);
   bg.addColorStop(0,'#3a2878');bg.addColorStop(0.5,'#1e1450');bg.addColorStop(1,'#0e0a28');
   x.fillStyle=bg;x.fillRect(0,0,512,512);
-  // Rim light
   var rim=x.createLinearGradient(0,0,512,512);
   rim.addColorStop(0,'rgba(208,192,255,0.35)');rim.addColorStop(0.5,'rgba(144,128,208,0.08)');rim.addColorStop(1,'rgba(80,64,176,0.2)');
   x.fillStyle=rim;x.fillRect(0,0,512,512);
-  // Sacred geometry — 90% fill, BRIGHT glossy lines
   function circle(px,py,rad,color,alpha,w){x.strokeStyle=color;x.globalAlpha=alpha;x.lineWidth=w;x.beginPath();x.arc(px,py,rad,0,Math.PI*2);x.stroke();}
-  // Outer halos
   circle(cx,cy,210,'#c0b0ff',0.2,1.5);circle(cx,cy,175,'#d0c0ff',0.25,1.8);
-  // Main center circle — bright
   circle(cx,cy,r,'#e8deff',0.85,3.5);
-  // Flower of Life petals — glossy bright
   var petals=[[cx,cy-r],[cx,cy+r],[cx-r*0.866,cy-r*0.5],[cx+r*0.866,cy-r*0.5],[cx-r*0.866,cy+r*0.5],[cx+r*0.866,cy+r*0.5]];
   petals.forEach(function(p){circle(p[0],p[1],r,'#d8c8ff',0.7,3);});
-  // Glassy highlight on geometry — second pass with white
   circle(cx,cy,r,'#ffffff',0.15,2);
   petals.forEach(function(p){circle(p[0],p[1],r,'#ffffff',0.1,1.5);});
-  // Outer bloom glow
   var bloom=x.createRadialGradient(cx,cy,0,cx,cy,110);
   bloom.addColorStop(0,'rgba(255,255,255,0.65)');bloom.addColorStop(0.15,'rgba(230,210,255,0.5)');bloom.addColorStop(0.35,'rgba(180,140,255,0.3)');bloom.addColorStop(0.6,'rgba(100,60,220,0.12)');bloom.addColorStop(1,'rgba(60,30,160,0)');
   x.globalAlpha=1;x.fillStyle=bloom;x.beginPath();x.arc(cx,cy,110,0,Math.PI*2);x.fill();
-  // Hot core glow
   var glow=x.createRadialGradient(cx,cy,0,cx,cy,70);
   glow.addColorStop(0,'rgba(255,255,255,1)');glow.addColorStop(0.12,'rgba(248,240,255,1)');glow.addColorStop(0.3,'rgba(220,200,255,0.9)');glow.addColorStop(0.5,'rgba(180,140,255,0.6)');glow.addColorStop(0.75,'rgba(120,80,240,0.2)');glow.addColorStop(1,'rgba(80,40,200,0)');
   x.globalAlpha=1;x.fillStyle=glow;x.beginPath();x.arc(cx,cy,70,0,Math.PI*2);x.fill();
-  // Inner core
   var core=x.createRadialGradient(cx,cy,0,cx,cy,35);
   core.addColorStop(0,'rgba(255,255,255,1)');core.addColorStop(0.5,'rgba(245,238,255,1)');core.addColorStop(0.85,'rgba(200,170,255,0.6)');core.addColorStop(1,'rgba(160,120,248,0)');
   x.fillStyle=core;x.beginPath();x.arc(cx,cy,35,0,Math.PI*2);x.fill();
-  // Blazing center
   x.fillStyle='#ffffff';x.beginPath();x.arc(cx,cy,15,0,Math.PI*2);x.fill();
   x.fillStyle='#ffffff';x.beginPath();x.arc(cx,cy,6,0,Math.PI*2);x.fill();
-  // Glass sheen overlay — NO roundRect, just fillRect
   var sheen=x.createLinearGradient(0,0,205,512);
   sheen.addColorStop(0,'rgba(255,255,255,0.25)');sheen.addColorStop(0.3,'rgba(255,255,255,0.1)');sheen.addColorStop(0.5,'rgba(255,255,255,0)');
   x.globalAlpha=1;x.fillStyle=sheen;x.fillRect(0,0,512,512);
   var iconUrl=c.toDataURL('image/png');
-  // Set apple-touch-icon as PNG
   var ati=document.getElementById('appleTouchIcon');if(ati)ati.href=iconUrl;
-  // Set PWA manifest
   var manifest={name:'AWAKE',short_name:'AWAKE',start_url:'.',display:'standalone',background_color:'#0a0a1a',theme_color:'#0a0a1a',icons:[{src:iconUrl,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
   var blob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
   var mLink=document.querySelector('link[rel="manifest"]');
   if(mLink)mLink.remove();
   var link=document.createElement('link');link.rel='manifest';link.href=URL.createObjectURL(blob);document.head.appendChild(link);
-  }catch(e){/* graceful fail */}
+  }catch(e){}
 })();
 </script>
 <style>
@@ -82,6 +68,7 @@
   --breath-exhale: #f0a060;
   --breath-hold: #c090f0;
   --accent-sit: #c090f0;
+  --accent-focus: #6ca0f0;
   --radius: 16px;
   --radius-sm: 10px;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -110,7 +97,8 @@ html, body {
   #app { padding-top: calc(env(safe-area-inset-top, 20px) + 20px); }
 }
 .screen-title { font-size:28px; font-weight:700; letter-spacing:-0.5px; margin-bottom:6px; }
-.screen-subtitle { font-size:14px; color:var(--text-secondary); margin-bottom:28px; line-height:1.5; }
+.screen-subtitle { font-size:14px; color:var(--text-secondary); margin-bottom:4px; line-height:1.5; }
+.daily-quote { font-size:12px; color:var(--text-dim); font-style:italic; margin-bottom:28px; line-height:1.5; }
 .section-label { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); margin-bottom:12px; margin-top:28px; }
 .section-label:first-of-type { margin-top:0; }
 .card {
@@ -169,6 +157,17 @@ html, body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .share-btn:active { background:rgba(255,255,255,0.12); }
+/* Settings button */
+.settings-btn {
+  position:fixed; top: calc(var(--safe-top) + 14px); right:108px;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+  border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--text-secondary); font-size:16px; z-index:50;
+  transition: background 0.3s, color 0.3s;
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.settings-btn:active { background:rgba(255,255,255,0.12); }
 /* Sound hint */
 .sound-hint {
   position:fixed; bottom: calc(var(--safe-bottom) + 12px); left:50%; transform:translateX(-50%);
@@ -207,14 +206,18 @@ html, body {
 .breath-orb.hold-big { transform:scale(1.3); }
 .breath-orb.contract { transform:scale(0.7); box-shadow: 0 0 30px rgba(96,208,192,0.15), inset 0 -15px 30px rgba(0,0,0,0.4), inset 0 5px 15px rgba(255,255,255,0.1); }
 .breath-orb.hold-small { transform:scale(0.7); }
+.breath-orb.rapid-expand { transform:scale(1.2); transition: transform 0.6s ease-in-out; }
+.breath-orb.rapid-contract { transform:scale(0.8); transition: transform 0.4s ease-in-out; }
 .breath-timer { font-size:48px; font-weight:200; color:white; }
 .breath-phase { font-size:20px; font-weight:300; letter-spacing:2px; text-transform:uppercase; color:var(--accent-breath); margin-bottom:8px; }
 .breath-cycle { font-size:13px; color:var(--text-secondary); }
-.breath-patterns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:20px; }
+.breath-patterns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:20px; width:100%; }
+.breath-cat-label { width:100%; font-size:10px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); margin-top:12px; margin-bottom:4px; text-align:center; }
+.breath-cat-label:first-child { margin-top:0; }
 .breath-pattern-btn {
-  padding:8px 16px; border-radius:20px;
+  padding:8px 14px; border-radius:20px;
   background: var(--bg-card); border:1px solid rgba(255,255,255,0.08);
-  color:var(--text-secondary); font-size:13px;
+  color:var(--text-secondary); font-size:12px;
   cursor:pointer; transition: all 0.3s;
 }
 .breath-pattern-btn.active { background: rgba(96,208,192,0.15); border-color: var(--accent-breath); color: var(--accent-breath); }
@@ -260,6 +263,30 @@ html, body {
 .builder-actions .btn { padding:10px 18px; font-size:13px; }
 .cycles-row { display:flex; align-items:center; gap:10px; margin-top:12px; }
 .cycles-row label { font-size:13px; color:var(--text-secondary); }
+
+/* Nadi Shodhana nostril guide */
+.nostril-guide { display:none; margin-bottom:16px; }
+.nostril-guide.visible { display:block; }
+.nostril-guide svg { width:80px; height:80px; }
+
+/* Wim Hof special UI */
+.wim-retention-display { display:none; flex-direction:column; align-items:center; gap:12px; }
+.wim-retention-display.visible { display:flex; }
+.wim-retention-timer { font-size:64px; font-weight:200; color:var(--accent-breath); }
+.wim-breathe-btn {
+  padding:16px 40px; border-radius:50px; border:2px solid var(--accent-breath);
+  background:rgba(96,208,192,0.15); color:var(--accent-breath);
+  font-size:18px; font-weight:700; letter-spacing:2px; cursor:pointer;
+  animation: pulse-breathe 1.5s ease-in-out infinite;
+}
+@keyframes pulse-breathe {
+  0%,100% { box-shadow: 0 0 20px rgba(96,208,192,0.2); }
+  50% { box-shadow: 0 0 40px rgba(96,208,192,0.4); }
+}
+.wim-round-results { width:100%; max-width:280px; margin-top:16px; }
+.wim-round-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; }
+.wim-round-row span:first-child { color:var(--text-secondary); }
+.wim-round-row span:last-child { font-weight:600; color:var(--accent-breath); }
 
 /* Snap */
 .snap-container { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0; text-align:center; width:100%; height:100%; }
@@ -327,6 +354,31 @@ html, body {
   cursor:pointer; transition: all 0.3s;
 }
 .interval-pill.active { background: rgba(192,144,240,0.12); border-color: rgba(192,144,240,0.3); color: var(--accent-sit); }
+
+/* Ambient sound toggle */
+.ambient-selector { display:flex; gap:8px; margin-bottom:20px; align-items:center; }
+.ambient-label { font-size:12px; color:var(--text-secondary); margin-right:4px; white-space:nowrap; }
+.ambient-pill {
+  padding:6px 14px; border-radius:16px;
+  background: var(--bg-card); border:1px solid rgba(255,255,255,0.08);
+  color:var(--text-dim); font-size:12px; font-weight:500;
+  cursor:pointer; transition: all 0.3s;
+}
+.ambient-pill.active { background: rgba(192,144,240,0.12); border-color: rgba(192,144,240,0.3); color: var(--accent-sit); }
+
+/* Micro-journal inputs */
+.micro-journal {
+  width:100%; max-width:320px; margin-bottom:20px; position:relative;
+}
+.micro-journal input {
+  width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px; padding:12px 60px 12px 14px; color:var(--text-primary); font-size:14px;
+  font-family:inherit; outline:none;
+}
+.micro-journal input:focus { border-color:var(--accent-sit); }
+.micro-journal input::placeholder { color:var(--text-dim); }
+.micro-journal .char-count { position:absolute; right:40px; top:50%; transform:translateY(-50%); font-size:10px; color:var(--text-dim); }
+.micro-journal .skip-btn { position:absolute; right:8px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--text-dim); font-size:11px; cursor:pointer; }
 
 /* Welcome back flash */
 .welcome-flash {
@@ -415,8 +467,83 @@ html, body {
 .history-info { flex:1; }
 .history-title { font-size:14px; font-weight:500; }
 .history-meta { font-size:12px; color:var(--text-secondary); }
+.history-journal { font-size:11px; color:var(--text-dim); font-style:italic; margin-top:2px; }
 .history-min { font-size:13px; font-weight:600; color:var(--accent-breath); text-align:right; }
 .history-wanders { font-size:11px; color:var(--accent-sit); }
+
+/* Focus States overlay */
+.focus-level-btn {
+  width:100%; padding:16px; border-radius:var(--radius-sm); margin-bottom:8px;
+  background:var(--bg-card); border:1px solid rgba(255,255,255,0.08);
+  cursor:pointer; transition: all 0.3s; text-align:left;
+}
+.focus-level-btn.active { border-color:var(--accent-focus); background:rgba(108,160,240,0.1); }
+.focus-level-name { font-size:16px; font-weight:600; color:var(--text-primary); }
+.focus-level-desc { font-size:12px; color:var(--text-secondary); margin-top:2px; }
+.focus-level-hz { font-size:11px; color:var(--accent-focus); margin-top:4px; }
+.focus-timer-pills { display:flex; gap:8px; margin:16px 0; justify-content:center; }
+.focus-pill {
+  padding:8px 18px; border-radius:20px;
+  background:var(--bg-card); border:1px solid rgba(255,255,255,0.08);
+  color:var(--text-secondary); font-size:13px; font-weight:500;
+  cursor:pointer; transition: all 0.3s;
+}
+.focus-pill.active { background:rgba(108,160,240,0.15); border-color:var(--accent-focus); color:var(--accent-focus); }
+.focus-session-display { display:none; flex-direction:column; align-items:center; gap:16px; width:100%; }
+.focus-session-display.visible { display:flex; }
+.focus-vis {
+  width:120px; height:120px; border-radius:50%;
+  background:radial-gradient(circle, rgba(108,160,240,0.3), rgba(108,160,240,0.05));
+  animation: focus-pulse 4s ease-in-out infinite;
+  display:flex; align-items:center; justify-content:center;
+}
+@keyframes focus-pulse {
+  0%,100% { transform:scale(1); box-shadow: 0 0 40px rgba(108,160,240,0.2); }
+  50% { transform:scale(1.08); box-shadow: 0 0 80px rgba(108,160,240,0.35); }
+}
+.focus-elapsed { font-size:48px; font-weight:200; color:var(--text-primary); }
+.focus-level-label { font-size:16px; font-weight:300; color:var(--accent-focus); letter-spacing:2px; }
+.focus-volume-wrap { display:flex; align-items:center; gap:10px; width:80%; max-width:250px; }
+.focus-volume-wrap input[type="range"] {
+  flex:1; -webkit-appearance:none; appearance:none; height:4px; border-radius:2px;
+  background:rgba(255,255,255,0.12); outline:none;
+}
+.focus-volume-wrap input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+  background:var(--accent-focus); cursor:pointer;
+}
+.focus-volume-wrap label { font-size:11px; color:var(--text-dim); }
+
+/* Insights overlay */
+.insights-week-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; width:100%; max-width:320px; margin-bottom:20px; text-align:center; }
+.insights-day { padding:8px 4px; border-radius:8px; background:rgba(255,255,255,0.02); }
+.insights-day-label { font-size:9px; color:var(--text-dim); text-transform:uppercase; }
+.insights-day-dot { width:10px; height:10px; border-radius:50%; margin:6px auto 4px; }
+.insights-day-min { font-size:10px; color:var(--text-secondary); }
+.sparkline-wrap { width:100%; max-width:320px; margin-bottom:24px; }
+.sparkline-label { font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.monthly-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; max-width:320px; margin-bottom:24px; }
+.monthly-stat { background:var(--bg-card); border:1px solid rgba(255,255,255,0.06); border-radius:var(--radius-sm); padding:14px 10px; text-align:center; }
+.monthly-stat-val { font-size:22px; font-weight:700; }
+.monthly-stat-label { font-size:9px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.8px; margin-top:2px; }
+.milestones-grid { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; width:100%; max-width:320px; margin-bottom:20px; }
+.milestone-badge {
+  width:60px; height:60px; border-radius:14px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:2px;
+  background:var(--bg-card); border:1px solid rgba(255,255,255,0.06);
+  transition: all 0.3s;
+}
+.milestone-badge.earned { border-color:rgba(240,160,96,0.3); background:rgba(240,160,96,0.08); }
+.milestone-badge.unearned { opacity:0.35; }
+.milestone-emoji { font-size:20px; }
+.milestone-label { font-size:7px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px; text-align:center; line-height:1.2; }
+
+/* Settings overlay */
+.settings-section { width:100%; max-width:320px; margin-bottom:20px; }
+.settings-section-label { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); margin-bottom:12px; }
+.settings-row { display:flex; gap:12px; margin-bottom:10px; }
+.settings-row .btn { flex:1; font-size:13px; padding:12px 16px; }
+.settings-version { font-size:11px; color:var(--text-dim); text-align:center; margin-top:20px; }
 
 @keyframes pulse-glow {
   0%,100% { box-shadow: 0 4px 20px rgba(180,80,30,0.35), inset 0 1px 0 rgba(255,255,255,0.1); }
@@ -431,6 +558,9 @@ html, body {
 <body>
 <canvas id="bgCanvas"></canvas>
 <div class="snap-flash" id="snapFlash"></div>
+<button class="settings-btn" id="settingsBtn" onclick="openSettings()" title="Settings">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+</button>
 <button class="share-btn" id="shareBtn" onclick="shareApp()" title="Share AWAKE">
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
 </button>
@@ -440,7 +570,8 @@ html, body {
 
 <div id="app">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;"><svg viewBox="0 0 100 100" width="28" height="28" style="flex-shrink:0;"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:22px;font-weight:600;letter-spacing:-0.5px;color:var(--text-primary);">AWAKE</span></div>
-  <div class="screen-subtitle" style="margin-bottom:6px;">Loops break. Presence enters.</div>
+  <div class="screen-subtitle" style="margin-bottom:4px;">Loops break. Presence enters.</div>
+  <div class="daily-quote" id="dailyQuote"></div>
   <div style="margin-bottom:28px;"><span class="a2hs-link" id="a2hsLink" onclick="openA2HS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg> Add to Home Screen</span></div>
 
   <div class="stats-row">
@@ -458,15 +589,23 @@ html, body {
   <div class="card" onclick="openBreathe()">
     <div class="card-row"><div class="card-icon" style="background:rgba(96,208,192,0.12);">🌊</div><div class="card-info"><div class="card-title">Breathwork</div><div class="card-desc">Guided breathing — presets or build your own</div></div></div>
   </div>
+  <div class="card" onclick="openFocus()">
+    <div class="card-row"><div class="card-icon" style="background:rgba(108,160,240,0.12);">🎧</div><div class="card-info"><div class="card-title">Focus States</div><div class="card-desc">Binaural beats for deep states</div></div></div>
+  </div>
 
   <div class="section-label" style="margin-top:36px;">Recent Sessions</div>
   <div id="journeyHistory"></div>
+
+  <div class="card" onclick="openInsights()" style="margin-top:28px;">
+    <div class="card-row"><div class="card-icon" style="background:rgba(240,160,96,0.12);">📊</div><div class="card-info"><div class="card-title">Insights</div><div class="card-desc">Your practice at a glance</div></div></div>
+  </div>
+
   <div style="margin-top:30px; text-align:center;">
     <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.4); border-color:rgba(255,80,80,0.1); font-size:10px; padding:6px 14px; letter-spacing:0.3px;">Reset All Progress</button>
   </div>
 </div>
 
-<!-- ═══ OVERLAYS ═══ -->
+<!-- OVERLAYS -->
 
 <!-- Snap -->
 <div class="exercise-overlay" id="snapOverlay">
@@ -486,10 +625,18 @@ html, body {
     <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-breath);">Breathwork</div>
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Let the rhythm dissolve the noise</div>
     <div class="breath-patterns" id="breathPatterns">
-      <button class="breath-pattern-btn active" data-pattern="box">Box 4-4-4-4</button>
-      <button class="breath-pattern-btn" data-pattern="478">4-7-8 Calm</button>
-      <button class="breath-pattern-btn" data-pattern="coherent">Coherent 5-5</button>
-      <button class="breath-pattern-btn" data-pattern="wim">Power Breath</button>
+      <div class="breath-cat-label">Calming</div>
+      <button class="breath-pattern-btn active" data-pattern="box">Sama Vritti</button>
+      <button class="breath-pattern-btn" data-pattern="478">4-7-8</button>
+      <button class="breath-pattern-btn" data-pattern="coherent">Coherence</button>
+      <button class="breath-pattern-btn" data-pattern="nadi">Nadi Shodhana</button>
+      <button class="breath-pattern-btn" data-pattern="calm446">4-4-6-2</button>
+      <div class="breath-cat-label">Energizing</div>
+      <button class="breath-pattern-btn" data-pattern="wimhof">Wim Hof</button>
+      <button class="breath-pattern-btn" data-pattern="bhastrika">Bhastrika</button>
+      <button class="breath-pattern-btn" data-pattern="kapalabhati">Kapalabhati</button>
+      <button class="breath-pattern-btn" data-pattern="energy21">2-1 Energy</button>
+      <div class="breath-cat-label">Your Patterns</div>
       <button class="breath-pattern-btn" data-pattern="custom" id="customPatternBtn">+ Custom</button>
     </div>
     <div class="custom-builder" id="customBuilder">
@@ -501,11 +648,26 @@ html, body {
       </div>
       <div class="cycles-row"><label>Cycles:</label><div class="stepper"><button class="stepper-btn" onclick="stepCycles(-1)">−</button><div class="stepper-val" id="customCyclesVal">6</div><button class="stepper-btn" onclick="stepCycles(1)">+</button></div></div>
     </div>
-    <div class="breath-container">
+    <div class="breath-container" id="breathContainer">
+      <div class="nostril-guide" id="nostrilGuide">
+        <svg viewBox="0 0 80 80" width="80" height="80">
+          <ellipse cx="40" cy="50" rx="18" ry="24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+          <line x1="40" y1="26" x2="40" y2="58" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <ellipse id="nostrilLeft" cx="32" cy="56" rx="6" ry="8" fill="rgba(96,208,192,0.1)" stroke="rgba(96,208,192,0.3)" stroke-width="1.5"/>
+          <ellipse id="nostrilRight" cx="48" cy="56" rx="6" ry="8" fill="rgba(96,208,192,0.1)" stroke="rgba(96,208,192,0.3)" stroke-width="1.5"/>
+          <text x="32" y="72" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="8">L</text>
+          <text x="48" y="72" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="8">R</text>
+        </svg>
+      </div>
       <div class="breath-phase" id="breathPhase">Ready</div>
       <div class="breath-orb-wrap"><div class="breath-orb" id="breathOrb"><span class="breath-timer" id="breathTimer">—</span></div></div>
       <div class="breath-cycle" id="breathCycle">Tap start to begin</div>
-      <div style="margin-top:24px; display:flex; gap:12px;">
+      <div class="wim-retention-display" id="wimRetention">
+        <div class="wim-retention-timer" id="wimRetentionTimer">0:00</div>
+        <button class="wim-breathe-btn" id="wimBreatheBtn" onclick="wimBreathe()">BREATHE</button>
+        <div class="wim-round-results" id="wimRoundResults"></div>
+      </div>
+      <div style="margin-top:24px; display:flex; gap:12px;" id="breathControls">
         <button class="btn btn-primary" id="breathStartBtn" onclick="toggleBreath()">Start</button>
         <button class="btn btn-ghost" onclick="stopBreath()">Reset</button>
       </div>
@@ -532,6 +694,18 @@ html, body {
       <button class="interval-pill" data-int="4" onclick="selectInterval(4,this)">4m</button>
       <button class="interval-pill" data-int="6" onclick="selectInterval(6,this)">6m</button>
     </div>
+    <div class="ambient-selector">
+      <span class="ambient-label">Ambient:</span>
+      <button class="ambient-pill active" data-amb="off" onclick="selectAmbient('off',this)">Off</button>
+      <button class="ambient-pill" data-amb="brown" onclick="selectAmbient('brown',this)">Brown</button>
+      <button class="ambient-pill" data-amb="rain" onclick="selectAmbient('rain',this)">Rain</button>
+      <button class="ambient-pill" data-amb="om" onclick="selectAmbient('om',this)">Om</button>
+    </div>
+    <div class="micro-journal" id="sitIntentionWrap">
+      <input type="text" id="sitIntention" placeholder="What are you sitting with?" maxlength="50" oninput="updateCharCount(this,'sitIntentionCount')">
+      <span class="char-count" id="sitIntentionCount">0/50</span>
+      <button class="skip-btn" onclick="skipIntention()">Skip</button>
+    </div>
     <button class="btn btn-primary" onclick="startSit()" style="margin-top:8px;">Begin</button>
   </div>
   <div id="sitActive" style="display:none; flex-direction:column; align-items:center; width:100%; flex:1;">
@@ -557,10 +731,104 @@ html, body {
       <div class="wander-tl-bar" id="wanderTlBar"><div class="wander-tl-fill" id="wanderTlFill"></div></div>
       <div class="wander-tl-ends"><span>0:00</span><span id="wanderTlEnd">0:00</span></div>
     </div>
-    <button class="btn btn-primary" onclick="closeSit()">Done</button>
+    <div class="micro-journal" id="sitReflectionWrap">
+      <input type="text" id="sitReflection" placeholder="What did you notice?" maxlength="50" oninput="updateCharCount(this,'sitReflectionCount')">
+      <span class="char-count" id="sitReflectionCount">0/50</span>
+      <button class="skip-btn" onclick="skipReflection()">Skip</button>
+    </div>
+    <button class="btn btn-primary" onclick="saveSitReflectionAndClose()">Done</button>
   </div>
 </div>
 
+<!-- Focus States -->
+<div class="exercise-overlay" id="focusOverlay">
+  <button class="overlay-close" onclick="closeFocus()">Close ✕</button>
+  <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-focus);">Focus States</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Binaural beats for deep states</div>
+    <div id="focusPicker" style="width:100%; max-width:320px;">
+      <div class="focus-level-btn active" data-focus="alpha" onclick="selectFocusLevel('alpha',this)">
+        <div class="focus-level-name">Alpha Rest</div>
+        <div class="focus-level-desc">Relaxed awareness</div>
+        <div class="focus-level-hz">10Hz binaural beat</div>
+      </div>
+      <div class="focus-level-btn" data-focus="theta" onclick="selectFocusLevel('theta',this)">
+        <div class="focus-level-name">Theta Deep</div>
+        <div class="focus-level-desc">Deep meditation</div>
+        <div class="focus-level-hz">6Hz binaural beat</div>
+      </div>
+      <div class="focus-level-btn" data-focus="delta" onclick="selectFocusLevel('delta',this)">
+        <div class="focus-level-name">Delta Drift</div>
+        <div class="focus-level-desc">Body asleep, mind awake</div>
+        <div class="focus-level-hz">4Hz binaural beat</div>
+      </div>
+      <div class="focus-level-btn" data-focus="gamma" onclick="selectFocusLevel('gamma',this)">
+        <div class="focus-level-name">Gamma Focus</div>
+        <div class="focus-level-desc">Heightened clarity</div>
+        <div class="focus-level-hz">40Hz binaural beat</div>
+      </div>
+      <div class="focus-timer-pills">
+        <button class="focus-pill" data-fdur="15" onclick="selectFocusDur(15,this)">15m</button>
+        <button class="focus-pill active" data-fdur="30" onclick="selectFocusDur(30,this)">30m</button>
+        <button class="focus-pill" data-fdur="45" onclick="selectFocusDur(45,this)">45m</button>
+        <button class="focus-pill" data-fdur="60" onclick="selectFocusDur(60,this)">60m</button>
+      </div>
+      <div style="text-align:center; padding:12px; background:rgba(108,160,240,0.08); border:1px solid rgba(108,160,240,0.15); border-radius:var(--radius-sm); margin-bottom:16px;">
+        <div style="font-size:13px; color:var(--accent-focus);">🎧 Use headphones for binaural effect</div>
+        <div style="font-size:11px; color:var(--text-dim); margin-top:4px;">Different frequencies in each ear create the beat</div>
+      </div>
+      <div style="text-align:center;"><button class="btn btn-primary" onclick="startFocusSession()" style="background:linear-gradient(135deg, var(--accent-focus), #8cb0f8);">Begin Session</button></div>
+    </div>
+    <div class="focus-session-display" id="focusSession">
+      <div class="focus-level-label" id="focusSessionLabel">ALPHA REST</div>
+      <div class="focus-vis" id="focusVis"></div>
+      <div class="focus-elapsed" id="focusElapsed">0:00</div>
+      <div style="font-size:12px; color:var(--text-dim);" id="focusRemaining"></div>
+      <div class="focus-volume-wrap">
+        <label>Vol</label>
+        <input type="range" id="focusVolume" min="0" max="100" value="50" oninput="setFocusVolume(this.value)">
+      </div>
+      <button class="btn btn-ghost" onclick="stopFocusSession()" style="margin-top:12px;">End Session</button>
+    </div>
+  </div>
+</div>
+
+<!-- Insights -->
+<div class="exercise-overlay" id="insightsOverlay">
+  <button class="overlay-close" onclick="closeInsights()">Close ✕</button>
+  <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-warm);">Insights</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Your practice at a glance</div>
+    <div class="section-label" style="margin-top:0;">This Week</div>
+    <div class="insights-week-grid" id="insightsWeekGrid"></div>
+    <div class="sparkline-wrap">
+      <div class="sparkline-label">30-Day Trend</div>
+      <svg id="sparklineSvg" width="100%" height="60" viewBox="0 0 320 60" preserveAspectRatio="none"></svg>
+    </div>
+    <div class="section-label">This Month</div>
+    <div class="monthly-stats" id="monthlyStats"></div>
+    <div class="section-label">Milestones</div>
+    <div class="milestones-grid" id="milestonesGrid"></div>
+  </div>
+</div>
+
+<!-- Settings -->
+<div class="exercise-overlay" id="settingsOverlay">
+  <button class="overlay-close" onclick="closeSettings()">Close ✕</button>
+  <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--text-primary);">Settings</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Data & preferences</div>
+    <div class="settings-section">
+      <div class="settings-section-label">Data</div>
+      <div class="settings-row">
+        <button class="btn btn-ghost" onclick="exportData()">Export Data</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">Import Data</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+      </div>
+    </div>
+    <div class="settings-version">AWAKE v12</div>
+  </div>
+</div>
 
 <!-- Add to Home Screen -->
 <div class="a2hs-modal" id="a2hsModal">
@@ -590,8 +858,50 @@ html, body {
 
 <script>
 /* ════════════════════════════════════════════
-   AWAKE v10
+   AWAKE v12
    ════════════════════════════════════════════ */
+
+// ═══ DAILY TEACHINGS ═══
+const TEACHINGS = [
+  "The quieter you become, the more you can hear. — Ram Dass",
+  "This is it. — Alan Watts",
+  "You are the sky. Everything else is weather. — Rumi",
+  "Be still and know. — Psalm 46:10",
+  "The mind is a wonderful servant but a terrible master. — Robin Sharma",
+  "Before thinking, there is awareness. — Nisargadatta Maharaj",
+  "When you realize nothing is lacking, the world belongs to you. — Lao Tzu",
+  "Smile, breathe, and go slowly. — Thich Nhat Hanh",
+  "You are not your thoughts. — Eckhart Tolle",
+  "What you seek is seeking you. — Rumi",
+  "Be here now. — Ram Dass",
+  "The obstacle is the path. — Zen Proverb",
+  "No self, no problem. — Anam Thubten",
+  "Wherever you go, there you are. — Jon Kabat-Zinn",
+  "An unexamined life is not worth living. — Socrates",
+  "First say to yourself what you would be; then do what you have to do. — Epictetus",
+  "The happiness of your life depends on the quality of your thoughts. — Marcus Aurelius",
+  "Hatred does not cease by hatred, but only by love. — Dhammapada",
+  "Let go or be dragged. — Zen Proverb",
+  "The only way out is through. — Robert Frost",
+  "Do not dwell in the past, do not dream of the future. — Buddha",
+  "Everything that has a beginning has an ending. — Buddha",
+  "Waste no more time arguing about what a good man should be. Be one. — Marcus Aurelius",
+  "The present moment is the only moment available to us. — Thich Nhat Hanh",
+  "I am not what happened to me. I am what I choose to become. — Jung",
+  "Muddy water is best cleared by leaving it alone. — Alan Watts",
+  "The soul always knows what to do. Listen. — Caroline Myss",
+  "In the middle of difficulty lies opportunity. — Einstein",
+  "Who looks outside, dreams. Who looks inside, awakes. — Jung",
+  "Silence is the language of God. — Rumi",
+];
+
+function getDailyQuote() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const diff = now - start;
+  const dayOfYear = Math.floor(diff / 86400000);
+  return TEACHINGS[dayOfYear % TEACHINGS.length];
+}
 
 // ═══ HAPTICS ENGINE ═══
 function haptic(ms){try{if(navigator.vibrate)navigator.vibrate(ms);}catch(e){}}
@@ -636,20 +946,151 @@ function playTick() { playChime(600, 0.15); }
 function playSoftTap() { playChime(400, 0.1); }
 function playWelcomeBack() { playChime(528, 0.25); setTimeout(() => playChime(660, 0.35), 120); }
 
+// ═══ AMBIENT SOUND ENGINE ═══
+let ambientNodes = null;
+let ambientType = 'off';
+
+function selectAmbient(type, btn) {
+  hapticTap();
+  ambientType = type;
+  document.querySelectorAll('.ambient-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function startAmbientSound(type) {
+  stopAmbientSound();
+  if (type === 'off' || (state && state.muted)) return;
+  try {
+    const ctx = getAudio();
+    const masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(0, ctx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + 3);
+    masterGain.connect(ctx.destination);
+    ambientNodes = { master: masterGain, sources: [] };
+
+    if (type === 'brown') {
+      const bufferSize = 2 * ctx.sampleRate;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      let lastOut = 0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        data[i] = (lastOut + (0.02 * white)) / 1.02;
+        lastOut = data[i];
+        data[i] *= 3.5;
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buffer; src.loop = true;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass'; filter.frequency.value = 800;
+      src.connect(filter); filter.connect(masterGain);
+      src.start();
+      ambientNodes.sources.push(src);
+    } else if (type === 'rain') {
+      // Filtered noise base
+      const bufferSize = 2 * ctx.sampleRate;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      let lastOut = 0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        data[i] = (lastOut + (0.02 * white)) / 1.02;
+        lastOut = data[i]; data[i] *= 3.5;
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buffer; src.loop = true;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass'; filter.frequency.value = 1200;
+      src.connect(filter); filter.connect(masterGain);
+      src.start();
+      ambientNodes.sources.push(src);
+      // Random high-freq clicks for rain drops
+      function scheduleClick() {
+        if (!ambientNodes) return;
+        const delay = 0.05 + Math.random() * 0.3;
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.frequency.value = 2000 + Math.random() * 4000;
+        g.gain.setValueAtTime(0.02 + Math.random() * 0.03, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay * 0.5);
+        osc.connect(g); g.connect(masterGain);
+        osc.start(ctx.currentTime); osc.stop(ctx.currentTime + delay * 0.5);
+        ambientNodes._rainTimer = setTimeout(scheduleClick, delay * 1000);
+      }
+      scheduleClick();
+    } else if (type === 'om') {
+      const freqs = [136.1, 272.2, 408.3];
+      const gains = [0.5, 0.25, 0.15];
+      freqs.forEach((f, i) => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'sine'; osc.frequency.value = f;
+        g.gain.value = gains[i];
+        osc.connect(g); g.connect(masterGain);
+        osc.start();
+        ambientNodes.sources.push(osc);
+      });
+    }
+  } catch(e) {}
+}
+
+function stopAmbientSound() {
+  if (!ambientNodes) return;
+  try {
+    const ctx = getAudio();
+    if (ambientNodes._rainTimer) clearTimeout(ambientNodes._rainTimer);
+    ambientNodes.master.gain.linearRampToValueAtTime(0, ctx.currentTime + 2);
+    const nodes = ambientNodes;
+    setTimeout(() => {
+      nodes.sources.forEach(s => { try { s.stop(); } catch(e) {} });
+      try { nodes.master.disconnect(); } catch(e) {}
+    }, 2500);
+  } catch(e) {}
+  ambientNodes = null;
+}
+
 // ═══ STATE ═══
 let state = loadState();
-function defaultState() { return { totalMinutes:0, totalSessions:0, streak:0, lastSessionDate:null, history:[], customPatterns:[], muted:false, dailyMinutes:0, dailyDate:null }; }
-function loadState() { try { const s = localStorage.getItem('awake_v3'); if(s) return {...defaultState(),...JSON.parse(s)}; } catch(e){} return defaultState(); }
+function defaultState() {
+  return {
+    totalMinutes:0, totalSessions:0, streak:0, lastSessionDate:null,
+    history:[], customPatterns:[], muted:false,
+    dailyMinutes:0, dailyDate:null,
+    streakFreezeUsed: false
+  };
+}
+function loadState() {
+  try { const s = localStorage.getItem('awake_v3'); if(s) return {...defaultState(),...JSON.parse(s)}; } catch(e){}
+  return defaultState();
+}
 function saveState() { localStorage.setItem('awake_v3', JSON.stringify(state)); }
 function checkDailyReset() { const today = new Date().toDateString(); if (state.dailyDate !== today) { state.dailyMinutes = 0; state.dailyDate = today; saveState(); } }
+
 function addMinutes(minutes, type, label, extra) {
   state.totalMinutes = Math.round((state.totalMinutes + minutes) * 10) / 10;
   state.dailyMinutes = Math.round((state.dailyMinutes + minutes) * 10) / 10;
   state.totalSessions++;
   const today = new Date().toDateString();
-  if (state.lastSessionDate !== today) { const yesterday = new Date(Date.now()-86400000).toDateString(); state.streak = (state.lastSessionDate === yesterday) ? state.streak+1 : 1; state.lastSessionDate = today; }
+  if (state.lastSessionDate !== today) {
+    const yesterday = new Date(Date.now()-86400000).toDateString();
+    const twoDaysAgo = new Date(Date.now()-2*86400000).toDateString();
+    if (state.lastSessionDate === yesterday) {
+      state.streak = state.streak + 1;
+    } else if (state.lastSessionDate === twoDaysAgo && !state.streakFreezeUsed) {
+      // Streak forgiveness: one freeze per gap
+      state.streak = state.streak + 1;
+      state.streakFreezeUsed = true;
+    } else {
+      state.streak = 1;
+    }
+    state.lastSessionDate = today;
+  }
+  // Reset freeze when a session happens on an active day
+  if (state.lastSessionDate === today) {
+    state.streakFreezeUsed = false;
+  }
   const entry = { type, label, minutes: Math.round(minutes*10)/10, date: new Date().toISOString(), ...extra };
-  state.history.unshift(entry); if (state.history.length > 100) state.history.pop();
+  state.history.unshift(entry); if (state.history.length > 200) state.history.pop();
   saveState();
   updateAllUI();
 }
@@ -672,51 +1113,88 @@ function shareApp(){
 
 // ═══ FIRST VISIT & SOUND HINT ═══
 function checkFirstVisit(){}
-function showSoundHint(){ return; // disabled
-}
+function showSoundHint(){ return; }
 
 // ═══ ADD TO HOME SCREEN ═══
 function openA2HS(){hapticTap();document.getElementById('a2hsModal').classList.add('active');}
 function closeA2HS(){hapticTap();document.getElementById('a2hsModal').classList.remove('active');}
-// Hide the link if already installed as PWA
 if(window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone){
   var l=document.getElementById('a2hsLink');if(l)l.style.display='none';
-  // Ensure proper safe-area padding in standalone PWA mode
   var appEl=document.getElementById('app');
   if(appEl){appEl.style.paddingTop='calc(env(safe-area-inset-top, 20px) + 24px)';}
+}
+
+// ═══ SETTINGS ═══
+function openSettings() { hapticTap(); document.getElementById('settingsOverlay').classList.add('active'); }
+function closeSettings() { hapticTap(); document.getElementById('settingsOverlay').classList.remove('active'); }
+
+function exportData() {
+  hapticTap();
+  const dataStr = JSON.stringify(state, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const d = new Date();
+  a.href = url;
+  a.download = 'awake-backup-' + d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0') + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData(input) {
+  if (!input.files.length) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (confirm('Import this data? This will replace your current progress.')) {
+        state = { ...defaultState(), ...imported };
+        saveState();
+        updateAllUI();
+        hapticPattern([20,30,20]);
+        alert('Data imported successfully.');
+      }
+    } catch(err) {
+      alert('Invalid backup file.');
+    }
+    input.value = '';
+  };
+  reader.readAsText(input.files[0]);
 }
 
 // ═══ WAKE LOCK ═══
 let wakeLock = null;
 async function requestWakeLock() { try { if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } } catch(e) {} }
 function releaseWakeLock() { if (wakeLock) { wakeLock.release().catch(()=>{}); wakeLock = null; } }
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && (sitState.running || breathState.running)) requestWakeLock(); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && (sitState.running || breathState.running || focusState.running)) requestWakeLock(); });
 
 // ═══ UI ═══
 function updateAllUI() {
   checkDailyReset();
-
   const streakEl=document.getElementById('statStreak');
   streakEl.innerHTML = state.streak + (state.streak>0?' <span class="streak-flame" style="color:#f0a060;">🔥</span>':'');
   document.getElementById('statSessions').textContent = state.totalSessions;
   document.getElementById('statMinutes').textContent = Math.floor(state.totalMinutes);
-
+  document.getElementById('dailyQuote').textContent = getDailyQuote();
   checkFirstVisit(); renderHistory(); updateMuteUI();
 }
 
 function renderHistory() {
   const c = document.getElementById('journeyHistory');
   if (!state.history.length) { c.innerHTML='<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:14px;">No sessions yet.</div>'; return; }
-  const icons = {snap:'⚡',breath:'🌊',sit:'🧘'};
-  const colors = {snap:'rgba(240,160,96,0.12)',breath:'rgba(96,208,192,0.12)',sit:'rgba(192,144,240,0.12)'};
+  const icons = {snap:'⚡',breath:'🌊',sit:'🧘',focus:'🎧'};
+  const colors = {snap:'rgba(240,160,96,0.12)',breath:'rgba(96,208,192,0.12)',sit:'rgba(192,144,240,0.12)',focus:'rgba(108,160,240,0.12)'};
   c.innerHTML = state.history.slice(0,20).map(h => {
     const d = new Date(h.date);
     const wanderInfo = h.wanders !== undefined ? `<div class="history-wanders">${h.wanders} wander${h.wanders!==1?'s':''}</div>` : '';
-    return `<div class="history-item"><div class="history-icon" style="background:${colors[h.type]||'var(--bg-card)'}">${icons[h.type]||'●'}</div><div class="history-info"><div class="history-title">${h.label}</div><div class="history-meta">${d.toLocaleDateString([],{month:'short',day:'numeric'})} · ${d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div></div><div class="history-min">+${h.minutes}m${wanderInfo}</div></div>`;
+    let journalHtml = '';
+    if (h.intention) journalHtml += `<div class="history-journal">"${h.intention}"</div>`;
+    if (h.reflection) journalHtml += `<div class="history-journal">"${h.reflection}"</div>`;
+    return `<div class="history-item"><div class="history-icon" style="background:${colors[h.type]||'var(--bg-card)'}">${icons[h.type]||'●'}</div><div class="history-info"><div class="history-title">${h.label}</div><div class="history-meta">${d.toLocaleDateString([],{month:'short',day:'numeric'})} · ${d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>${journalHtml}</div><div class="history-min">+${h.minutes}m${wanderInfo}</div></div>`;
   }).join('');
 }
 
-// ═══ SNAP PRESENT (Randomized from pools — hundreds of unique sequences) ═══
+// ═══ SNAP PRESENT ═══
 const SNAP = {
   openers: [
     "STOP.","WAKE UP.","HEY.","NOW.","ENOUGH.","PAUSE.","FREEZE.","HERE.",
@@ -842,17 +1320,35 @@ function scheduleNextSnap() {
 }
 
 // ═══ JUST SIT ═══
-let sitState = { duration:12, running:false, startTime:null, timer:null, wanders:0, elapsed:0, intervalBell:0, intervalTimer:null, wanderTimes:[] };
-function openSitPicker() { hapticTap(); document.getElementById('sitOverlay').classList.add('active'); document.getElementById('sitPicker').style.display='flex'; document.getElementById('sitActive').style.display='none'; document.getElementById('sitComplete').classList.remove('visible'); }
+let sitState = { duration:12, running:false, startTime:null, timer:null, wanders:0, elapsed:0, intervalBell:0, intervalTimer:null, wanderTimes:[], intention:'', reflection:'' };
+
+function updateCharCount(input, countId) {
+  document.getElementById(countId).textContent = input.value.length + '/50';
+}
+function skipIntention() { document.getElementById('sitIntention').value = ''; startSit(); }
+function skipReflection() { saveSitReflectionAndClose(); }
+
+function openSitPicker() {
+  hapticTap();
+  document.getElementById('sitOverlay').classList.add('active');
+  document.getElementById('sitPicker').style.display='flex';
+  document.getElementById('sitActive').style.display='none';
+  document.getElementById('sitComplete').classList.remove('visible');
+  document.getElementById('sitIntention').value = '';
+  document.getElementById('sitIntentionCount').textContent = '0/50';
+}
 function selectSitDur(dur, btn) { hapticTap(); sitState.duration = dur; document.querySelectorAll('.sit-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
 function selectInterval(mins, btn) { hapticTap(); sitState.intervalBell = mins; document.querySelectorAll('.interval-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
 function startSit() {
   sitState.running=true; sitState.startTime=Date.now(); sitState.wanders=0; sitState.elapsed=0; sitState.wanderTimes=[];
+  sitState.intention = document.getElementById('sitIntention').value.trim();
+  sitState.reflection = '';
   document.getElementById('sitPicker').style.display='none'; document.getElementById('sitActive').style.display='flex';
   document.getElementById('sitComplete').classList.remove('visible');
   document.getElementById('sitWanderText').textContent='Mind wanders: 0';
   document.getElementById('sitBtnLabel').textContent="I'm Back"; document.getElementById('sitBtnSub').textContent='tap when you notice';
   playBowl(220,3); hapticPattern([50,30,50]); requestWakeLock(); canvasIntensity = 0.6; sitTick();
+  startAmbientSound(ambientType);
   if (sitState.intervalBell > 0) { sitState.intervalTimer = setInterval(() => { if (sitState.running) { playBowl(280,2); hapticPattern([30,60,30]); } }, sitState.intervalBell*60*1000); }
 }
 function sitTick() {
@@ -879,6 +1375,7 @@ function logWander() {
 function completeSit() {
   sitState.running=false; clearTimeout(sitState.timer); canvasIntensity = 0.15;
   if(sitState.intervalTimer){clearInterval(sitState.intervalTimer);sitState.intervalTimer=null;}
+  stopAmbientSound();
   const mins=Math.round((sitState.elapsed/60)*10)/10, actualMins=Math.min(mins,sitState.duration);
   playBowl(440,4); hapticPattern([100,100,200]); releaseWakeLock();
   document.getElementById('sitActive').style.display='none'; document.getElementById('sitComplete').classList.add('visible');
@@ -889,7 +1386,18 @@ function completeSit() {
   const presencePct=(sitState.wanders>0&&actualMins>0)?Math.max(0,Math.round(100-(sitState.wanders/actualMins)*10)):100;
   document.getElementById('scPresence').textContent=presencePct+'%';
   renderWanderTimeline(sitState.wanderTimes, sitState.duration*60, actualMins);
-  addMinutes(actualMins,'sit',`Just Sit · ${sitState.duration}m`,{wanders:sitState.wanders,targetDuration:sitState.duration,wanderTimes:sitState.wanderTimes});
+  // Show reflection input
+  document.getElementById('sitReflection').value = '';
+  document.getElementById('sitReflectionCount').textContent = '0/50';
+}
+function saveSitReflectionAndClose() {
+  sitState.reflection = document.getElementById('sitReflection').value.trim();
+  const actualMins = Math.min(Math.round((sitState.elapsed/60)*10)/10, sitState.duration);
+  const extra = {wanders:sitState.wanders, targetDuration:sitState.duration, wanderTimes:sitState.wanderTimes};
+  if (sitState.intention) extra.intention = sitState.intention;
+  if (sitState.reflection) extra.reflection = sitState.reflection;
+  addMinutes(actualMins,'sit',`Just Sit · ${sitState.duration}m`, extra);
+  closeSit();
 }
 function renderWanderTimeline(times, totalSec, actualMins) {
   const tl=document.getElementById('wanderTimeline');
@@ -902,16 +1410,39 @@ function renderWanderTimeline(times, totalSec, actualMins) {
   const endMin=Math.floor(displayTotal/60), endSec=displayTotal%60;
   document.getElementById('wanderTlEnd').textContent=endMin+':'+String(endSec).padStart(2,'0');
 }
-function endSit(){if(sitState.running)completeSit();else closeSit();}
-function closeSit(){document.getElementById('sitOverlay').classList.remove('active');sitState.running=false;clearTimeout(sitState.timer);if(sitState.intervalTimer){clearInterval(sitState.intervalTimer);sitState.intervalTimer=null;}releaseWakeLock();canvasIntensity=0.15;}
+function endSit(){
+  if(sitState.running) completeSit();
+  else if(document.getElementById('sitComplete').classList.contains('visible')) saveSitReflectionAndClose();
+  else closeSit();
+}
+function closeSit(){
+  document.getElementById('sitOverlay').classList.remove('active');
+  sitState.running=false;clearTimeout(sitState.timer);
+  if(sitState.intervalTimer){clearInterval(sitState.intervalTimer);sitState.intervalTimer=null;}
+  stopAmbientSound();
+  releaseWakeLock();canvasIntensity=0.15;
+}
 
 // ═══ BREATHWORK ═══
 const BREATH_PATTERNS = {
-  box:{name:'Box Breathing',phases:[{p:'Inhale',t:4},{p:'Hold',t:4},{p:'Exhale',t:4},{p:'Hold',t:4}],cycles:6},
-  '478':{name:'4-7-8 Calm',phases:[{p:'Inhale',t:4},{p:'Hold',t:7},{p:'Exhale',t:8}],cycles:4},
-  coherent:{name:'Coherent',phases:[{p:'Inhale',t:5},{p:'Exhale',t:5}],cycles:8},
-  wim:{name:'Power Breath',phases:[{p:'Inhale',t:2},{p:'Exhale',t:2}],cycles:15},
+  box:{name:'Sama Vritti (Box)',phases:[{p:'Inhale',t:4},{p:'Hold',t:4},{p:'Exhale',t:4},{p:'Hold',t:4}],cycles:6},
+  '478':{name:'4-7-8 Relaxation',phases:[{p:'Inhale',t:4},{p:'Hold',t:7},{p:'Exhale',t:8}],cycles:4,credit:'Dr. Andrew Weil'},
+  coherent:{name:'Heart Coherence',phases:[{p:'Inhale',t:5},{p:'Exhale',t:5}],cycles:8},
+  nadi:{name:'Nadi Shodhana',special:'nadi',phases:[
+    {p:'Close R, Inhale L',t:4,nostril:'left'},
+    {p:'Hold Both',t:4,nostril:'both'},
+    {p:'Close L, Exhale R',t:4,nostril:'right'},
+    {p:'Inhale R',t:4,nostril:'right'},
+    {p:'Hold Both',t:4,nostril:'both'},
+    {p:'Exhale L',t:4,nostril:'left'}
+  ],cycles:6},
+  calm446:{name:'4-4-6-2 Calm',phases:[{p:'Inhale',t:4},{p:'Hold',t:4},{p:'Exhale',t:6},{p:'Hold',t:2}],cycles:6},
+  wimhof:{name:'Wim Hof Method',special:'wimhof',rounds:3,breathsPerRound:30,recoveryHold:15},
+  bhastrika:{name:'Bhastrika (Bellows)',special:'bhastrika',rounds:3,breathsPerRound:30,holdAfter:15},
+  kapalabhati:{name:'Kapalabhati',special:'kapalabhati',rounds:3,breathsPerRound:40,holdAfter:20},
+  energy21:{name:'2-1 Energizing',phases:[{p:'Inhale',t:6},{p:'Exhale',t:3}],cycles:10},
 };
+
 function loadCustomPatterns(){if(state.customPatterns&&state.customPatterns.length){state.customPatterns.forEach((cp,i)=>{BREATH_PATTERNS['custom_'+i]=cp;});renderSavedCustomButtons();}}
 function renderSavedCustomButtons(){
   const c=document.getElementById('breathPatterns');c.querySelectorAll('.saved-custom-wrap').forEach(b=>b.remove());const cb=document.getElementById('customPatternBtn');
@@ -936,6 +1467,11 @@ function selectBreathPattern(btn){
   btn.classList.add('active');breathState.pattern=btn.dataset.pattern;
   if(btn.dataset.pattern==='custom'){document.getElementById('customBuilder').classList.add('visible');initCustomBuilder();}
   else{document.getElementById('customBuilder').classList.remove('visible');}
+  // Show/hide nostril guide
+  const pat = BREATH_PATTERNS[breathState.pattern];
+  document.getElementById('nostrilGuide').classList.toggle('visible', pat && pat.special === 'nadi');
+  // Show/hide wim UI
+  document.getElementById('wimRetention').classList.remove('visible');
 }
 document.querySelectorAll('.breath-pattern-btn').forEach(btn=>{btn.addEventListener('click',()=>selectBreathPattern(btn));});
 let customPhases=[{label:'Inhale',seconds:4},{label:'Hold',seconds:4},{label:'Exhale',seconds:4},{label:'Hold',seconds:4}];
@@ -965,29 +1501,281 @@ function closeBreathe(){
   if(breathState.running)stopBreath();
   document.getElementById('breatheOverlay').classList.remove('active');releaseWakeLock();
 }
-function toggleBreath(){if(breathState.running)pauseBreath();else startBreathSession();}
+
+// ═══ WIM HOF / BHASTRIKA / KAPALABHATI ENGINE ═══
+let wimState = { running:false, round:0, breathCount:0, phase:'idle', retentionStart:0, retentionTimes:[], timer:null };
+
+function startWimHof(patternKey) {
+  const pat = BREATH_PATTERNS[patternKey];
+  wimState = { running:true, round:0, breathCount:0, phase:'power', retentionStart:0, retentionTimes:[], timer:null, patternKey:patternKey };
+  breathState.running = true;
+  breathState.startTime = Date.now();
+  document.getElementById('breathStartBtn').textContent = 'Stop';
+  document.getElementById('breathControls').style.display = 'none';
+  document.getElementById('wimRetention').classList.remove('visible');
+  document.getElementById('wimRoundResults').innerHTML = '';
+  canvasIntensity = 0.5;
+  runWimRound();
+}
+
+function runWimRound() {
+  if (!wimState.running) return;
+  const pat = BREATH_PATTERNS[wimState.patternKey];
+  const totalRounds = pat.rounds || 3;
+  wimState.breathCount = 0;
+  wimState.phase = 'power';
+
+  document.getElementById('breathCycle').textContent = `Round ${wimState.round + 1} of ${totalRounds}`;
+  runWimPowerBreath();
+}
+
+function runWimPowerBreath() {
+  if (!wimState.running) return;
+  const pat = BREATH_PATTERNS[wimState.patternKey];
+  const totalBreaths = pat.breathsPerRound || 30;
+  const orb = document.getElementById('breathOrb');
+  const phaseEl = document.getElementById('breathPhase');
+  const timerEl = document.getElementById('breathTimer');
+
+  if (wimState.breathCount >= totalBreaths) {
+    // Power breaths done
+    if (wimState.patternKey === 'wimhof') {
+      // Exhale and hold empty (retention with user tap)
+      wimState.phase = 'retention';
+      orb.className = 'breath-orb contract';
+      phaseEl.textContent = 'EXHALE & HOLD';
+      phaseEl.style.color = 'var(--breath-exhale)';
+      timerEl.textContent = '';
+      wimState.retentionStart = Date.now();
+      document.getElementById('breathContainer').querySelector('.breath-orb-wrap').style.display = 'none';
+      document.getElementById('wimRetention').classList.add('visible');
+      document.getElementById('wimBreatheBtn').style.display = '';
+      wimRetentionTick();
+    } else {
+      // Bhastrika/Kapalabhati: deep inhale + hold
+      wimState.phase = 'hold';
+      orb.className = 'breath-orb expand';
+      phaseEl.textContent = 'DEEP INHALE & HOLD';
+      phaseEl.style.color = 'var(--breath-hold)';
+      const holdTime = pat.holdAfter || 15;
+      let count = holdTime;
+      timerEl.textContent = count;
+      playTick();
+      function holdCount() {
+        if (!wimState.running) return;
+        count--;
+        if (count <= 0) {
+          wimState.round++;
+          if (wimState.round >= (pat.rounds || 3)) {
+            finishWimSession();
+          } else {
+            runWimRound();
+          }
+          return;
+        }
+        timerEl.textContent = count;
+        wimState.timer = setTimeout(holdCount, 1000);
+      }
+      wimState.timer = setTimeout(holdCount, 1000);
+    }
+    return;
+  }
+
+  wimState.breathCount++;
+  const isInhale = wimState.breathCount % 2 !== 0 || wimState.patternKey !== 'kapalabhati';
+
+  // Rapid breath animation
+  if (wimState.breathCount % 2 === 1) {
+    // Inhale phase
+    orb.className = 'breath-orb rapid-expand';
+    if (wimState.patternKey === 'kapalabhati') {
+      phaseEl.textContent = 'INHALE (passive)';
+    } else {
+      phaseEl.textContent = 'INHALE (deep)';
+    }
+    phaseEl.style.color = 'var(--breath-inhale)';
+  }
+
+  timerEl.textContent = Math.ceil(wimState.breathCount / 2) + ' / ' + totalBreaths;
+  document.getElementById('breathCycle').textContent = `Round ${wimState.round + 1} — Breath ${Math.ceil(wimState.breathCount / 2)}`;
+
+  const inTime = wimState.patternKey === 'wimhof' ? 750 : 500;
+  const outTime = wimState.patternKey === 'wimhof' ? 500 : 500;
+
+  wimState.timer = setTimeout(() => {
+    if (!wimState.running) return;
+    // Exhale phase
+    orb.className = 'breath-orb rapid-contract';
+    if (wimState.patternKey === 'kapalabhati') {
+      phaseEl.textContent = 'EXHALE (forceful)';
+    } else {
+      phaseEl.textContent = 'EXHALE';
+    }
+    phaseEl.style.color = 'var(--breath-exhale)';
+    wimState.timer = setTimeout(() => runWimPowerBreath(), outTime);
+  }, inTime);
+
+  if (wimState.breathCount % 4 === 1) playTick();
+}
+
+function wimRetentionTick() {
+  if (!wimState.running || wimState.phase !== 'retention') return;
+  const elapsed = (Date.now() - wimState.retentionStart) / 1000;
+  const min = Math.floor(elapsed / 60);
+  const sec = Math.floor(elapsed % 60);
+  document.getElementById('wimRetentionTimer').textContent = min + ':' + String(sec).padStart(2, '0');
+  wimState.timer = setTimeout(wimRetentionTick, 250);
+}
+
+function wimBreathe() {
+  if (wimState.phase !== 'retention') return;
+  clearTimeout(wimState.timer);
+  const retTime = Math.round((Date.now() - wimState.retentionStart) / 1000);
+  wimState.retentionTimes.push(retTime);
+  hapticPattern([40, 30, 40]);
+  playBowl(330, 1.5);
+
+  // Show retention result
+  const resultsEl = document.getElementById('wimRoundResults');
+  resultsEl.innerHTML += `<div class="wim-round-row"><span>Round ${wimState.round + 1}</span><span>${Math.floor(retTime/60)}:${String(retTime%60).padStart(2,'0')}</span></div>`;
+  document.getElementById('wimBreatheBtn').style.display = 'none';
+
+  // Recovery hold: inhale and hold 15s
+  wimState.phase = 'recovery';
+  document.getElementById('wimRetentionTimer').textContent = '15';
+  const phaseEl = document.getElementById('breathPhase');
+  phaseEl.textContent = 'INHALE & HOLD';
+  phaseEl.style.color = 'var(--breath-hold)';
+  let count = 15;
+  function recoveryCount() {
+    if (!wimState.running) return;
+    count--;
+    if (count <= 0) {
+      wimState.round++;
+      const pat = BREATH_PATTERNS[wimState.patternKey];
+      if (wimState.round >= (pat.rounds || 3)) {
+        finishWimSession();
+      } else {
+        document.getElementById('wimRetention').classList.remove('visible');
+        document.getElementById('breathContainer').querySelector('.breath-orb-wrap').style.display = '';
+        runWimRound();
+      }
+      return;
+    }
+    document.getElementById('wimRetentionTimer').textContent = count;
+    wimState.timer = setTimeout(recoveryCount, 1000);
+  }
+  wimState.timer = setTimeout(recoveryCount, 1000);
+}
+
+function finishWimSession() {
+  wimState.running = false;
+  wimState.phase = 'done';
+  clearTimeout(wimState.timer);
+  const orb = document.getElementById('breathOrb');
+  orb.className = 'breath-orb';
+  document.getElementById('breathContainer').querySelector('.breath-orb-wrap').style.display = '';
+
+  const phaseEl = document.getElementById('breathPhase');
+  phaseEl.textContent = 'Complete';
+  phaseEl.style.color = 'var(--accent-breath)';
+  document.getElementById('breathTimer').textContent = '✦';
+
+  // Show all results
+  if (wimState.retentionTimes.length > 0) {
+    document.getElementById('wimRetention').classList.add('visible');
+    document.getElementById('wimBreatheBtn').style.display = 'none';
+    document.getElementById('wimRetentionTimer').textContent = '✦';
+  }
+
+  document.getElementById('breathControls').style.display = '';
+  document.getElementById('breathStartBtn').textContent = 'Start';
+
+  const pat = BREATH_PATTERNS[wimState.patternKey];
+  const mins = Math.round((Date.now() - breathState.startTime) / 60000 * 10) / 10;
+  breathState.running = false;
+  canvasIntensity = 0.15;
+  playBowl(440, 3);
+  if (mins > 0.25) {
+    const extra = wimState.retentionTimes.length ? { retentionTimes: wimState.retentionTimes } : {};
+    addMinutes(mins, 'breath', pat.name, extra);
+  }
+}
+
+// ═══ NADI SHODHANA NOSTRIL HIGHLIGHTING ═══
+function highlightNostril(side) {
+  const left = document.getElementById('nostrilLeft');
+  const right = document.getElementById('nostrilRight');
+  const activeStyle = 'fill:rgba(96,208,192,0.4);stroke:var(--accent-breath);stroke-width:2';
+  const inactiveStyle = 'fill:rgba(96,208,192,0.1);stroke:rgba(96,208,192,0.3);stroke-width:1.5';
+  const closedStyle = 'fill:rgba(255,100,100,0.15);stroke:rgba(255,100,100,0.3);stroke-width:1.5';
+  if (side === 'left') { left.setAttribute('style', activeStyle); right.setAttribute('style', closedStyle); }
+  else if (side === 'right') { right.setAttribute('style', activeStyle); left.setAttribute('style', closedStyle); }
+  else if (side === 'both') { left.setAttribute('style', closedStyle); right.setAttribute('style', closedStyle); }
+  else { left.setAttribute('style', inactiveStyle); right.setAttribute('style', inactiveStyle); }
+}
+
+function toggleBreath(){if(breathState.running){pauseBreath();}else{startBreathSession();}}
 function startBreathSession(){
   const pat=BREATH_PATTERNS[breathState.pattern];if(!pat)return;
+
+  // Special engines
+  if (pat.special === 'wimhof' || pat.special === 'bhastrika' || pat.special === 'kapalabhati') {
+    startWimHof(breathState.pattern);
+    return;
+  }
+
   breathState.running=true;breathState.cycle=0;breathState.phase=0;breathState.count=pat.phases[0].t;breathState.startTime=Date.now();
   document.getElementById('breathStartBtn').textContent='Pause';playBowl(330,1.5);hapticPattern([40,30,40]);canvasIntensity=0.5;runBreathPhase();
 }
-function pauseBreath(){breathState.running=false;clearTimeout(breathState.timer);document.getElementById('breathStartBtn').textContent='Resume';}
+function pauseBreath(){
+  if (wimState.running) { stopBreath(); return; }
+  breathState.running=false;clearTimeout(breathState.timer);document.getElementById('breathStartBtn').textContent='Resume';
+}
 function stopBreath(){
-  const was=breathState.running;breathState.running=false;clearTimeout(breathState.timer);canvasIntensity=0.15;
+  const was=breathState.running || wimState.running;
+  // Stop wim/special
+  if (wimState.running) {
+    wimState.running = false;
+    clearTimeout(wimState.timer);
+    document.getElementById('wimRetention').classList.remove('visible');
+    document.getElementById('breathContainer').querySelector('.breath-orb-wrap').style.display = '';
+    document.getElementById('breathControls').style.display = '';
+  }
+  breathState.running=false;clearTimeout(breathState.timer);canvasIntensity=0.15;
   document.getElementById('breathOrb').className='breath-orb';
+  document.getElementById('breathOrb').style.background='';
+  document.getElementById('breathOrb').style.boxShadow='';
   document.getElementById('breathPhase').textContent='Ready';document.getElementById('breathTimer').textContent='—';
   document.getElementById('breathCycle').textContent='Tap start to begin';document.getElementById('breathStartBtn').textContent='Start';
-  if(was&&breathState.startTime){const m=(Date.now()-breathState.startTime)/60000;if(m>0.25){const pat=BREATH_PATTERNS[breathState.pattern];playBowl(440,2);addMinutes(Math.round(m*10)/10,'breath',pat?pat.name:'Breathwork');}}
+  document.getElementById('nostrilGuide').classList.remove('visible');
+  highlightNostril('none');
+  if(was&&breathState.startTime){
+    const m=(Date.now()-breathState.startTime)/60000;
+    if(m>0.25){
+      const pat=BREATH_PATTERNS[breathState.pattern];
+      playBowl(440,2);
+      addMinutes(Math.round(m*10)/10,'breath',pat?pat.name:'Breathwork');
+    }
+  }
 }
 function runBreathPhase(){
   if(!breathState.running)return;
   const pat=BREATH_PATTERNS[breathState.pattern],phase=pat.phases[breathState.phase];
   const orb=document.getElementById('breathOrb'),pL=phase.p.toLowerCase(),phaseEl=document.getElementById('breathPhase');
   orb.className='breath-orb';
+  orb.style.transition='';
   let phaseColor='var(--accent-breath)';
+
+  // Nadi Shodhana nostril guide
+  if (pat.special === 'nadi') {
+    document.getElementById('nostrilGuide').classList.add('visible');
+    highlightNostril(phase.nostril || 'none');
+  }
+
   if(pL.includes('inhale')||pL==='in'||pL.includes('breathe in')){orb.classList.add('expand');phaseColor='var(--breath-inhale)';orb.style.background=`radial-gradient(circle at 35% 30%, rgba(160,240,220,0.9), var(--breath-inhale) 40%, #1a5050 80%, #0a2828)`;orb.style.boxShadow='0 0 100px rgba(96,208,192,0.45), 0 0 200px rgba(96,208,192,0.15), inset 0 -20px 40px rgba(0,0,0,0.3), inset 0 8px 20px rgba(255,255,255,0.15)';}
   else if(pL.includes('exhale')||pL.includes('out')||pL.includes('release')){orb.classList.add('contract');phaseColor='var(--breath-exhale)';orb.style.background=`radial-gradient(circle at 35% 30%, rgba(255,200,140,0.9), var(--breath-exhale) 40%, #604020 80%, #2a1a0a)`;orb.style.boxShadow='0 0 100px rgba(240,160,96,0.4), 0 0 200px rgba(240,160,96,0.12), inset 0 -20px 40px rgba(0,0,0,0.3), inset 0 8px 20px rgba(255,255,255,0.12)';}
-  else if(pL.includes('hold')||pL.includes('retain')||pL.includes('pause')){phaseColor='var(--breath-hold)';orb.style.background=`radial-gradient(circle at 35% 30%, rgba(220,180,255,0.9), var(--breath-hold) 40%, #3a2060 80%, #1a0a30)`;orb.style.boxShadow='0 0 100px rgba(192,144,240,0.4), 0 0 200px rgba(192,144,240,0.12), inset 0 -20px 40px rgba(0,0,0,0.3), inset 0 8px 20px rgba(255,255,255,0.12)';if(breathState.phase>0){const prev=pat.phases[breathState.phase-1].p.toLowerCase();orb.classList.add(prev.includes('inhale')||prev==='in'?'hold-big':'hold-small');}else orb.classList.add('hold-big');}
+  else if(pL.includes('hold')||pL.includes('retain')||pL.includes('pause')||pL.includes('close')){phaseColor='var(--breath-hold)';orb.style.background=`radial-gradient(circle at 35% 30%, rgba(220,180,255,0.9), var(--breath-hold) 40%, #3a2060 80%, #1a0a30)`;orb.style.boxShadow='0 0 100px rgba(192,144,240,0.4), 0 0 200px rgba(192,144,240,0.12), inset 0 -20px 40px rgba(0,0,0,0.3), inset 0 8px 20px rgba(255,255,255,0.12)';if(breathState.phase>0){const prev=pat.phases[breathState.phase-1].p.toLowerCase();orb.classList.add(prev.includes('inhale')||prev==='in'?'hold-big':'hold-small');}else orb.classList.add('hold-big');}
   phaseEl.textContent=phase.p;phaseEl.style.color=phaseColor;
   document.getElementById('breathCycle').textContent=`Cycle ${breathState.cycle+1} of ${pat.cycles}`;
   breathState.count=phase.t;document.getElementById('breathTimer').textContent=breathState.count;
@@ -996,9 +1784,318 @@ function runBreathPhase(){
 function breathCountdown(){if(!breathState.running)return;if(breathState.count<=0){nextBreathPhase();return;}document.getElementById('breathTimer').textContent=breathState.count;breathState.timer=setTimeout(()=>{breathState.count--;breathCountdown();},1000);}
 function nextBreathPhase(){const pat=BREATH_PATTERNS[breathState.pattern];breathState.phase++;if(breathState.phase>=pat.phases.length){breathState.phase=0;breathState.cycle++;if(breathState.cycle>=pat.cycles){stopBreath();closeBreathe();return;}}runBreathPhase();}
 
+// ═══ FOCUS STATES (BINAURAL BEATS) ═══
+const FOCUS_LEVELS = {
+  alpha: { name:'Alpha Rest', desc:'Relaxed awareness', baseFreq:200, beatFreq:10 },
+  theta: { name:'Theta Deep', desc:'Deep meditation', baseFreq:150, beatFreq:6 },
+  delta: { name:'Delta Drift', desc:'Body asleep, mind awake', baseFreq:120, beatFreq:4 },
+  gamma: { name:'Gamma Focus', desc:'Heightened clarity', baseFreq:300, beatFreq:40 },
+};
+let focusState = { running:false, level:'alpha', duration:30, startTime:null, timer:null, nodes:null };
+
+function selectFocusLevel(level, btn) {
+  hapticTap();
+  focusState.level = level;
+  document.querySelectorAll('.focus-level-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function selectFocusDur(dur, btn) {
+  hapticTap();
+  focusState.duration = dur;
+  document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+}
+function openFocus() { hapticTap(); document.getElementById('focusOverlay').classList.add('active'); }
+function closeFocus() {
+  if (focusState.running) stopFocusSession();
+  document.getElementById('focusOverlay').classList.remove('active');
+}
+
+function startFocusSession() {
+  const level = FOCUS_LEVELS[focusState.level];
+  focusState.running = true;
+  focusState.startTime = Date.now();
+  requestWakeLock();
+
+  document.getElementById('focusPicker').style.display = 'none';
+  document.getElementById('focusSession').classList.add('visible');
+  document.getElementById('focusSessionLabel').textContent = level.name.toUpperCase();
+  document.getElementById('focusElapsed').textContent = '0:00';
+
+  try {
+    const ctx = getAudio();
+    const oL = ctx.createOscillator(), oR = ctx.createOscillator();
+    const merger = ctx.createChannelMerger(2);
+    const gainL = ctx.createGain(), gainR = ctx.createGain();
+    const masterGain = ctx.createGain();
+
+    oL.type = 'sine'; oR.type = 'sine';
+    oL.frequency.value = level.baseFreq;
+    oR.frequency.value = level.baseFreq + level.beatFreq;
+
+    // Fade in over 10s
+    gainL.gain.setValueAtTime(0, ctx.currentTime);
+    gainR.gain.setValueAtTime(0, ctx.currentTime);
+    gainL.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 10);
+    gainR.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 10);
+
+    oL.connect(gainL); gainL.connect(merger, 0, 0);
+    oR.connect(gainR); gainR.connect(merger, 0, 1);
+
+    masterGain.gain.value = 0.5;
+    merger.connect(masterGain);
+    masterGain.connect(ctx.destination);
+
+    oL.start(); oR.start();
+
+    // Pink noise bed
+    const bufferSize = 2 * ctx.sampleRate;
+    const noiseBuffer = ctx.createBuffer(2, bufferSize, ctx.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const data = noiseBuffer.getChannelData(ch);
+      let b0=0, b1=0, b2=0, b3=0, b4=0, b5=0, b6=0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        b0 = 0.99886*b0 + white*0.0555179;
+        b1 = 0.99332*b1 + white*0.0750759;
+        b2 = 0.96900*b2 + white*0.1538520;
+        b3 = 0.86650*b3 + white*0.3104856;
+        b4 = 0.55000*b4 + white*0.5329522;
+        b5 = -0.7616*b5 - white*0.0168980;
+        data[i] = (b0+b1+b2+b3+b4+b5+b6+white*0.5362) * 0.11;
+        b6 = white * 0.115926;
+      }
+    }
+    const noiseSrc = ctx.createBufferSource();
+    noiseSrc.buffer = noiseBuffer; noiseSrc.loop = true;
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0, ctx.currentTime);
+    noiseGain.gain.linearRampToValueAtTime(0.02, ctx.currentTime + 10);
+    noiseSrc.connect(noiseGain);
+    noiseGain.connect(masterGain);
+    noiseSrc.start();
+
+    focusState.nodes = { oL, oR, gainL, gainR, merger, masterGain, noiseSrc, noiseGain };
+  } catch(e) {}
+
+  focusTick();
+  canvasIntensity = 0.4;
+}
+
+function focusTick() {
+  if (!focusState.running) return;
+  const elapsed = (Date.now() - focusState.startTime) / 1000;
+  const remaining = focusState.duration * 60 - elapsed;
+  const min = Math.floor(elapsed / 60);
+  const sec = Math.floor(elapsed % 60);
+  document.getElementById('focusElapsed').textContent = min + ':' + String(sec).padStart(2, '0');
+  const remMin = Math.floor(Math.max(0, remaining) / 60);
+  const remSec = Math.floor(Math.max(0, remaining) % 60);
+  document.getElementById('focusRemaining').textContent = remMin + ':' + String(remSec).padStart(2, '0') + ' remaining';
+
+  if (remaining <= 0) {
+    const level = FOCUS_LEVELS[focusState.level];
+    const mins = Math.round(focusState.duration * 10) / 10;
+    focusState.startTime = null; // prevent double-log in stopFocusSession
+    stopFocusSession();
+    playBowl(440, 3);
+    addMinutes(mins, 'focus', level.name);
+    return;
+  }
+  focusState.timer = setTimeout(focusTick, 500);
+}
+
+function setFocusVolume(val) {
+  if (focusState.nodes && focusState.nodes.masterGain) {
+    focusState.nodes.masterGain.gain.value = val / 100;
+  }
+}
+
+function stopFocusSession() {
+  focusState.running = false;
+  clearTimeout(focusState.timer);
+  canvasIntensity = 0.15;
+
+  if (focusState.nodes) {
+    try {
+      const ctx = getAudio();
+      const n = focusState.nodes;
+      // Fade out over 5s
+      n.gainL.gain.linearRampToValueAtTime(0, ctx.currentTime + 5);
+      n.gainR.gain.linearRampToValueAtTime(0, ctx.currentTime + 5);
+      n.noiseGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 5);
+      setTimeout(() => {
+        try { n.oL.stop(); n.oR.stop(); n.noiseSrc.stop(); n.masterGain.disconnect(); } catch(e) {}
+      }, 6000);
+    } catch(e) {}
+    focusState.nodes = null;
+  }
+
+  // Record partial if significant
+  if (focusState.startTime) {
+    const elapsed = (Date.now() - focusState.startTime) / 60000;
+    if (elapsed > 1) {
+      const level = FOCUS_LEVELS[focusState.level];
+      addMinutes(Math.round(elapsed * 10) / 10, 'focus', level.name);
+    }
+  }
+
+  document.getElementById('focusSession').classList.remove('visible');
+  document.getElementById('focusPicker').style.display = '';
+  releaseWakeLock();
+}
+
+// ═══ INSIGHTS ═══
+function openInsights() {
+  hapticTap();
+  document.getElementById('insightsOverlay').classList.add('active');
+  renderInsights();
+}
+function closeInsights() {
+  document.getElementById('insightsOverlay').classList.remove('active');
+}
+
+function renderInsights() {
+  renderWeekGrid();
+  renderSparkline();
+  renderMonthlyStats();
+  renderMilestones();
+}
+
+function getDateKey(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function getDailyMap() {
+  const map = {};
+  state.history.forEach(h => {
+    const d = new Date(h.date);
+    const key = getDateKey(d);
+    if (!map[key]) map[key] = { minutes: 0, types: new Set() };
+    map[key].minutes += h.minutes;
+    map[key].types.add(h.type);
+  });
+  return map;
+}
+
+function renderWeekGrid() {
+  const grid = document.getElementById('insightsWeekGrid');
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const now = new Date();
+  const dayOfWeek = (now.getDay() + 6) % 7; // Mon=0
+  const dailyMap = getDailyMap();
+  const typeColors = { snap:'#f0a060', breath:'#60d0c0', sit:'#c090f0', focus:'#6ca0f0' };
+
+  let html = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - dayOfWeek + i);
+    const key = getDateKey(d);
+    const entry = dailyMap[key];
+    const mins = entry ? Math.round(entry.minutes) : 0;
+    let dotColor = 'rgba(255,255,255,0.06)';
+    if (entry && entry.types.size > 0) {
+      const firstType = [...entry.types][0];
+      dotColor = typeColors[firstType] || '#7c6cf0';
+    }
+    html += `<div class="insights-day"><div class="insights-day-label">${days[i]}</div><div class="insights-day-dot" style="background:${dotColor}"></div><div class="insights-day-min">${mins > 0 ? mins+'m' : '-'}</div></div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function renderSparkline() {
+  const svg = document.getElementById('sparklineSvg');
+  const dailyMap = getDailyMap();
+  const now = new Date();
+  const points = [];
+  let maxMin = 1;
+
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    const key = getDateKey(d);
+    const mins = dailyMap[key] ? dailyMap[key].minutes : 0;
+    points.push(mins);
+    if (mins > maxMin) maxMin = mins;
+  }
+
+  const w = 320, h = 50, padY = 5;
+  const stepX = w / 29;
+  let pathD = '';
+  points.forEach((p, i) => {
+    const x = i * stepX;
+    const y = h - padY - (p / maxMin) * (h - padY * 2);
+    pathD += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+  });
+
+  // Fill area
+  const fillD = pathD + ` L${(29*stepX).toFixed(1)},${h} L0,${h} Z`;
+  svg.innerHTML = `<defs><linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(240,160,96,0.3)"/><stop offset="100%" stop-color="rgba(240,160,96,0)"/></linearGradient></defs><path d="${fillD}" fill="url(#sparkGrad)"/><path d="${pathD}" fill="none" stroke="rgba(240,160,96,0.7)" stroke-width="2"/>`;
+}
+
+function renderMonthlyStats() {
+  const el = document.getElementById('monthlyStats');
+  const now = new Date();
+  const thisMonth = now.getMonth();
+  const thisYear = now.getFullYear();
+  const daysInMonth = new Date(thisYear, thisMonth + 1, 0).getDate();
+  const currentDay = now.getDate();
+
+  let totalMins = 0, totalSessions = 0, daysPracticed = 0;
+  let wanderMins = 0, wanderCount = 0;
+  const daysWithPractice = new Set();
+
+  state.history.forEach(h => {
+    const d = new Date(h.date);
+    if (d.getMonth() === thisMonth && d.getFullYear() === thisYear) {
+      totalMins += h.minutes;
+      totalSessions++;
+      daysWithPractice.add(d.getDate());
+      if (h.type === 'sit' && h.wanders !== undefined) {
+        wanderMins += h.minutes;
+        wanderCount += h.wanders;
+      }
+    }
+  });
+
+  daysPracticed = daysWithPractice.size;
+  const consistency = currentDay > 0 ? Math.round((daysPracticed / currentDay) * 100) : 0;
+  const avgSession = totalSessions > 0 ? (totalMins / totalSessions).toFixed(1) : 0;
+  const avgWandersPerMin = wanderMins > 0 ? (wanderCount / wanderMins).toFixed(1) : '-';
+
+  el.innerHTML = `
+    <div class="monthly-stat"><div class="monthly-stat-val">${Math.round(totalMins)}</div><div class="monthly-stat-label">Total Minutes</div></div>
+    <div class="monthly-stat"><div class="monthly-stat-val">${totalSessions}</div><div class="monthly-stat-label">Sessions</div></div>
+    <div class="monthly-stat"><div class="monthly-stat-val">${avgSession}</div><div class="monthly-stat-label">Avg Length</div></div>
+    <div class="monthly-stat"><div class="monthly-stat-val">${consistency}%</div><div class="monthly-stat-label">Consistency</div></div>
+    <div class="monthly-stat"><div class="monthly-stat-val">${avgWandersPerMin}</div><div class="monthly-stat-label">Wanders/Min</div></div>
+    <div class="monthly-stat"><div class="monthly-stat-val">${daysPracticed}</div><div class="monthly-stat-label">Days Active</div></div>
+  `;
+}
+
+function renderMilestones() {
+  const el = document.getElementById('milestonesGrid');
+  const totalMins = state.totalMinutes;
+  const streak = state.streak;
+  const sessions = state.totalSessions;
+
+  // Calculate longest streak from history
+  let longestStreak = streak;
+  // Simple approach: use current streak as the best approximation
+
+  const milestones = [
+    { emoji:'🌱', label:'First Session', earned: sessions >= 1 },
+    { emoji:'⚡', label:'100 Min', earned: totalMins >= 100 },
+    { emoji:'🔥', label:'7-Day Streak', earned: streak >= 7 },
+    { emoji:'💎', label:'500 Min', earned: totalMins >= 500 },
+    { emoji:'🏔️', label:'30-Day Streak', earned: streak >= 30 },
+    { emoji:'👁️', label:'1000 Min', earned: totalMins >= 1000 },
+    { emoji:'∞', label:'100-Day Streak', earned: streak >= 100 },
+  ];
+
+  el.innerHTML = milestones.map(m => `<div class="milestone-badge ${m.earned ? 'earned' : 'unearned'}"><div class="milestone-emoji">${m.emoji}</div><div class="milestone-label">${m.label}</div></div>`).join('');
+}
+
 // ═══ SACRED GEOMETRY CANVAS ═══
 const canvas = document.getElementById('bgCanvas'), bctx = canvas.getContext('2d');
-let canvasIntensity = 0.15; // 0-1, scales during sessions
+let canvasIntensity = 0.15;
 let geoTime = 0;
 
 function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -1006,7 +2103,6 @@ resizeCanvas(); window.addEventListener('resize', resizeCanvas);
 
 function drawSacredGeometry() {
   const w = canvas.width, h = canvas.height;
-  // Floating center — drifts gently in a lissajous pattern
   const driftX = Math.sin(geoTime * 0.12) * w * 0.03 + Math.sin(geoTime * 0.07) * w * 0.015;
   const driftY = Math.cos(geoTime * 0.09) * h * 0.025 + Math.cos(geoTime * 0.13) * h * 0.012;
   const cx = w / 2 + driftX, cy = h / 2 + driftY;
@@ -1017,15 +2113,13 @@ function drawSacredGeometry() {
   bctx.clearRect(0, 0, w, h);
   bctx.globalAlpha = 1;
 
-  // Multi-frequency breathing pulse
   const pulse = 1 + Math.sin(t * 0.8) * 0.06 * intensity + Math.sin(t * 0.3) * 0.03;
-  const slowBreath = Math.sin(t * 0.25) * 0.5 + 0.5; // 0-1 slow cycle
+  const slowBreath = Math.sin(t * 0.25) * 0.5 + 0.5;
 
   const petalCount = 6;
   const layers = 3;
   const baseAlpha = 0.04 + intensity * 0.12;
 
-  // Soft ambient glow behind everything
   const ambGrad = bctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 1.2);
   ambGrad.addColorStop(0, `rgba(124,108,240,${0.03 + intensity * 0.06})`);
   ambGrad.addColorStop(0.5, `rgba(124,108,240,${0.01 + intensity * 0.02})`);
@@ -1033,18 +2127,15 @@ function drawSacredGeometry() {
   bctx.fillStyle = ambGrad;
   bctx.beginPath(); bctx.arc(cx, cy, baseR * 1.2, 0, Math.PI * 2); bctx.fill();
 
-  // Central circle
   bctx.strokeStyle = `rgba(124,108,240,${baseAlpha * 1.2})`;
   bctx.lineWidth = 0.8;
   const centralR = baseR * 0.33 * pulse;
   bctx.beginPath(); bctx.arc(cx, cy, centralR, 0, Math.PI * 2); bctx.stroke();
 
-  // Rotating petal layers
   for (let layer = 1; layer <= layers; layer++) {
     const layerR = baseR * 0.33 * layer * pulse;
     const rotation = t * 0.15 * (layer % 2 === 0 ? 1 : -1);
     const layerAlpha = baseAlpha * (1 - (layer - 1) * 0.2);
-    // Each layer breathes slightly differently
     const layerPulse = 1 + Math.sin(t * 0.6 + layer * 1.2) * 0.04;
 
     const circlesInLayer = petalCount * layer;
@@ -1061,13 +2152,11 @@ function drawSacredGeometry() {
       bctx.beginPath(); bctx.arc(px, py, petalR, 0, Math.PI * 2); bctx.stroke();
     }
 
-    // Connecting ring
     bctx.strokeStyle = `rgba(124,108,240,${layerAlpha * 0.6})`;
     bctx.lineWidth = 0.4;
     bctx.beginPath(); bctx.arc(cx, cy, layerR, 0, Math.PI * 2); bctx.stroke();
   }
 
-  // Outer seed circles — slowly rotating + individual floating
   const seedCount = 12;
   const seedR = baseR * 1.1 * pulse;
   const seedRotation = t * 0.05;
@@ -1083,7 +2172,6 @@ function drawSacredGeometry() {
     bctx.beginPath(); bctx.arc(px, py, r, 0, Math.PI * 2); bctx.stroke();
   }
 
-  // Radiating lines — slow rotation with length breathing
   const lineCount = 6;
   const lineRotation = t * 0.08;
   for (let i = 0; i < lineCount; i++) {
@@ -1101,7 +2189,6 @@ function drawSacredGeometry() {
     bctx.stroke();
   }
 
-  // Center glow — pulsing with multiple frequencies
   const glowAlpha = 0.1 + intensity * 0.25 + Math.sin(t * 1.5) * 0.05 + slowBreath * 0.04;
   const glowR = baseR * (0.15 + slowBreath * 0.03);
   const grad = bctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
@@ -1111,7 +2198,6 @@ function drawSacredGeometry() {
   bctx.fillStyle = grad;
   bctx.beginPath(); bctx.arc(cx, cy, glowR, 0, Math.PI * 2); bctx.fill();
 
-  // Tiny floating particles
   for (let i = 0; i < 8; i++) {
     const pAngle = t * 0.2 + i * (Math.PI * 2 / 8);
     const pDist = baseR * (0.5 + Math.sin(t * 0.15 + i * 3) * 0.4);
