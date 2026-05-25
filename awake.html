@@ -610,9 +610,6 @@ html, body {
 .lang-btn.active { background:rgba(124,108,240,0.2); border-color:var(--accent-glow); color:var(--text-primary); }
 
 /* Mantra */
-.mantra-tabs { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; justify-content:center; }
-.mantra-tab { padding:6px 16px; border-radius:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08); color:var(--text-secondary); font-size:13px; cursor:pointer; transition:0.2s; }
-.mantra-tab.active { background:rgba(255,180,60,0.15); border-color:rgba(255,180,60,0.3); color:#f0b43c; }
 .mantra-list { max-height:400px; overflow-y:auto; width:100%; }
 .mantra-item { padding:14px; border-radius:var(--radius-sm); background:var(--bg-card); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; cursor:pointer; transition:0.2s; display:flex; justify-content:space-between; align-items:center; }
 .mantra-item:active { transform:scale(0.98); }
@@ -632,6 +629,8 @@ html, body {
 .tutorial-icon { font-size:48px; margin-bottom:16px; }
 .tutorial-title { font-size:22px; font-weight:300; color:var(--text-primary); margin-bottom:12px; }
 .tutorial-text { font-size:15px; color:var(--text-secondary); line-height:1.6; }
+#snapOverlay { backdrop-filter: blur(40px) saturate(1.8); -webkit-backdrop-filter: blur(40px) saturate(1.8); }
+#snapOverlay .snap-prompt { text-shadow: 0 2px 20px rgba(0,0,0,0.6), 0 0 60px rgba(255,255,255,0.08); }
 </style>
 </head>
 <body>
@@ -676,7 +675,7 @@ html, body {
     <div class="card-row"><div class="card-icon" style="background:rgba(108,160,240,0.12);">🎧</div><div class="card-info"><div class="card-title" data-i18n="focus_states">Focus States</div><div class="card-desc" data-i18n="focus_states_desc">Binaural beats for deep states</div></div></div>
   </div>
   <div class="card" onclick="openBodyScan()">
-    <div class="card-row"><div class="card-icon" style="background:rgba(160,120,220,0.12);">🫧</div><div class="card-info"><div class="card-title" data-i18n="yoga_nidra">Yoga Nidra</div><div class="card-desc" data-i18n="yoga_nidra_desc">Body scan — rotation of consciousness</div></div></div>
+    <div class="card-row"><div class="card-icon" style="background:rgba(160,120,220,0.12);">🫧</div><div class="card-info"><div class="card-title" data-i18n="yoga_nidra">Body Scan</div><div class="card-desc" data-i18n="yoga_nidra_desc">Yoga Nidra — rotation of consciousness</div></div></div>
   </div>
   <div class="card" onclick="openMantra()">
     <div class="card-row"><div class="card-icon" style="background:rgba(255,180,60,0.12);"><span style="font-size:20px;">🕉️</span></div><div class="card-info"><div class="card-title" data-i18n="mantra_title">Mantra</div><div class="card-desc" data-i18n="mantra_desc">Chant with tanpura drone</div></div></div>
@@ -698,7 +697,7 @@ html, body {
 
 <!-- Snap -->
 <div class="exercise-overlay" id="snapOverlay">
-  <button class="overlay-close" onclick="closeSnap()">Close ✕</button>
+  <button class="overlay-close" onclick="closeSnap()" data-i18n="close">Close ✕</button>
   <div class="overlay-content">
     <div class="snap-container">
       <div class="snap-step-dots" id="snapDots"></div>
@@ -709,18 +708,18 @@ html, body {
 
 <!-- Breathwork -->
 <div class="exercise-overlay" id="breatheOverlay">
-  <button class="overlay-close" onclick="closeBreathe()">Close ✕</button>
+  <button class="overlay-close" onclick="closeBreathe()" data-i18n="close">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
-    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-breath);">Breathwork</div>
-    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Let the rhythm dissolve the noise</div>
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-breath);" data-i18n="breathwork_heading">Breathwork</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;" data-i18n="breathwork_sub">Let the rhythm dissolve the noise</div>
     <div class="breath-patterns" id="breathPatterns">
-      <div class="breath-cat-label">Calming</div>
+      <div class="breath-cat-label" data-i18n="calming">Calming</div>
       <button class="breath-pattern-btn active" data-pattern="box">Sama Vritti</button>
       <button class="breath-pattern-btn" data-pattern="478">4-7-8</button>
       <button class="breath-pattern-btn" data-pattern="coherent">Coherence</button>
       <button class="breath-pattern-btn" data-pattern="nadi">Nadi Shodhana</button>
       <button class="breath-pattern-btn" data-pattern="calm446">4-4-6-2</button>
-      <div class="breath-cat-label">Energizing</div>
+      <div class="breath-cat-label" data-i18n="energizing">Energizing</div>
       <button class="breath-pattern-btn" data-pattern="wimhof">Wim Hof</button>
       <button class="breath-pattern-btn" data-pattern="bhastrika">Bhastrika</button>
       <button class="breath-pattern-btn" data-pattern="kapalabhati">Kapalabhati</button>
@@ -757,7 +756,7 @@ html, body {
         <div class="wim-round-results" id="wimRoundResults"></div>
       </div>
       <div style="margin-top:24px; display:flex; gap:12px;" id="breathControls">
-        <button class="btn btn-primary" id="breathStartBtn" onclick="toggleBreath()">Start</button>
+        <button class="btn btn-primary" id="breathStartBtn" onclick="toggleBreath()" data-i18n="start">Start</button>
         <button class="btn btn-ghost" onclick="stopBreath()">Reset</button>
       </div>
     </div>
@@ -831,10 +830,10 @@ html, body {
 
 <!-- Focus States -->
 <div class="exercise-overlay" id="focusOverlay">
-  <button class="overlay-close" onclick="closeFocus()">Close ✕</button>
+  <button class="overlay-close" onclick="closeFocus()" data-i18n="close">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
-    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-focus);">Focus States</div>
-    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Binaural beats for deep states</div>
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-focus);" data-i18n="focus_heading">Focus States</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;" data-i18n="focus_sub">Binaural beats for deep states</div>
     <div id="focusPicker" style="width:100%; max-width:320px;">
       <div class="focus-level-btn active" data-focus="alpha" onclick="selectFocusLevel('alpha',this)">
         <div style="display:flex;align-items:center;gap:10px;">
@@ -949,21 +948,21 @@ html, body {
       <div class="focus-elapsed" id="focusElapsed">0:00</div>
       <div style="font-size:12px; color:var(--text-dim);" id="focusRemaining"></div>
       <div class="focus-volume-wrap">
-        <label>Vol</label>
+        <label data-i18n="vol">Vol</label>
         <input type="range" id="focusVolume" min="0" max="100" value="50" oninput="setFocusVolume(this.value)">
       </div>
-      <button class="btn btn-ghost" onclick="stopFocusSession()" style="margin-top:12px;">End Session</button>
+      <button class="btn btn-ghost" onclick="stopFocusSession()" style="margin-top:12px;" data-i18n="end_session">End Session</button>
     </div>
   </div>
 </div>
 
 <!-- Yoga Nidra -->
 <div class="exercise-overlay" id="nidraOverlay">
-  <button class="overlay-close" onclick="closeBodyScan()">Close ✕</button>
+  <button class="overlay-close" onclick="closeBodyScan()" data-i18n="close">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
     <div id="nidraPicker">
-      <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:rgba(160,120,220,0.9);">Yoga Nidra</div>
-      <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Rotation of consciousness</div>
+      <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:rgba(160,120,220,0.9);" data-i18n="body_scan_heading">Body Scan</div>
+      <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;" data-i18n="body_scan_sub">Yoga Nidra — rotation of consciousness</div>
       <div style="display:flex; gap:10px; justify-content:center; margin-bottom:20px;">
         <button class="nidra-pill" onclick="selectNidraDur(15,this)">15m</button>
         <button class="nidra-pill active" onclick="selectNidraDur(25,this)">25m</button>
@@ -975,25 +974,25 @@ html, body {
       <div style="text-align:center;"><button class="btn btn-primary" onclick="startBodyScan()" style="background:linear-gradient(135deg, rgba(160,120,220,0.8), rgba(120,80,200,0.8));">Begin Session</button></div>
     </div>
     <div class="focus-session-display" id="nidraSession">
-      <div class="focus-level-label" style="color:rgba(160,120,220,0.9);">YOGA NIDRA</div>
+      <div class="focus-level-label" style="color:rgba(160,120,220,0.9);" data-i18n="body_scan_heading">BODY SCAN</div>
       <div id="nidraScanText"></div>
       <div class="nidra-vis"></div>
       <div class="focus-elapsed" id="nidraElapsed">0:00</div>
       <div style="font-size:12px; color:var(--text-dim);" id="nidraRemaining"></div>
       <div class="focus-volume-wrap">
-        <label>Vol</label>
+        <label data-i18n="vol">Vol</label>
         <input type="range" min="0" max="100" value="50" oninput="setNidraVolume(this.value)">
       </div>
-      <button class="btn btn-ghost" onclick="stopBodyScan()" style="margin-top:12px;">End Session</button>
+      <button class="btn btn-ghost" onclick="stopBodyScan()" style="margin-top:12px;" data-i18n="end_session">End Session</button>
     </div>
   </div>
 </div>
 
 <!-- Insights -->
 <div class="exercise-overlay" id="insightsOverlay">
-  <button class="overlay-close" onclick="closeInsights()">Close ✕</button>
+  <button class="overlay-close" onclick="closeInsights()" data-i18n="close">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
-    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-warm);">Insights</div>
+    <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-warm);" data-i18n="insight_heading">Insights</div>
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Your practice at a glance</div>
     <div class="stats-row" style="margin-bottom:20px;">
       <div class="stat-chip"><div class="stat-value" id="statStreak">0</div><div class="stat-label" data-i18n="day_streak">Day Streak</div></div>
@@ -1015,18 +1014,12 @@ html, body {
 
 <!-- Mantra -->
 <div class="exercise-overlay" id="mantraOverlay">
-  <button class="overlay-close" onclick="closeMantra()">Close ✕</button>
+  <button class="overlay-close" onclick="closeMantra()" data-i18n="close">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
     <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:#f0b43c;" data-i18n="mantra_heading">Mantra Meditation</div>
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;" data-i18n="mantra_sub">Chant along with tanpura drone</div>
 
     <div id="mantraPicker" style="width:100%;max-width:360px;">
-      <div class="mantra-tabs">
-        <button class="mantra-tab active" onclick="filterMantras('all',this)" data-i18n="all">All</button>
-        <button class="mantra-tab" onclick="filterMantras('mantra',this)">Mantra</button>
-        <button class="mantra-tab" onclick="filterMantras('chalisa',this)">Chalisa</button>
-        <button class="mantra-tab" onclick="filterMantras('bhajan',this)">Bhajan</button>
-      </div>
       <div class="mantra-list" id="mantraList"></div>
     </div>
 
@@ -1036,19 +1029,19 @@ html, body {
       <div class="mantra-transliteration" id="mantraTranslit"></div>
       <div class="mantra-meaning" id="mantraMeaning"></div>
       <div class="focus-elapsed" id="mantraElapsed">0:00</div>
-      <div style="font-size:12px;color:var(--text-dim);">🔔 Tanpura drone playing</div>
+      <div style="font-size:12px;color:var(--text-dim);"><span data-i18n="tanpura_playing">Tanpura drone playing</span></div>
       <div class="focus-volume-wrap">
-        <label>Vol</label>
+        <label data-i18n="vol">Vol</label>
         <input type="range" id="mantraVolume" min="0" max="100" value="50" oninput="setMantraVolume(this.value)">
       </div>
-      <button class="btn btn-ghost" onclick="stopMantra()" style="margin-top:12px;">End Session</button>
+      <button class="btn btn-ghost" onclick="stopMantra()" style="margin-top:12px;" data-i18n="end_session">End Session</button>
     </div>
   </div>
 </div>
 
 <!-- Tutorial -->
 <div class="exercise-overlay" id="tutorialOverlay">
-  <button class="overlay-close" onclick="closeTutorial()">Close ✕</button>
+  <button class="overlay-close" onclick="closeTutorial()" data-i18n="close">Close ✕</button>
   <div class="overlay-content">
     <div class="tutorial-card" id="tutorialCard">
       <div class="tutorial-step" id="tutorialStep">1/7</div>
@@ -1065,7 +1058,7 @@ html, body {
 
 <!-- Settings -->
 <div class="exercise-overlay" id="settingsOverlay">
-  <button class="overlay-close" onclick="closeSettings()">Close ✕</button>
+  <button class="overlay-close" onclick="closeSettings()" data-i18n="close">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
     <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--text-primary);" data-i18n="settings">Settings</div>
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Data & preferences</div>
@@ -1880,15 +1873,43 @@ const SNAP = {
   ],
 };
 const SNAP_COLORS = ['#200800','#1a0400','#0d0a1a','#100a1e','#0a1218','#0a1520','#0a180d','#18120a','#120a18','#0a1418','#0d0d1e','#0e0e20','#0a0a1a','#1a0a10','#0a1a10','#10081a'];
+const SNAP_I18N = {
+  hi: {
+    openers: ["रुको.","जागो.","अरे.","अभी.","बस.","ठहरो.","रुक जाओ.","यहाँ.","सपने से\nबाहर आओ.","ऊपर देखो.","छोड़ो.","तुम.","नमस्ते.","चुप.","ध्यान दो."],
+    body: ["पैर.\nज़मीन पर.","रीढ़\nमहसूस करो.","जबड़ा\nढीला करो.","कंधे\nनीचे करो.","हाथ\nमहसूस करो.","पैर की उंगलियां\nहिलाओ.","अपना वज़न\nमहसूस करो.","पीठ\nसीधी करो.","चेहरा\nढीला करो.","हथेलियां\nखोलो.","दिल की\nधड़कन\nमहसूस करो.","मुट्ठी\nबंद करो.\nछोड़ो."],
+    breath: [
+      {in:"साँस अंदर.",hold:"रोको.",out:"बाहर."},
+      {in:"गहरी\nसाँस लो.",hold:"रोके रखो.",out:"छोड़ो."},
+      {in:"नाक से\nअंदर.",hold:"ठहरो.",out:"मुँह से\nबाहर."},
+    ],
+    senses: ["देखो.\nक्या दिखता\nहै?","सुनो.","हवा\nमहसूस करो.","सबसे करीब\nकी आवाज़?","सबसे पास\nका रंग?","क्या छू रहा\nहै तुम्हारी\nत्वचा को?","अपने हाथ\nदेखो.","तीन आवाज़ें\nगिनो.","आसमान\nदेखो.","क्या हिल\nरहा है?"],
+    presence: ["तुम\nयहाँ\nहो.","यह\nअसली है.","अभी.","बस यही\nपल.","कहीं\nऔर नहीं.","तुम\nज़िंदा हो.","पूरी तरह\nयहाँ.","बस\nहो.","विचार\nतुम नहीं\nहो."],
+    closers: ["उपस्थित. ✦","दोस्त ऑन. ✦","जागे. ✦","यहाँ. ✦","लौट आए. ✦","स्पष्ट. ✦","ज़िंदा. ✦"],
+  },
+  gu: {
+    openers: ["થોભો.","જાગો.","અરે.","હવે.","બસ.","ઊભા રહો.","અટકો.","અહીં.","સપનામાંથી\nબહાર આવો.","ઉપર જુઓ.","છોડો.","તમે.","નમસ્તે.","શાંત.","ધ્યાન આપો."],
+    body: ["પગ.\nજમીન પર.","કરોડરજ્જુ\nઅનુભવો.","જડબું\nછોડો.","ખભા\nનીચે કરો.","હાથ\nઅનુભવો.","પગની આંગળીઓ\nહલાવો.","તમારું વજન\nઅનુભવો.","પીઠ\nસીધી કરો.","ચહેરો\nછોડો.","હથેળીઓ\nખોલો.","હૃદયના\nધબકારા\nઅનુભવો.","મુઠ્ઠી\nબંધ કરો.\nછોડો."],
+    breath: [
+      {in:"શ્વાસ અંદર.",hold:"રોકો.",out:"બહાર."},
+      {in:"ઊંડો\nશ્વાસ લો.",hold:"રોકી રાખો.",out:"છોડો."},
+      {in:"નાકથી\nઅંદર.",hold:"થોભો.",out:"મોંથી\nબહાર."},
+    ],
+    senses: ["જુઓ.\nશું દેખાય\nછે?","સાંભળો.","હવા\nઅનુભવો.","સૌથી નજીકનો\nઅવાજ?","સૌથી નજીકનો\nરંગ?","શું સ્પર્શે\nછે તમારી\nત્વચાને?","તમારા હાથ\nજુઓ.","ત્રણ અવાજ\nગણો.","આકાશ\nજુઓ.","શું હલે\nછે?"],
+    presence: ["તમે\nઅહીં\nછો.","આ\nવાસ્તવિક છે.","હવે.","બસ આ\nપળ.","ક્યાંય\nબીજે નહીં.","તમે\nજીવિત છો.","સંપૂર્ણ\nઅહીં.","બસ\nરહો.","વિચારો\nતમે નથી."],
+    closers: ["હાજર. ✦","દોસ્ત ઑન. ✦","જાગ્યા. ✦","અહીં. ✦","પાછા આવ્યા. ✦","સ્પષ્ટ. ✦","જીવંત. ✦"],
+  }
+};
 function pick(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 function pickN(arr, n) { const s=[...arr]; for(let i=s.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]];} return s.slice(0,n); }
 function buildSnapSequence() {
-  const br = pick(SNAP.breath);
-  const bodies = pickN(SNAP.body, 2);
-  const senses = pickN(SNAP.senses, 2);
-  const pres = pickN(SNAP.presence, 2);
+  const lang = currentLang;
+  const src = (lang !== 'en' && SNAP_I18N[lang]) ? SNAP_I18N[lang] : SNAP;
+  const br = pick(src.breath);
+  const bodies = pickN(src.body, 2);
+  const senses = pickN(src.senses, 2);
+  const pres = pickN(src.presence, 2);
   const steps = [
-    {prompt:pick(SNAP.openers), sz:72, wt:900, hold:1.1},
+    {prompt:pick(src.openers), sz:72, wt:900, hold:1.1},
     {prompt:bodies[0], sz:48, wt:700, hold:1.8},
     {prompt:br.in, sz:56, wt:800, hold:1.5},
     {prompt:br.hold, sz:68, wt:900, hold:2},
@@ -1898,7 +1919,7 @@ function buildSnapSequence() {
     {prompt:senses[1], sz:44, wt:700, hold:2.2},
     {prompt:pres[0], sz:60, wt:900, hold:2},
     {prompt:pres[1], sz:56, wt:800, hold:1.8},
-    {prompt:pick(SNAP.closers), sz:72, wt:900, hold:3},
+    {prompt:pick(src.closers), sz:72, wt:900, hold:3},
   ];
   const colors = pickN(SNAP_COLORS, steps.length);
   steps.forEach((s,i) => s.color = colors[i]);
@@ -3322,7 +3343,7 @@ const I18N = {
     just_sit: 'Just Sit', just_sit_desc: 'Track the mind wanders',
     breathwork: 'Breathwork', breathwork_desc: 'Guided breathing — presets or build your own',
     focus_states: 'Focus States', focus_states_desc: 'Binaural beats for deep states',
-    yoga_nidra: 'Yoga Nidra', yoga_nidra_desc: 'Body scan — rotation of consciousness',
+    yoga_nidra: 'Body Scan', yoga_nidra_desc: 'Yoga Nidra — rotation of consciousness',
     mantra_title: 'Mantra', mantra_desc: 'Chant with tanpura drone',
     mantra_heading: 'Mantra Meditation', mantra_sub: 'Chant along with tanpura drone',
     insights: 'Insights', insights_desc: 'Your practice at a glance',
@@ -3333,6 +3354,26 @@ const I18N = {
     export_data: 'Export Data', import_data: 'Import Data',
     how_to_use: 'How to Use', reset: 'Reset All Progress',
     all: 'All',
+    close: 'Close ✕',
+    get_ready: 'Get ready...',
+    breathwork_heading: 'Breathwork',
+    breathwork_sub: 'Let the rhythm dissolve the noise',
+    calming: 'Calming', energizing: 'Energizing', custom: 'Custom',
+    start: 'Start', pause: 'Pause', stop: 'Stop',
+    end_session: 'End Session',
+    vol: 'Vol',
+    tanpura_playing: 'Tanpura drone playing',
+    focus_heading: 'Focus States',
+    focus_sub: 'Binaural beats for deep states',
+    body_scan_heading: 'Body Scan',
+    body_scan_sub: 'Yoga Nidra — rotation of consciousness',
+    begin_scan: 'Begin Scan',
+    guided: 'Guided',
+    choose_journey: 'Choose a journey',
+    insight_heading: 'Insights',
+    streak_label: 'Day Streak',
+    sessions_label: 'Sessions',
+    totalmin_label: 'Total Min',
   },
   hi: {
     subtitle: 'चक्र टूटें। उपस्थिति आए।',
@@ -3342,7 +3383,7 @@ const I18N = {
     just_sit: 'बस बैठो', just_sit_desc: 'मन की भटकन पर नज़र रखें',
     breathwork: 'प्राणायाम', breathwork_desc: 'श्वास अभ्यास — तैयार या अपना बनाएं',
     focus_states: 'ध्यान अवस्थाएं', focus_states_desc: 'गहरी अवस्थाओं के लिए बाइनॉरल बीट्स',
-    yoga_nidra: 'योग निद्रा', yoga_nidra_desc: 'शरीर स्कैन — चेतना का घूर्णन',
+    yoga_nidra: 'बॉडी स्कैन', yoga_nidra_desc: 'योग निद्रा — चेतना का घूर्णन',
     mantra_title: 'मंत्र', mantra_desc: 'तानपुरा ध्वनि के साथ जप करें',
     mantra_heading: 'मंत्र ध्यान', mantra_sub: 'तानपुरा ध्वनि के साथ जप करें',
     insights: 'अंतर्दृष्टि', insights_desc: 'आपके अभ्यास की झलक',
@@ -3353,6 +3394,26 @@ const I18N = {
     export_data: 'डेटा निर्यात', import_data: 'डेटा आयात',
     how_to_use: 'उपयोग कैसे करें', reset: 'सभी प्रगति रीसेट करें',
     all: 'सभी',
+    close: 'बंद ✕',
+    get_ready: 'तैयार हो जाओ...',
+    breathwork_heading: 'प्राणायाम',
+    breathwork_sub: 'लय को शोर मिटाने दो',
+    calming: 'शांत', energizing: 'ऊर्जा', custom: 'कस्टम',
+    start: 'शुरू', pause: 'रुको', stop: 'बंद',
+    end_session: 'सत्र समाप्त',
+    vol: 'ध्वनि',
+    tanpura_playing: 'तानपुरा बज रहा है',
+    focus_heading: 'ध्यान अवस्थाएं',
+    focus_sub: 'गहरी अवस्थाओं के लिए बाइनॉरल बीट्स',
+    body_scan_heading: 'बॉडी स्कैन',
+    body_scan_sub: 'योग निद्रा — चेतना का घूर्णन',
+    begin_scan: 'स्कैन शुरू करें',
+    guided: 'मार्गदर्शित',
+    choose_journey: 'यात्रा चुनें',
+    insight_heading: 'अंतर्दृष्टि',
+    streak_label: 'दिन लगातार',
+    sessions_label: 'सत्र',
+    totalmin_label: 'कुल मिनट',
   },
   gu: {
     subtitle: 'ચક્ર તૂટે. હાજરી આવે.',
@@ -3362,7 +3423,7 @@ const I18N = {
     just_sit: 'બસ બેસો', just_sit_desc: 'મનની ભટકણ પર નજર રાખો',
     breathwork: 'પ્રાણાયામ', breathwork_desc: 'શ્વાસ અભ્યાસ — તૈયાર અથવા તમારું બનાવો',
     focus_states: 'ધ્યાન અવસ્થાઓ', focus_states_desc: 'ઊંડી અવસ્થાઓ માટે બાઇનોરલ બીટ્સ',
-    yoga_nidra: 'યોગ નિદ્રા', yoga_nidra_desc: 'શરીર સ્કેન — ચેતનાનું પરિભ્રમણ',
+    yoga_nidra: 'બોડી સ્કેન', yoga_nidra_desc: 'યોગ નિદ્રા — ચેતનાનું પરિભ્રમણ',
     mantra_title: 'મંત્ર', mantra_desc: 'તાનપુરા ધ્વનિ સાથે જાપ કરો',
     mantra_heading: 'મંત્ર ધ્યાન', mantra_sub: 'તાનપુરા ધ્વનિ સાથે જાપ કરો',
     insights: 'અંતર્દૃષ્ટિ', insights_desc: 'તમારા અભ્યાસની ઝલક',
@@ -3373,6 +3434,26 @@ const I18N = {
     export_data: 'ડેટા નિકાસ', import_data: 'ડેટા આયાત',
     how_to_use: 'ઉપયોગ કેવી રીતે કરવો', reset: 'બધી પ્રગતિ રીસેટ કરો',
     all: 'બધા',
+    close: 'બંધ ✕',
+    get_ready: 'તૈયાર થાઓ...',
+    breathwork_heading: 'પ્રાણાયામ',
+    breathwork_sub: 'લયને અવાજ મિટાવવા દો',
+    calming: 'શાંત', energizing: 'ઊર્જા', custom: 'કસ્ટમ',
+    start: 'શરૂ', pause: 'થોભો', stop: 'બંધ',
+    end_session: 'સત્ર સમાપ્ત',
+    vol: 'અવાજ',
+    tanpura_playing: 'તાનપુરા વાગી રહ્યું છે',
+    focus_heading: 'ધ્યાન અવસ્થાઓ',
+    focus_sub: 'ઊંડી અવસ્થાઓ માટે બાઇનોરલ બીટ્સ',
+    body_scan_heading: 'બોડી સ્કેન',
+    body_scan_sub: 'યોગ નિદ્રા — ચેતનાનું પરિભ્રમણ',
+    begin_scan: 'સ્કેન શરૂ કરો',
+    guided: 'માર્ગદર્શિત',
+    choose_journey: 'યાત્રા પસંદ કરો',
+    insight_heading: 'અંતર્દૃષ્ટિ',
+    streak_label: 'દિવસ સતત',
+    sessions_label: 'સત્રો',
+    totalmin_label: 'કુલ મિનિટ',
   }
 };
 
@@ -3466,18 +3547,9 @@ let mantraState = { running:false, current:null, startTime:null, timer:null, nod
 function openMantra() { hapticTap(); renderMantraList(); document.getElementById('mantraOverlay').classList.add('active'); }
 function closeMantra() { if(mantraState.running) stopMantra(); document.getElementById('mantraOverlay').classList.remove('active'); }
 
-function filterMantras(cat, btn) {
-  hapticTap();
-  mantraState.filter = cat;
-  document.querySelectorAll('.mantra-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  renderMantraList();
-}
-
 function renderMantraList() {
   const list = document.getElementById('mantraList');
-  const filtered = mantraState.filter === 'all' ? MANTRAS : MANTRAS.filter(m => m.cat === mantraState.filter);
-  list.innerHTML = filtered.map(m =>
+  list.innerHTML = MANTRAS.map(m =>
     `<div class="mantra-item" onclick="startMantra('${m.id}')">
       <div>
         <div class="mantra-item-name">${m.name}</div>
@@ -3546,6 +3618,7 @@ function startMantra(id) {
     mantraState.nodes = { sa, pa, sa2, buzz, saGain, paGain, sa2Gain, buzzGain, buzzFilter, masterGain };
   } catch(e) {}
 
+  speakMantra(m.translit);
   mantraTick();
 }
 
@@ -3558,11 +3631,34 @@ function mantraTick() {
   mantraState.timer = setTimeout(mantraTick, 500);
 }
 
+function speakMantra(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const lines = text.split('\n').filter(l => l.trim());
+  let lineIdx = 0;
+  function speakNextLine() {
+    if (!mantraState.running) return;
+    const u = new SpeechSynthesisUtterance(lines[lineIdx]);
+    u.rate = 0.7;
+    u.pitch = 0.9;
+    u.lang = 'hi-IN';
+    u.onend = () => {
+      if (!mantraState.running) return;
+      lineIdx = (lineIdx + 1) % lines.length;
+      setTimeout(speakNextLine, 2000);
+    };
+    window.speechSynthesis.speak(u);
+  }
+  mantraState.speechTimer = setTimeout(speakNextLine, 3000);
+}
+
 function setMantraVolume(val) {
   if (mantraState.nodes && mantraState.nodes.masterGain) mantraState.nodes.masterGain.gain.value = val / 100;
 }
 
 function stopMantra() {
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  clearTimeout(mantraState.speechTimer);
   mantraState.running = false;
   clearTimeout(mantraState.timer);
   canvasIntensity = 0.45;
