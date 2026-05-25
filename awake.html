@@ -577,6 +577,35 @@ html, body {
   0%,100% { box-shadow: 0 0 30px rgba(192,144,240,0.08), inset 0 0 60px rgba(192,144,240,0.03); border-color:rgba(192,144,240,0.12); }
   50% { box-shadow: 0 0 60px rgba(192,144,240,0.15), inset 0 0 80px rgba(192,144,240,0.06); border-color:rgba(192,144,240,0.2); }
 }
+.nidra-vis {
+  width:140px; height:140px; border-radius:50%;
+  background:radial-gradient(circle, rgba(160,120,220,0.3), rgba(160,120,220,0.05));
+  animation: nidra-pulse 6s ease-in-out infinite;
+}
+@keyframes nidra-pulse {
+  0%,100% { transform:scale(1); box-shadow: 0 0 50px rgba(160,120,220,0.2); }
+  50% { transform:scale(1.05); box-shadow: 0 0 100px rgba(160,120,220,0.35); }
+}
+#nidraScanText {
+  font-size:18px; font-weight:300; color:rgba(255,255,255,0.85);
+  text-align:center; max-width:280px; line-height:1.5;
+  transition: opacity 0.8s ease; min-height:54px; opacity:0;
+}
+#nidraScanText.visible { opacity:1; }
+.nidra-pill { background:rgba(160,120,220,0.1); border:1px solid rgba(160,120,220,0.2); color:var(--text-secondary); padding:8px 18px; border-radius:20px; font-size:14px; cursor:pointer; transition:0.2s; }
+.nidra-pill.active { background:rgba(160,120,220,0.25); border-color:rgba(160,120,220,0.5); color:var(--text-primary); }
+.toggle-switch { position:relative; display:inline-block; width:48px; height:28px; flex-shrink:0; }
+.toggle-switch input { opacity:0; width:0; height:0; }
+.toggle-slider {
+  position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0;
+  background:rgba(255,255,255,0.12); border-radius:28px; transition: 0.3s;
+}
+.toggle-slider:before {
+  position:absolute; content:""; height:22px; width:22px; left:3px; bottom:3px;
+  background:white; border-radius:50%; transition: 0.3s;
+}
+.toggle-switch input:checked + .toggle-slider { background:var(--accent-glow); }
+.toggle-switch input:checked + .toggle-slider:before { transform:translateX(20px); }
 </style>
 </head>
 <body>
@@ -615,6 +644,9 @@ html, body {
   </div>
   <div class="card" onclick="openFocus()">
     <div class="card-row"><div class="card-icon" style="background:rgba(108,160,240,0.12);">🎧</div><div class="card-info"><div class="card-title">Focus States</div><div class="card-desc">Binaural beats for deep states</div></div></div>
+  </div>
+  <div class="card" onclick="openBodyScan()">
+    <div class="card-row"><div class="card-icon" style="background:rgba(160,120,220,0.12);">🫧</div><div class="card-info"><div class="card-title">Yoga Nidra</div><div class="card-desc">Body scan — rotation of consciousness</div></div></div>
   </div>
 
   <div class="section-label" style="margin-top:36px;">Recent Sessions</div>
@@ -811,6 +843,16 @@ html, body {
           </div>
         </div>
       </div>
+      <div class="focus-level-btn" data-focus="astral" onclick="selectFocusLevel('astral',this)">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:24px;">🌌</span>
+          <div>
+            <div class="focus-level-name">Astral Projection</div>
+            <div class="focus-level-desc" style="color:var(--text-dim);font-style:italic;">Body asleep, mind awake — OBE gateway</div>
+            <div class="focus-level-hz">Delta · 4Hz binaural beat</div>
+          </div>
+        </div>
+      </div>
       <div class="focus-timer-pills">
         <button class="focus-pill" data-fdur="15" onclick="selectFocusDur(15,this)">15m</button>
         <button class="focus-pill active" data-fdur="30" onclick="selectFocusDur(30,this)">30m</button>
@@ -849,6 +891,22 @@ html, body {
             <div class="guided-card-desc">Drift into deep, restful sleep</div>
           </div>
         </div>
+        <div class="guided-card" onclick="startGuidedFocus('astral_beginner')" style="border-color:rgba(160,120,220,0.2);background:linear-gradient(135deg, rgba(160,120,220,0.08), rgba(80,60,160,0.08));">
+          <div class="guided-card-icon">🌌</div>
+          <div class="guided-card-info">
+            <div class="guided-card-name">Gateway Experience</div>
+            <div class="guided-card-meta">25 min · Delta waves · Beginner</div>
+            <div class="guided-card-desc">Your first out-of-body exploration</div>
+          </div>
+        </div>
+        <div class="guided-card" onclick="startGuidedFocus('astral_advanced')" style="border-color:rgba(160,120,220,0.2);background:linear-gradient(135deg, rgba(160,120,220,0.08), rgba(80,60,160,0.08));">
+          <div class="guided-card-icon">🔮</div>
+          <div class="guided-card-info">
+            <div class="guided-card-name">Deep Gateway</div>
+            <div class="guided-card-meta">40 min · Delta waves · Advanced</div>
+            <div class="guided-card-desc">Extended astral projection for experienced practitioners</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="focus-session-display" id="focusSession">
@@ -862,6 +920,38 @@ html, body {
         <input type="range" id="focusVolume" min="0" max="100" value="50" oninput="setFocusVolume(this.value)">
       </div>
       <button class="btn btn-ghost" onclick="stopFocusSession()" style="margin-top:12px;">End Session</button>
+    </div>
+  </div>
+</div>
+
+<!-- Yoga Nidra -->
+<div class="exercise-overlay" id="nidraOverlay">
+  <button class="overlay-close" onclick="closeBodyScan()">Close ✕</button>
+  <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
+    <div id="nidraPicker">
+      <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:rgba(160,120,220,0.9);">Yoga Nidra</div>
+      <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Rotation of consciousness</div>
+      <div style="display:flex; gap:10px; justify-content:center; margin-bottom:20px;">
+        <button class="nidra-pill" onclick="selectNidraDur(15,this)">15m</button>
+        <button class="nidra-pill active" onclick="selectNidraDur(25,this)">25m</button>
+        <button class="nidra-pill" onclick="selectNidraDur(35,this)">35m</button>
+      </div>
+      <div style="padding:14px; background:rgba(160,120,220,0.06); border:1px solid rgba(160,120,220,0.12); border-radius:var(--radius-sm); margin-bottom:20px; max-width:320px;">
+        <div style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Yoga Nidra is conscious sleep — a guided rotation of awareness through every part of the body. Lie down, close your eyes, and follow the voice. You remain aware while your body falls into deep rest.</div>
+      </div>
+      <div style="text-align:center;"><button class="btn btn-primary" onclick="startBodyScan()" style="background:linear-gradient(135deg, rgba(160,120,220,0.8), rgba(120,80,200,0.8));">Begin Session</button></div>
+    </div>
+    <div class="focus-session-display" id="nidraSession">
+      <div class="focus-level-label" style="color:rgba(160,120,220,0.9);">YOGA NIDRA</div>
+      <div id="nidraScanText"></div>
+      <div class="nidra-vis"></div>
+      <div class="focus-elapsed" id="nidraElapsed">0:00</div>
+      <div style="font-size:12px; color:var(--text-dim);" id="nidraRemaining"></div>
+      <div class="focus-volume-wrap">
+        <label>Vol</label>
+        <input type="range" min="0" max="100" value="50" oninput="setNidraVolume(this.value)">
+      </div>
+      <button class="btn btn-ghost" onclick="stopBodyScan()" style="margin-top:12px;">End Session</button>
     </div>
   </div>
 </div>
@@ -892,6 +982,19 @@ html, body {
     <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--text-primary);">Settings</div>
     <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Data & preferences</div>
     <div class="settings-section">
+      <div class="settings-section-label">Preferences</div>
+      <div class="settings-row" style="justify-content:space-between;align-items:center;padding:0 4px;">
+        <div>
+          <div style="font-size:14px;color:var(--text-primary);">Haptic Guidance</div>
+          <div style="font-size:11px;color:var(--text-dim);">Vibrations during breathwork & guided sessions</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="hapticToggle" onchange="toggleHapticGuidance(this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="settings-section">
       <div class="settings-section-label">Data</div>
       <div class="settings-row">
         <button class="btn btn-ghost" onclick="exportData()">Export Data</button>
@@ -899,7 +1002,7 @@ html, body {
         <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
       </div>
     </div>
-    <div class="settings-version">AWAKE v12</div>
+    <div class="settings-version">AWAKE v12.2</div>
   </div>
 </div>
 
@@ -931,7 +1034,7 @@ html, body {
 
 <script>
 /* ════════════════════════════════════════════
-   AWAKE v12
+   AWAKE v12.2
    ════════════════════════════════════════════ */
 
 // ═══ DAILY TEACHINGS ═══
@@ -1129,7 +1232,8 @@ function defaultState() {
     totalMinutes:0, totalSessions:0, streak:0, lastSessionDate:null,
     history:[], customPatterns:[], muted:false,
     dailyMinutes:0, dailyDate:null,
-    streakFreezeUsed: false
+    streakFreezeUsed: false,
+    hapticGuidance: false
   };
 }
 function loadState() {
@@ -1852,7 +1956,7 @@ function runBreathPhase(){
   phaseEl.textContent=phase.p;phaseEl.style.color=phaseColor;
   document.getElementById('breathCycle').textContent=`Cycle ${breathState.cycle+1} of ${pat.cycles}`;
   breathState.count=phase.t;document.getElementById('breathTimer').textContent=breathState.count;
-  playTick();haptic(15);breathCountdown();
+  playTick();if(state.hapticGuidance){const phase=pat.phases[breathState.phase];const pL=phase.p.toLowerCase();if(pL.includes('inhale')||pL==='in')hapticPattern([30,50,30,50,30]);else if(pL.includes('exhale')||pL.includes('out'))hapticPattern([50,30,50]);else if(pL.includes('hold'))haptic(80);}else{haptic(15);}breathCountdown();
 }
 function breathCountdown(){if(!breathState.running)return;if(breathState.count<=0){nextBreathPhase();return;}document.getElementById('breathTimer').textContent=breathState.count;breathState.timer=setTimeout(()=>{breathState.count--;breathCountdown();},1000);}
 function nextBreathPhase(){const pat=BREATH_PATTERNS[breathState.pattern];breathState.phase++;if(breathState.phase>=pat.phases.length){breathState.phase=0;breathState.cycle++;if(breathState.cycle>=pat.cycles){stopBreath();closeBreathe();return;}}runBreathPhase();}
@@ -1863,6 +1967,7 @@ const FOCUS_LEVELS = {
   theta: { name:'Deep Meditation', useCase:'Go deeper in your practice', desc:'Theta waves (6Hz) — meditative trance', baseFreq:150, beatFreq:6 },
   delta: { name:'Can\'t Sleep', useCase:'Fall asleep naturally', desc:'Delta waves (4Hz) — sleep onset', baseFreq:120, beatFreq:4 },
   gamma: { name:'Sharp Focus', useCase:'Study, work, or creative flow', desc:'Gamma waves (40Hz) — peak concentration', baseFreq:300, beatFreq:40 },
+  astral: { name:'Astral Projection', useCase:'Body asleep, mind awake — OBE gateway', desc:'Delta waves (4Hz) — out-of-body states', baseFreq:120, beatFreq:4 },
 };
 let focusState = { running:false, level:'alpha', duration:30, startTime:null, timer:null, nodes:null };
 
@@ -2072,7 +2177,68 @@ const GUIDED_SESSIONS = {
       { t:900, text:'Let sleep come naturally. It\'s safe to let go.', speak:true },
       { t:1200, text:'', speak:false },
     ]
-  }
+  },
+  astral_beginner: {
+    name: 'Gateway Experience', level: 'astral', duration: 25,
+    prompts: [
+      { t:0, text:'Lie down comfortably. Close your eyes.', speak:true },
+      { t:20, text:'Take three deep breaths. Each exhale releases all tension.', speak:true },
+      { t:50, text:'Feel your body becoming heavy. Sinking into the surface below.', speak:true },
+      { t:80, text:'Imagine a warm energy at the soles of your feet.', speak:true },
+      { t:110, text:'Let this energy slowly rise through your ankles... calves... knees...', speak:true },
+      { t:140, text:'It moves through your thighs... hips... filling your abdomen with warmth.', speak:true },
+      { t:170, text:'Rising through your chest... shoulders... down your arms to your fingertips.', speak:true },
+      { t:200, text:'Up through your neck... your jaw relaxes... your face softens.', speak:true },
+      { t:230, text:'Your whole body is wrapped in warm, protective energy.', speak:true },
+      { t:260, text:'Now notice the space between your eyebrows. Your third eye.', speak:true },
+      { t:290, text:'Focus here gently. You may feel a tingling or pulsing. That is good.', speak:true },
+      { t:330, text:'Your body is deeply relaxed now. Let it sleep.', speak:true },
+      { t:360, text:'But your mind stays awake. Alert. Present.', speak:true },
+      { t:400, text:'You may begin to feel vibrations. A buzzing energy throughout your body.', speak:true },
+      { t:440, text:'Do not resist them. Welcome them. They are the gateway.', speak:true },
+      { t:480, text:'The vibrations may intensify. Let them wash over you like waves.', speak:true },
+      { t:530, text:'Now, gently imagine floating upward. Light as a feather.', speak:true },
+      { t:570, text:'You are safe. You are always connected to your body.', speak:true },
+      { t:610, text:'Imagine looking down at yourself from above. Peaceful. Calm.', speak:true },
+      { t:660, text:'Explore this feeling of lightness. Of freedom.', speak:true },
+      { t:720, text:'You are consciousness itself. Boundless. Limitless.', speak:true },
+      { t:840, text:'', speak:false },
+      { t:1200, text:'Now gently return your awareness to your body.', speak:true },
+      { t:1230, text:'Feel the weight of your physical form again.', speak:true },
+      { t:1260, text:'Wiggle your fingers. Your toes.', speak:true },
+      { t:1290, text:'Take a deep breath. You are fully back.', speak:true },
+      { t:1320, text:'Remember everything you experienced. Open your eyes when ready.', speak:true },
+    ]
+  },
+  astral_advanced: {
+    name: 'Deep Gateway', level: 'astral', duration: 40,
+    prompts: [
+      { t:0, text:'Assume your position. Close your eyes. You know the way.', speak:true },
+      { t:25, text:'Breathe deeply. Release everything. Drop into stillness.', speak:true },
+      { t:60, text:'Perform your energy body preparation. Feet to crown.', speak:true },
+      { t:120, text:'Establish your resonant energy balloon. Surrounding you completely.', speak:true },
+      { t:180, text:'Affirm: I am more than my physical body.', speak:true },
+      { t:210, text:'Affirm: I am deeply protected and guided.', speak:true },
+      { t:260, text:'Let your body fall asleep. Systematically release every muscle.', speak:true },
+      { t:320, text:'Face. Jaw. Neck. Shoulders. Arms. Hands.', speak:true },
+      { t:360, text:'Chest. Abdomen. Hips. Legs. Feet. Everything releases.', speak:true },
+      { t:420, text:'You are at the threshold. The hypnagogic state.', speak:true },
+      { t:470, text:'Images may arise. Let them flow without attachment.', speak:true },
+      { t:530, text:'Go deeper. Past the images. Into the void.', speak:true },
+      { t:600, text:'Feel for the vibrations. They are always there, waiting.', speak:true },
+      { t:660, text:'The vibrations build. Let them engulf you completely.', speak:true },
+      { t:720, text:'You are vibrating at the frequency of separation.', speak:true },
+      { t:780, text:'Now. With gentle intention. Roll out. Float up. Lift away.', speak:true },
+      { t:840, text:'You are free. Explore with curiosity and calm.', speak:true },
+      { t:900, text:'', speak:false },
+      { t:1800, text:'', speak:false },
+      { t:2100, text:'Begin your return when you feel ready.', speak:true },
+      { t:2160, text:'Follow the silver cord back to your body.', speak:true },
+      { t:2220, text:'Settle back in. Feel the physical form.', speak:true },
+      { t:2280, text:'Deepen your breath. Move your fingers and toes.', speak:true },
+      { t:2340, text:'You are back. Grounded. Present. Remember everything.', speak:true },
+    ]
+  },
 };
 
 let guidedState = { active:false, session:null, promptIdx:0, promptTimer:null, speechSynth:null };
@@ -2111,6 +2277,7 @@ function scheduleGuidedPrompts(key) {
       if (!guidedState.active) return;
       showGuidedPrompt(prompt.text);
       if (prompt.speak && prompt.text) speakPrompt(prompt.text);
+      if (prompt.speak && prompt.text && state.hapticGuidance) haptic(30);
     }, prompt.t * 1000);
   });
 }
@@ -2431,10 +2598,227 @@ function confirmReset() {
   }
 }
 
+// ═══ HAPTIC GUIDANCE ═══
+function toggleHapticGuidance(on) {
+  state.hapticGuidance = on;
+  saveState();
+  if (on) hapticMedium();
+}
+
+// ═══ YOGA NIDRA ═══
+const NIDRA_SESSIONS = {
+  standard: {
+    name: 'Yoga Nidra', duration: 25,
+    prompts: [
+      { t:0, text:'Welcome. Find a comfortable position lying down.', speak:true },
+      { t:15, text:'Close your eyes. Take a deep breath in... and let it go.', speak:true },
+      { t:35, text:'Set a resolve. A short, positive intention for your practice.', speak:true },
+      { t:60, text:'Begin to notice your body. Feel its weight against the surface.', speak:true },
+      { t:90, text:'Bring your awareness to your right hand. Feel the right thumb.', speak:true },
+      { t:105, text:'Index finger. Middle finger. Ring finger. Little finger.', speak:true },
+      { t:120, text:'The palm of the right hand. The back of the hand.', speak:true },
+      { t:135, text:'The right wrist. Forearm. Elbow. Upper arm.', speak:true },
+      { t:150, text:'The right shoulder. Right side of the chest.', speak:true },
+      { t:165, text:'Right side of the abdomen. Right hip.', speak:true },
+      { t:180, text:'Right thigh. Right knee. Right shin.', speak:true },
+      { t:195, text:'Right ankle. Top of the right foot. Sole of the right foot.', speak:true },
+      { t:210, text:'Right big toe. Second toe. Third. Fourth. Fifth toe.', speak:true },
+      { t:235, text:'Now, the left hand. Feel the left thumb.', speak:true },
+      { t:250, text:'Index finger. Middle finger. Ring finger. Little finger.', speak:true },
+      { t:265, text:'The palm of the left hand. The back of the hand.', speak:true },
+      { t:280, text:'The left wrist. Forearm. Elbow. Upper arm.', speak:true },
+      { t:295, text:'The left shoulder. Left side of the chest.', speak:true },
+      { t:310, text:'Left side of the abdomen. Left hip.', speak:true },
+      { t:325, text:'Left thigh. Left knee. Left shin.', speak:true },
+      { t:340, text:'Left ankle. Top of the left foot. Sole of the left foot.', speak:true },
+      { t:355, text:'Left big toe. Second toe. Third. Fourth. Fifth toe.', speak:true },
+      { t:380, text:'Now bring awareness to the back of the body. The back of the head.', speak:true },
+      { t:400, text:'The shoulder blades. The middle back. The lower back.', speak:true },
+      { t:420, text:'The buttocks. The backs of the thighs. The backs of the knees.', speak:true },
+      { t:440, text:'The calves. The heels.', speak:true },
+      { t:460, text:'Now the front of the body. The top of the head. The forehead.', speak:true },
+      { t:480, text:'The right eyebrow. The left eyebrow. The space between the eyebrows.', speak:true },
+      { t:500, text:'The right eye. The left eye. The right ear. The left ear.', speak:true },
+      { t:520, text:'The right cheek. The left cheek. The nose. The tip of the nose.', speak:true },
+      { t:540, text:'The upper lip. The lower lip. The chin. The throat.', speak:true },
+      { t:560, text:'The right collarbone. The left collarbone. The chest. The heart center.', speak:true },
+      { t:580, text:'The navel. The abdomen. The pelvis.', speak:true },
+      { t:610, text:'Now feel the whole right side of the body.', speak:true },
+      { t:630, text:'The whole left side of the body.', speak:true },
+      { t:650, text:'Both sides together. The whole body. Feel the whole body at once.', speak:true },
+      { t:680, text:'The body is heavy and warm. You are safe. You are held.', speak:true },
+      { t:720, text:'Now simply rest in this awareness. Nothing to do.', speak:true },
+      { t:900, text:'', speak:false },
+      { t:1200, text:'Begin to deepen your breath. Feel the air filling your lungs.', speak:true },
+      { t:1230, text:'Gently wiggle your fingers and toes.', speak:true },
+      { t:1260, text:'Recall your resolve. Let it resonate within you.', speak:true },
+      { t:1290, text:'When you are ready, slowly open your eyes.', speak:true },
+      { t:1320, text:'Yoga Nidra is complete. Carry this peace with you.', speak:true },
+    ]
+  }
+};
+
+let nidraState = { running:false, duration:25, startTime:null, timer:null, nodes:null, promptTimers:[] };
+
+function openBodyScan() { hapticTap(); document.getElementById('nidraOverlay').classList.add('active'); }
+function closeBodyScan() {
+  if (nidraState.running) stopBodyScan();
+  document.getElementById('nidraOverlay').classList.remove('active');
+}
+
+function selectNidraDur(dur, btn) {
+  hapticTap();
+  nidraState.duration = dur;
+  document.querySelectorAll('.nidra-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function startBodyScan() {
+  nidraState.running = true;
+  nidraState.startTime = Date.now();
+  nidraState.duration = nidraState.duration || 25;
+  requestWakeLock();
+  hapticMedium();
+
+  document.getElementById('nidraPicker').style.display = 'none';
+  document.getElementById('nidraSession').classList.add('visible');
+  document.getElementById('nidraElapsed').textContent = '0:00';
+  canvasIntensity = 0.3;
+
+  // Start Theta binaural bed (6Hz)
+  try {
+    const ctx = getAudio();
+    const oL = ctx.createOscillator(), oR = ctx.createOscillator();
+    const merger = ctx.createChannelMerger(2);
+    const gainL = ctx.createGain(), gainR = ctx.createGain();
+    const masterGain = ctx.createGain();
+    oL.type = 'sine'; oR.type = 'sine';
+    oL.frequency.value = 150; oR.frequency.value = 156; // 6Hz theta
+    gainL.gain.setValueAtTime(0, ctx.currentTime);
+    gainR.gain.setValueAtTime(0, ctx.currentTime);
+    gainL.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 15);
+    gainR.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 15);
+    oL.connect(gainL); gainL.connect(merger, 0, 0);
+    oR.connect(gainR); gainR.connect(merger, 0, 1);
+    masterGain.gain.value = 0.5;
+    merger.connect(masterGain); masterGain.connect(ctx.destination);
+    oL.start(); oR.start();
+
+    // Pink noise bed
+    const bufferSize = 2 * ctx.sampleRate;
+    const noiseBuffer = ctx.createBuffer(2, bufferSize, ctx.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const data = noiseBuffer.getChannelData(ch);
+      let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+      for (let i = 0; i < bufferSize; i++) {
+        const w = Math.random()*2-1;
+        b0=0.99886*b0+w*0.0555179;b1=0.99332*b1+w*0.0750759;b2=0.96900*b2+w*0.1538520;
+        b3=0.86650*b3+w*0.3104856;b4=0.55000*b4+w*0.5329522;b5=-0.7616*b5-w*0.0168980;
+        data[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.08;b6=w*0.115926;
+      }
+    }
+    const noiseSrc = ctx.createBufferSource();
+    noiseSrc.buffer = noiseBuffer; noiseSrc.loop = true;
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0, ctx.currentTime);
+    noiseGain.gain.linearRampToValueAtTime(0.015, ctx.currentTime + 15);
+    noiseSrc.connect(noiseGain); noiseGain.connect(masterGain);
+    noiseSrc.start();
+    nidraState.nodes = { oL, oR, gainL, gainR, merger, masterGain, noiseSrc, noiseGain };
+  } catch(e) {}
+
+  // Schedule prompts (scale timing to duration)
+  scheduleNidraPrompts();
+  nidraTick();
+}
+
+function scheduleNidraPrompts() {
+  const session = NIDRA_SESSIONS.standard;
+  const scale = nidraState.duration / session.duration;
+  nidraState.promptTimers = [];
+  session.prompts.forEach(prompt => {
+    const timer = setTimeout(() => {
+      if (!nidraState.running) return;
+      showNidraPrompt(prompt.text);
+      if (prompt.speak && prompt.text) speakPrompt(prompt.text);
+      if (prompt.speak && prompt.text && state.hapticGuidance) haptic(30);
+    }, prompt.t * scale * 1000);
+    nidraState.promptTimers.push(timer);
+  });
+}
+
+function showNidraPrompt(text) {
+  const el = document.getElementById('nidraScanText');
+  if (!el) return;
+  el.classList.remove('visible');
+  setTimeout(() => {
+    el.textContent = text;
+    if (text) el.classList.add('visible');
+  }, 400);
+  if (text) setTimeout(() => el.classList.remove('visible'), 8000);
+}
+
+function nidraTick() {
+  if (!nidraState.running) return;
+  const elapsed = (Date.now() - nidraState.startTime) / 1000;
+  const remaining = nidraState.duration * 60 - elapsed;
+  const min = Math.floor(elapsed / 60);
+  const sec = Math.floor(elapsed % 60);
+  document.getElementById('nidraElapsed').textContent = min + ':' + String(sec).padStart(2, '0');
+  const remMin = Math.floor(Math.max(0, remaining) / 60);
+  const remSec = Math.floor(Math.max(0, remaining) % 60);
+  document.getElementById('nidraRemaining').textContent = remMin + ':' + String(remSec).padStart(2, '0') + ' remaining';
+
+  if (remaining <= 0) {
+    nidraState.startTime = null;
+    stopBodyScan();
+    playBowl(396, 4);
+    addMinutes(Math.round(nidraState.duration * 10) / 10, 'nidra', 'Yoga Nidra');
+    return;
+  }
+  nidraState.timer = setTimeout(nidraTick, 500);
+}
+
+function setNidraVolume(val) {
+  if (nidraState.nodes && nidraState.nodes.masterGain) nidraState.nodes.masterGain.gain.value = val / 100;
+}
+
+function stopBodyScan() {
+  nidraState.running = false;
+  clearTimeout(nidraState.timer);
+  nidraState.promptTimers.forEach(t => clearTimeout(t));
+  nidraState.promptTimers = [];
+  canvasIntensity = 0.15;
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  const scanText = document.getElementById('nidraScanText');
+  if (scanText) { scanText.classList.remove('visible'); scanText.textContent = ''; }
+
+  if (nidraState.nodes) {
+    try {
+      const ctx = getAudio();
+      const n = nidraState.nodes;
+      n.gainL.gain.linearRampToValueAtTime(0, ctx.currentTime + 5);
+      n.gainR.gain.linearRampToValueAtTime(0, ctx.currentTime + 5);
+      n.noiseGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 5);
+      setTimeout(() => { try { n.oL.stop(); n.oR.stop(); n.noiseSrc.stop(); n.masterGain.disconnect(); } catch(e) {} }, 6000);
+    } catch(e) {}
+    nidraState.nodes = null;
+  }
+
+  if (nidraState.startTime) {
+    const elapsed = (Date.now() - nidraState.startTime) / 60000;
+    if (elapsed > 1) addMinutes(Math.round(elapsed * 10) / 10, 'nidra', 'Yoga Nidra');
+  }
+
+  document.getElementById('nidraSession').classList.remove('visible');
+  document.getElementById('nidraPicker').style.display = 'block';
+}
+
 // ═══ INIT ═══
 checkDailyReset();
 loadCustomPatterns();
 updateAllUI();
+document.getElementById('hapticToggle').checked = !!state.hapticGuidance;
 setTimeout(showSoundHint, 2000);
 </script>
 </body>
