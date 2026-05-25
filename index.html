@@ -139,8 +139,8 @@ html, body {
 .btn-snap {
   background: linear-gradient(135deg, #c85a20, #a04018); color:white;
   box-shadow: 0 4px 20px rgba(180,80,30,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
-  width:auto; padding:14px 36px; border-radius:50px;
-  font-size:15px; font-weight:700; letter-spacing:1.5px;
+  width:100%; padding:11px 28px; border-radius:50px;
+  font-size:14px; font-weight:700; letter-spacing:1.5px;
 }
 .stats-row { display:flex; gap:10px; margin-bottom:20px; }
 .stat-chip { flex:1; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding:14px 12px; text-align:center; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow: 0 2px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.04); }
@@ -449,7 +449,7 @@ html, body {
     <div class="stat-chip"><div class="stat-value" id="statMinutes">0</div><div class="stat-label">Total Min</div></div>
   </div>
 
-  <div style="text-align:center;margin-bottom:20px;"><button class="btn btn-snap" onclick="startSnap()" style="animation: pulse-glow 3s ease-in-out infinite;">SNAP PRESENT</button></div>
+  <button class="btn btn-snap" onclick="startSnap()" style="margin-bottom:20px; animation: pulse-glow 3s ease-in-out infinite;">SNAP PRESENT</button>
 
   <div class="section-label">Practice</div>
   <div class="card" onclick="openSitPicker()">
@@ -857,7 +857,7 @@ function startSit() {
   document.getElementById('sitComplete').classList.remove('visible');
   document.getElementById('sitWanderText').textContent='Mind wanders: 0';
   document.getElementById('sitBtnLabel').textContent="I'm Back"; document.getElementById('sitBtnSub').textContent='tap when you notice';
-  document.getElementById('welcomeMsg').classList.remove('show');
+  var wm=document.getElementById('welcomeMsg');if(wm)wm.classList.remove('show');
   playBowl(220,3); hapticPattern([50,30,50]); requestWakeLock(); canvasIntensity = 0.6; sitTick();
   if (sitState.intervalBell > 0) { sitState.intervalTimer = setInterval(() => { if (sitState.running) { playBowl(280,2); hapticPattern([30,60,30]); } }, sitState.intervalBell*60*1000); }
 }
