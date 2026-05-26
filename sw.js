@@ -1,4 +1,4 @@
-var CACHE_NAME = 'awake-v16';
+var CACHE_NAME = 'awake-v16.2';
 var ASSETS = [
   './',
   './index.html'
