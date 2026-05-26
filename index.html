@@ -335,6 +335,14 @@ html, body {
 }
 .sit-left-btn:active { transform:scale(0.98); background: rgba(192,144,240,0.15); box-shadow: 0 0 60px rgba(192,144,240,0.25); }
 .sit-left-btn .sit-btn-sub { font-size:12px; color:var(--text-secondary); font-weight:400; }
+.sit-pause-btn {
+  margin-top:18px; padding:10px 36px; border-radius:24px;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+  color:var(--text-secondary); font-size:14px; font-weight:500;
+  cursor:pointer; transition:all 0.3s; letter-spacing:0.5px;
+}
+.sit-pause-btn:active { background:rgba(255,255,255,0.12); }
+.sit-pause-btn.paused { background:rgba(192,144,240,0.15); border-color:var(--accent-sit); color:var(--accent-sit); }
 .sit-duration-pills { display:flex; gap:10px; margin-bottom:20px; }
 .sit-pill {
   padding:10px 20px; border-radius:24px;
@@ -727,10 +735,12 @@ html, body {
       <button class="sit-pill active" data-dur="6" onclick="selectSitDur(6,this)">6 min</button>
       <button class="sit-pill" data-dur="12" onclick="selectSitDur(12,this)">12 min</button>
     </div>
-    <div class="interval-selector">
-      <span class="interval-label">1-min bell:</span>
-      <button class="interval-pill active" data-int="0" onclick="toggleBell(this)">Off</button>
-      <button class="interval-pill" data-int="1" onclick="toggleBell(this)">On</button>
+    <div class="interval-selector" style="display:flex;align-items:center;gap:10px;">
+      <span class="interval-label">1-min bell</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="bellToggle" onchange="toggleBell(this.checked)">
+        <span class="toggle-slider"></span>
+      </label>
     </div>
     <div class="ambient-selector">
       <span class="ambient-label">Ambient:</span>
@@ -754,6 +764,7 @@ html, body {
       <span id="sitBtnLabel" style="font-size:22px;">I'm Back</span>
       <span class="sit-btn-sub" id="sitBtnSub">tap anywhere when you notice</span>
     </button>
+    <button class="sit-pause-btn" id="sitPauseBtn" onclick="toggleSitPause()">Pause</button>
   </div>
   <div class="sit-complete" id="sitComplete">
     <div class="sit-complete-title" id="sitCompleteTitle">Session Complete</div>
@@ -1941,7 +1952,7 @@ function scheduleNextSnap() {
 }
 
 // ═══ JUST SIT ═══
-let sitState = { duration:6, running:false, startTime:null, timer:null, wanders:0, elapsed:0, bellOn:false, intervalTimer:null, wanderTimes:[], intention:'', reflection:'' };
+let sitState = { duration:6, running:false, paused:false, startTime:null, timer:null, wanders:0, elapsed:0, bellOn:false, intervalTimer:null, wanderTimes:[], intention:'', reflection:'', pausedAt:0, pausedTotal:0 };
 
 function updateCharCount(input, countId) {
   document.getElementById(countId).textContent = input.value.length + '/50';
@@ -1960,11 +1971,36 @@ function openSitPicker() {
   document.getElementById('sitIntentionCount').textContent = '0/50';
 }
 function selectSitDur(dur, btn) { hapticTap(); sitState.duration = dur; document.querySelectorAll('.sit-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
-function toggleBell(btn) { hapticTap(); var on = btn.dataset.int === '1'; sitState.bellOn = on; document.querySelectorAll('.interval-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
+function toggleBell(on) { hapticTap(); sitState.bellOn = on; }
+function toggleSitPause() {
+  if (!sitState.running) return;
+  hapticTap();
+  var btn = document.getElementById('sitPauseBtn');
+  if (!sitState.paused) {
+    sitState.paused = true;
+    sitState.pausedAt = Date.now()/1000;
+    clearTimeout(sitState.timer);
+    if(sitState.intervalTimer){clearInterval(sitState.intervalTimer);sitState.intervalTimer=null;}
+    btn.textContent = 'Resume'; btn.classList.add('paused');
+    document.getElementById('sitLeftBtn').style.pointerEvents = 'none';
+    document.getElementById('sitLeftBtn').style.opacity = '0.4';
+  } else {
+    sitState.pausedTotal += Date.now()/1000 - sitState.pausedAt;
+    sitState.paused = false; sitState.pausedAt = 0;
+    btn.textContent = 'Pause'; btn.classList.remove('paused');
+    document.getElementById('sitLeftBtn').style.pointerEvents = '';
+    document.getElementById('sitLeftBtn').style.opacity = '';
+    if (sitState.bellOn) { sitState.intervalTimer = setInterval(() => { if (sitState.running && !sitState.paused) { playBowl(280,2); hapticPattern([30,60,30]); } }, 60*1000); }
+    sitTick();
+  }
+}
 function startSit() {
-  sitState.running=true; sitState.startTime=Date.now(); sitState.wanders=0; sitState.elapsed=0; sitState.wanderTimes=[];
+  sitState.running=true; sitState.paused=false; sitState.pausedAt=0; sitState.pausedTotal=0;
+  sitState.startTime=Date.now(); sitState.wanders=0; sitState.elapsed=0; sitState.wanderTimes=[];
   sitState.intention = document.getElementById('sitIntention').value.trim();
   sitState.reflection = '';
+  document.getElementById('sitPauseBtn').textContent='Pause';
+  document.getElementById('sitPauseBtn').classList.remove('paused');
   document.getElementById('sitPicker').style.display='none'; document.getElementById('sitActive').style.display='flex';
   document.getElementById('sitComplete').classList.remove('visible');
   document.getElementById('sitWanderText').textContent='Mind wanders: 0';
@@ -1974,8 +2010,8 @@ function startSit() {
   if (sitState.bellOn) { sitState.intervalTimer = setInterval(() => { if (sitState.running) { playBowl(280,2); hapticPattern([30,60,30]); } }, 60*1000); }
 }
 function sitTick() {
-  if (!sitState.running) return;
-  const elapsed = (Date.now()-sitState.startTime)/1000; sitState.elapsed=elapsed;
+  if (!sitState.running || sitState.paused) return;
+  const elapsed = (Date.now()-sitState.startTime)/1000 - sitState.pausedTotal; sitState.elapsed=elapsed;
   const remaining = Math.max(0, sitState.duration*60 - elapsed);
   document.getElementById('sitTimerDisplay').textContent = Math.floor(remaining/60)+':'+String(Math.floor(remaining%60)).padStart(2,'0');
   if (remaining <= 0) { completeSit(); return; }
