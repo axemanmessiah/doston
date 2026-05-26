@@ -98,13 +98,13 @@ html, body {
   #app { padding-top: calc(env(safe-area-inset-top, 20px) + 20px); }
 }
 .screen-title { font-size:28px; font-weight:700; letter-spacing:-0.5px; margin-bottom:6px; }
-.screen-subtitle { font-size:14px; color:var(--text-secondary); margin-bottom:4px; line-height:1.5; }
-.daily-quote { font-size:12px; color:var(--text-dim); font-style:italic; margin-bottom:28px; line-height:1.5; }
-.section-label { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); margin-bottom:12px; margin-top:28px; }
+.screen-subtitle { font-size:12px; color:var(--text-secondary); margin-bottom:4px; line-height:1.5; font-style:italic; text-align:center; }
+.daily-quote { font-size:12px; color:var(--text-dim); font-style:italic; margin-bottom:12px; line-height:1.5; text-align:center; }
+.section-label { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); margin-bottom:8px; margin-top:16px; }
 .section-label:first-of-type { margin-top:0; }
 .card {
   background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius); padding:14px 16px; margin-bottom:8px;
+  border-radius: var(--radius); padding:12px 14px; margin-bottom:6px;
   cursor:pointer; transition: background 0.3s, transform 0.2s, border-color 0.3s;
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
   box-shadow: 0 2px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.04);
@@ -165,7 +165,6 @@ html, body {
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
 }
 .bottom-btn:active { transform:scale(0.9); background:rgba(255,255,255,0.15); }
-.bottom-btn.muted { color:var(--text-dim); background:rgba(255,80,80,0.08); border-color:rgba(255,80,80,0.15); }
 /* Sound hint */
 .sound-hint {
   position:fixed; bottom: calc(var(--safe-bottom) + 12px); left:50%; transform:translateX(-50%);
@@ -621,16 +620,13 @@ html, body {
   <button class="bottom-btn" id="shareBtn" onclick="shareApp()" title="Share">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
   </button>
-  <button class="bottom-btn" id="muteBtn" onclick="toggleMute()" title="Sound">
-    <svg id="muteIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path id="muteSlash" d="M23 9l-6 6m0-6l6 6" style="display:none"/><path id="soundWaves" d="M15.5 8.5a5 5 0 010 7M19 6a9 9 0 010 12"/></svg>
-  </button>
 </div>
 
 <div id="app">
   <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:2px;"><svg viewBox="0 0 100 100" width="44" height="44" style="flex-shrink:0;filter:drop-shadow(0 0 10px rgba(160,128,240,0.35));"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:36px;font-weight:200;letter-spacing:6px;background:linear-gradient(135deg,#7c6cf0,#6ca0f0,#5cc8c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:hero-glow 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(124,108,240,0.3));">AWAKE</span></div>
-  <div class="screen-subtitle" style="margin-bottom:8px;">Loops break. Presence enters.</div>
+  <div class="screen-subtitle" style="margin-bottom:6px;">Loops break. Presence enters.</div>
   <div class="daily-quote" id="dailyQuote"></div>
-  <button class="btn btn-snap" onclick="startSnap()" style="margin-bottom:20px;">
+  <button class="btn btn-snap" onclick="startSnap()" style="margin-bottom:10px;">
     <span class="snap-text">SNAP PRESENT</span>
   </button>
 
@@ -648,16 +644,11 @@ html, body {
     <div class="card-row"><div class="card-icon" style="background:rgba(160,120,220,0.12);">🫧</div><div class="card-info"><div class="card-title">Body Scan</div><div class="card-desc">Yoga Nidra — rotation of consciousness</div></div></div>
   </div>
 
-  <div class="section-label" style="margin-top:36px;">Recent Sessions</div>
-  <div id="journeyHistory"></div>
 
-  <div class="card" onclick="openInsights()" style="margin-top:28px;background:linear-gradient(135deg, rgba(240,160,96,0.06), rgba(240,120,80,0.04));border-color:rgba(240,160,96,0.12);">
+  <div class="card" onclick="openInsights()" style="margin-top:12px;background:linear-gradient(135deg, rgba(240,160,96,0.06), rgba(240,120,80,0.04));border-color:rgba(240,160,96,0.12);">
     <div class="card-row"><div class="card-icon" style="background:linear-gradient(135deg, rgba(240,160,96,0.15), rgba(240,120,80,0.1));"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(240,160,96,0.9)" stroke-width="2" stroke-linecap="round"><path d="M3 20L7 13L11 16L15 8L21 4"/><circle cx="21" cy="4" r="1.5" fill="rgba(240,160,96,0.9)"/></svg></div><div class="card-info"><div class="card-title">Insights</div><div class="card-desc">Your practice at a glance</div></div></div>
   </div>
 
-  <div style="margin-top:30px; text-align:center;">
-    <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.4); border-color:rgba(255,80,80,0.1); font-size:10px; padding:6px 14px; letter-spacing:0.3px;">Reset All Progress</button>
-  </div>
 </div>
 
 <!-- OVERLAYS -->
@@ -960,22 +951,32 @@ html, body {
   <button class="overlay-close" onclick="closeInsights()">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
     <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--accent-warm);">Insights</div>
-    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Your practice at a glance</div>
-    <div class="stats-row" style="margin-bottom:20px;">
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">Your practice at a glance</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;">
+      <button class="btn btn-ghost" onclick="insightsNavPrev()" style="padding:6px 12px;font-size:16px;min-width:36px;">‹</button>
+      <div id="insightsMonthLabel" style="font-size:15px;font-weight:600;letter-spacing:0.5px;min-width:140px;text-align:center;color:var(--text-primary);"></div>
+      <button class="btn btn-ghost" onclick="insightsNavNext()" style="padding:6px 12px;font-size:16px;min-width:36px;">›</button>
+    </div>
+    <div class="stats-row" style="margin-bottom:16px;">
       <div class="stat-chip"><div class="stat-value" id="statStreak">0</div><div class="stat-label">Day Streak</div></div>
       <div class="stat-chip"><div class="stat-value" id="statSessions">0</div><div class="stat-label">Sessions</div></div>
       <div class="stat-chip"><div class="stat-value" id="statMinutes">0</div><div class="stat-label">Total Min</div></div>
     </div>
-    <div class="section-label" style="margin-top:0;">Focus Quality</div>
-    <div id="focusInsights" style="width:100%;max-width:360px;margin-bottom:20px;"></div>
-    <div class="section-label">This Week</div>
-    <div class="insights-week-grid" id="insightsWeekGrid"></div>
+    <div id="periodStats" style="width:100%;max-width:360px;margin-bottom:16px;"></div>
+    <div class="section-label" style="margin-top:0;">Activity</div>
+    <div id="insightsHeatmap" style="width:100%;max-width:360px;margin-bottom:16px;overflow-x:auto;"></div>
+    <div class="section-label">Practice Breakdown</div>
+    <div id="insightsBreakdown" style="width:100%;max-width:360px;margin-bottom:16px;"></div>
+    <div class="section-label">Focus Quality</div>
+    <div id="focusInsights" style="width:100%;max-width:360px;margin-bottom:16px;"></div>
+    <div class="section-label">Focus Trend</div>
+    <div id="focusTrendChart" style="width:100%;max-width:360px;margin-bottom:16px;"></div>
     <div class="sparkline-wrap">
       <div class="sparkline-label">30-Day Trend</div>
       <svg id="sparklineSvg" width="100%" height="60" viewBox="0 0 320 60" preserveAspectRatio="none"></svg>
     </div>
-    <div class="section-label">This Month</div>
-    <div class="monthly-stats" id="monthlyStats"></div>
+    <div class="section-label">Session History</div>
+    <div id="insightsHistory" style="width:100%;max-width:360px;margin-bottom:16px;"></div>
     <div class="section-label">Milestones</div>
     <div class="milestones-grid" id="milestonesGrid"></div>
   </div>
@@ -1003,10 +1004,20 @@ html, body {
   <button class="overlay-close" onclick="closeSettings()">Close ✕</button>
   <div class="overlay-content" style="justify-content:flex-start; padding-top:20px;">
     <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:var(--text-primary);">Settings</div>
-    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Data & preferences</div>
+    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Preferences & data</div>
     <div class="settings-section">
       <div class="settings-section-label">Preferences</div>
       <div class="settings-row" style="justify-content:space-between;align-items:center;padding:0 4px;">
+        <div>
+          <div style="font-size:14px;color:var(--text-primary);">Sound</div>
+          <div style="font-size:11px;color:var(--text-dim);">Audio during sessions</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="soundToggle" onchange="toggleMuteFromSettings(this.checked)" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="settings-row" style="justify-content:space-between;align-items:center;padding:0 4px;margin-top:12px;">
         <div>
           <div style="font-size:14px;color:var(--text-primary);">Haptic Guidance</div>
           <div style="font-size:11px;color:var(--text-dim);">Vibrations during breathwork & guided sessions</div>
@@ -1032,7 +1043,13 @@ html, body {
         <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
       </div>
     </div>
-    <div class="settings-version">AWAKE v13</div>
+    <div class="settings-section">
+      <div class="settings-section-label" style="color:rgba(255,80,80,0.5);">Danger Zone</div>
+      <div class="settings-row" style="padding:0 4px;">
+        <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.6); border-color:rgba(255,80,80,0.15); font-size:12px; padding:8px 16px;">Reset All Progress</button>
+      </div>
+    </div>
+    <div class="settings-version">AWAKE v15</div>
   </div>
 </div>
 
@@ -1064,7 +1081,7 @@ html, body {
 
 <script>
 /* ════════════════════════════════════════════
-   AWAKE v13
+   AWAKE v15
    ════════════════════════════════════════════ */
 
 // ═══ DAILY TEACHINGS ═══
@@ -1469,11 +1486,11 @@ const TEACHINGS = [
 ];
 
 function getDailyQuote() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now - start;
-  const dayOfYear = Math.floor(diff / 86400000);
-  return TEACHINGS[dayOfYear % TEACHINGS.length];
+  var stored = localStorage.getItem('awake_quoteIdx');
+  var idx = stored !== null ? parseInt(stored) : Math.floor(Math.random() * TEACHINGS.length);
+  var quote = TEACHINGS[idx % TEACHINGS.length];
+  localStorage.setItem('awake_quoteIdx', (idx + 1) % TEACHINGS.length);
+  return quote;
 }
 
 // ═══ HAPTICS ENGINE ═══
@@ -1674,9 +1691,13 @@ function addMinutes(minutes, type, label, extra) {
 // ═══ MUTE ═══
 function toggleMute() { state.muted = !state.muted; saveState(); updateMuteUI(); hapticTap(); }
 function updateMuteUI() {
-  const btn = document.getElementById('muteBtn'), slash = document.getElementById('muteSlash'), waves = document.getElementById('soundWaves');
-  if (state.muted) { btn.classList.add('muted'); slash.style.display = ''; waves.style.display = 'none'; }
-  else { btn.classList.remove('muted'); slash.style.display = 'none'; waves.style.display = ''; }
+  var st = document.getElementById('soundToggle');
+  if (st) st.checked = !state.muted;
+}
+function toggleMuteFromSettings(checked) {
+  state.muted = !checked;
+  saveState();
+  updateMuteUI();
 }
 
 // ═══ SHARE ═══
@@ -1701,7 +1722,7 @@ if(window.matchMedia('(display-mode:standalone)').matches||window.navigator.stan
 }
 
 // ═══ SETTINGS ═══
-function openSettings() { hapticTap(); document.getElementById('settingsOverlay').classList.add('active'); }
+function openSettings() { hapticTap(); document.getElementById('settingsOverlay').classList.add('active'); var st=document.getElementById('soundToggle'); if(st) st.checked = !state.muted; }
 function closeSettings() { hapticTap(); document.getElementById('settingsOverlay').classList.remove('active'); }
 
 function exportData() {
@@ -1747,28 +1768,10 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 // ═══ UI ═══
 function updateAllUI() {
   checkDailyReset();
-  const streakEl=document.getElementById('statStreak');
-  streakEl.innerHTML = state.streak + (state.streak>0?' <span class="streak-flame" style="color:#f0a060;">🔥</span>':'');
-  document.getElementById('statSessions').textContent = state.totalSessions;
-  document.getElementById('statMinutes').textContent = Math.floor(state.totalMinutes);
   document.getElementById('dailyQuote').textContent = getDailyQuote();
-  checkFirstVisit(); renderHistory(); updateMuteUI();
+  checkFirstVisit(); updateMuteUI();
 }
 
-function renderHistory() {
-  const c = document.getElementById('journeyHistory');
-  if (!state.history.length) { c.innerHTML='<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:14px;">No sessions yet.</div>'; return; }
-  const icons = {snap:'⚡',breath:'🌊',sit:'🧘',focus:'🎧',mantra:'🕉️'};
-  const colors = {snap:'rgba(240,160,96,0.12)',breath:'rgba(96,208,192,0.12)',sit:'rgba(192,144,240,0.12)',focus:'rgba(108,160,240,0.12)',mantra:'rgba(255,180,60,0.12)'};
-  c.innerHTML = state.history.slice(0,20).map(h => {
-    const d = new Date(h.date);
-    const wanderInfo = h.wanders !== undefined ? `<div class="history-wanders">${h.wanders} wander${h.wanders!==1?'s':''}</div>` : '';
-    let journalHtml = '';
-    if (h.intention) journalHtml += `<div class="history-journal">"${h.intention}"</div>`;
-    if (h.reflection) journalHtml += `<div class="history-journal">"${h.reflection}"</div>`;
-    return `<div class="history-item"><div class="history-icon" style="background:${colors[h.type]||'var(--bg-card)'}">${icons[h.type]||'●'}</div><div class="history-info"><div class="history-title">${h.label}</div><div class="history-meta">${d.toLocaleDateString([],{month:'short',day:'numeric'})} · ${d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>${journalHtml}</div><div class="history-min">+${h.minutes}m${wanderInfo}</div></div>`;
-  }).join('');
-}
 
 // ═══ SNAP PRESENT ═══
 const SNAP = {
@@ -2718,6 +2721,20 @@ if ('speechSynthesis' in window) {
 }
 
 // ═══ INSIGHTS ═══
+var insightsMonth = new Date().getMonth();
+var insightsYear = new Date().getFullYear();
+function insightsNavPrev() {
+  insightsMonth--;
+  if (insightsMonth < 0) { insightsMonth = 11; insightsYear--; }
+  renderInsights();
+}
+function insightsNavNext() {
+  var now = new Date();
+  if (insightsYear === now.getFullYear() && insightsMonth >= now.getMonth()) return;
+  insightsMonth++;
+  if (insightsMonth > 11) { insightsMonth = 0; insightsYear++; }
+  renderInsights();
+}
 function openInsights() {
   hapticTap();
   document.getElementById('insightsOverlay').classList.add('active');
@@ -2728,10 +2745,21 @@ function closeInsights() {
 }
 
 function renderInsights() {
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('insightsMonthLabel').textContent = months[insightsMonth] + ' ' + insightsYear;
+  var streakEl = document.getElementById('statStreak');
+  if(streakEl) streakEl.innerHTML = state.streak + (state.streak>0?' <span class="streak-flame" style="color:#f0a060;">🔥</span>':'');
+  var sessEl = document.getElementById('statSessions');
+  if(sessEl) sessEl.textContent = state.totalSessions;
+  var minEl = document.getElementById('statMinutes');
+  if(minEl) minEl.textContent = Math.floor(state.totalMinutes);
+  renderPeriodStats();
+  renderHeatmap();
+  renderBreakdown();
   renderFocusInsights();
-  renderWeekGrid();
+  renderFocusTrend();
   renderSparkline();
-  renderMonthlyStats();
+  renderInsightsHistory();
   renderMilestones();
 }
 
@@ -2853,6 +2881,118 @@ function calcAvgGap(sessions) {
     const lastG = sessionLen - sorted[sorted.length - 1]; if (lastG > 0) gaps.push(lastG);
   });
   return gaps.length > 0 ? gaps.reduce((a,b) => a+b, 0) / gaps.length : 0;
+}
+
+function renderPeriodStats() {
+  var el = document.getElementById('periodStats');
+  var totalMins = 0, totalSessions = 0, daysWithPractice = new Set();
+  state.history.forEach(function(h) {
+    var d = new Date(h.date);
+    if (d.getMonth() === insightsMonth && d.getFullYear() === insightsYear) {
+      totalMins += h.minutes; totalSessions++; daysWithPractice.add(d.getDate());
+    }
+  });
+  var daysInMonth = new Date(insightsYear, insightsMonth + 1, 0).getDate();
+  var now = new Date();
+  var maxDays = (insightsYear === now.getFullYear() && insightsMonth === now.getMonth()) ? now.getDate() : daysInMonth;
+  var consistency = maxDays > 0 ? Math.round((daysWithPractice.size / maxDays) * 100) : 0;
+  var avgLen = totalSessions > 0 ? (totalMins / totalSessions).toFixed(1) : '0';
+  el.innerHTML = '<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;"><div class="stat-chip" style="padding:10px 6px;"><div class="stat-value" style="font-size:16px;">' + Math.round(totalMins) + '</div><div class="stat-label">Minutes</div></div><div class="stat-chip" style="padding:10px 6px;"><div class="stat-value" style="font-size:16px;">' + totalSessions + '</div><div class="stat-label">Sessions</div></div><div class="stat-chip" style="padding:10px 6px;"><div class="stat-value" style="font-size:16px;">' + consistency + '%</div><div class="stat-label">Consistency</div></div><div class="stat-chip" style="padding:10px 6px;"><div class="stat-value" style="font-size:16px;">' + avgLen + 'm</div><div class="stat-label">Avg Len</div></div></div>';
+}
+
+function renderHeatmap() {
+  var el = document.getElementById('insightsHeatmap');
+  var daysInMonth = new Date(insightsYear, insightsMonth + 1, 0).getDate();
+  var firstDay = (new Date(insightsYear, insightsMonth, 1).getDay() + 6) % 7;
+  var dailyMap = getDailyMap();
+  var maxMins = 1;
+  for (var i = 1; i <= daysInMonth; i++) {
+    var key = insightsYear + '-' + String(insightsMonth+1).padStart(2,'0') + '-' + String(i).padStart(2,'0');
+    if (dailyMap[key] && dailyMap[key].minutes > maxMins) maxMins = dailyMap[key].minutes;
+  }
+  var html = '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;">';
+  ['M','T','W','T','F','S','S'].forEach(function(d){ html += '<div style="font-size:9px;color:var(--text-dim);padding:2px 0;">' + d + '</div>'; });
+  for (var e = 0; e < firstDay; e++) html += '<div></div>';
+  for (var i = 1; i <= daysInMonth; i++) {
+    var key = insightsYear + '-' + String(insightsMonth+1).padStart(2,'0') + '-' + String(i).padStart(2,'0');
+    var mins = dailyMap[key] ? dailyMap[key].minutes : 0;
+    var intensity = mins > 0 ? Math.max(0.15, Math.min(1, mins / maxMins)) : 0;
+    var bg = mins > 0 ? 'rgba(240,160,96,' + intensity.toFixed(2) + ')' : 'rgba(255,255,255,0.04)';
+    var now = new Date();
+    var isToday = (i === now.getDate() && insightsMonth === now.getMonth() && insightsYear === now.getFullYear());
+    var border = isToday ? 'border:1px solid rgba(240,160,96,0.5);' : 'border:1px solid transparent;';
+    html += '<div style="aspect-ratio:1;border-radius:4px;background:' + bg + ';display:flex;align-items:center;justify-content:center;font-size:9px;color:' + (mins > 0 ? 'rgba(255,255,255,0.9)' : 'var(--text-dim)') + ';' + border + '" title="' + i + ': ' + Math.round(mins) + 'min">' + i + '</div>';
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function renderBreakdown() {
+  var el = document.getElementById('insightsBreakdown');
+  var types = {snap:{label:'Snap Present',color:'#f0a060',icon:'⚡',mins:0,count:0},sit:{label:'Just Sit',color:'#c090f0',icon:'🧘',mins:0,count:0},breath:{label:'Breathwork',color:'#60d0c0',icon:'🌊',mins:0,count:0},focus:{label:'Focus States',color:'#6ca0f0',icon:'🎧',mins:0,count:0},bodyscan:{label:'Body Scan',color:'#a078dc',icon:'🫧',mins:0,count:0}};
+  var totalMins = 0;
+  state.history.forEach(function(h) {
+    var d = new Date(h.date);
+    if (d.getMonth() === insightsMonth && d.getFullYear() === insightsYear) {
+      var t = h.type || 'snap';
+      if (types[t]) { types[t].mins += h.minutes; types[t].count++; totalMins += h.minutes; }
+    }
+  });
+  if (totalMins === 0) { el.innerHTML = '<div style="text-align:center;color:var(--text-dim);font-size:13px;padding:12px 0;">No sessions this month</div>'; return; }
+  var html = '';
+  Object.keys(types).forEach(function(k) {
+    var t = types[k];
+    if (t.count === 0) return;
+    var pct = Math.round((t.mins / totalMins) * 100);
+    html += '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-primary);">' + t.icon + ' ' + t.label + '</span><span style="font-size:12px;color:var(--text-secondary);">' + t.count + ' · ' + Math.round(t.mins) + 'm · ' + pct + '%</span></div><div style="height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:' + t.color + ';border-radius:3px;transition:width 0.5s;"></div></div></div>';
+  });
+  el.innerHTML = html;
+}
+
+function renderFocusTrend() {
+  var el = document.getElementById('focusTrendChart');
+  var sitSessions = state.history.filter(function(h) { return h.type === 'sit' && h.wanderTimes && h.wanderTimes.length > 0; });
+  if (sitSessions.length < 2) { el.innerHTML = '<div style="text-align:center;color:var(--text-dim);font-size:13px;padding:12px 0;">Need 2+ Just Sit sessions for trend</div>'; return; }
+  var recent = sitSessions.slice(0, 20).reverse();
+  var avgGaps = recent.map(function(h) {
+    var sorted = h.wanderTimes.slice().sort(function(a,b){return a-b;});
+    var sessionLen = (h.targetDuration || h.minutes) * 60;
+    var gaps = [];
+    if (sorted[0] > 0) gaps.push(sorted[0]);
+    for (var i = 1; i < sorted.length; i++) { var g = sorted[i] - sorted[i-1]; if (g > 0) gaps.push(g); }
+    var lastG = sessionLen - sorted[sorted.length - 1]; if (lastG > 0) gaps.push(lastG);
+    return gaps.length > 0 ? gaps.reduce(function(a,b){return a+b;},0) / gaps.length : 0;
+  });
+  var maxGap = Math.max.apply(null, avgGaps);
+  if (maxGap < 1) maxGap = 1;
+  var w = 320, ht = 80, padY = 10, padX = 5;
+  var stepX = avgGaps.length > 1 ? (w - padX * 2) / (avgGaps.length - 1) : 0;
+  var pathD = '';
+  avgGaps.forEach(function(g, i) {
+    var x = padX + i * stepX;
+    var y = ht - padY - (g / maxGap) * (ht - padY * 2);
+    pathD += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+  });
+  var fillD = pathD + ' L' + (padX + (avgGaps.length-1)*stepX).toFixed(1) + ',' + ht + ' L' + padX + ',' + ht + ' Z';
+  var improving = avgGaps.length >= 4 && avgGaps[avgGaps.length-1] > avgGaps[0];
+  var trendColor = improving ? '#60d0c0' : '#c090f0';
+  el.innerHTML = '<svg width="100%" height="80" viewBox="0 0 ' + w + ' ' + ht + '" preserveAspectRatio="none"><defs><linearGradient id="focusGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="' + trendColor + '" stop-opacity="0.3"/><stop offset="100%" stop-color="' + trendColor + '" stop-opacity="0"/></linearGradient></defs><path d="' + fillD + '" fill="url(#focusGrad)"/><path d="' + pathD + '" fill="none" stroke="' + trendColor + '" stroke-width="2"/></svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-dim);margin-top:4px;"><span>Oldest</span><span>Avg gap between wanders</span><span>Recent</span></div>';
+}
+
+function renderInsightsHistory() {
+  var el = document.getElementById('insightsHistory');
+  var monthSessions = state.history.filter(function(h) {
+    var d = new Date(h.date);
+    return d.getMonth() === insightsMonth && d.getFullYear() === insightsYear;
+  });
+  if (monthSessions.length === 0) { el.innerHTML = '<div style="text-align:center;color:var(--text-dim);font-size:13px;padding:12px 0;">No sessions this month</div>'; return; }
+  var icons = {snap:'⚡',breath:'🌊',sit:'🧘',focus:'🎧',bodyscan:'🫧'};
+  var colors = {snap:'rgba(240,160,96,0.12)',breath:'rgba(96,208,192,0.12)',sit:'rgba(192,144,240,0.12)',focus:'rgba(108,160,240,0.12)',bodyscan:'rgba(160,120,220,0.12)'};
+  el.innerHTML = monthSessions.slice(0,30).map(function(h) {
+    var d = new Date(h.date);
+    var wanderInfo = h.wanders !== undefined ? '<div style="font-size:10px;color:var(--accent-warm);">' + h.wanders + ' wander' + (h.wanders!==1?'s':'') + '</div>' : '';
+    return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:32px;height:32px;border-radius:8px;background:' + (colors[h.type]||'var(--bg-card)') + ';display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;">' + (icons[h.type]||'●') + '</div><div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:500;color:var(--text-primary);">' + h.label + '</div><div style="font-size:11px;color:var(--text-dim);">' + d.toLocaleDateString([],{month:'short',day:'numeric'}) + ' · ' + d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) + '</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:13px;color:var(--text-secondary);">+' + h.minutes + 'm</div>' + wanderInfo + '</div></div>';
+  }).join('');
 }
 
 function getDateKey(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
