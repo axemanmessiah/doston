@@ -2129,7 +2129,7 @@ function selectBreathPattern(btn){
   hapticTap();if(breathState.running)stopBreath();
   document.querySelectorAll('.breath-pattern-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');breathState.pattern=btn.dataset.pattern;
-  if(btn.dataset.pattern==='custom'){document.getElementById('customBuilder').classList.add('visible');initCustomBuilder();}
+  if(btn.dataset.pattern==='custom'){document.getElementById('customBuilder').style.display='';document.getElementById('customBuilder').classList.add('visible');initCustomBuilder();}
   else{document.getElementById('customBuilder').classList.remove('visible');}
   // Show/hide nostril guide
   const pat = BREATH_PATTERNS[breathState.pattern];
@@ -2437,6 +2437,7 @@ function stopBreath(){
   document.getElementById('nostrilGuide').classList.remove('visible');
   highlightNostril('none');
   document.getElementById('breathPatterns').style.display = '';
+  document.getElementById('customBuilder').style.display = '';
   document.querySelector('#breatheOverlay .overlay-content').style.justifyContent = '';
   document.querySelector('#breatheOverlay .overlay-content').style.paddingTop = '';
   document.querySelector('.breath-orb-wrap').classList.remove('fullscreen');
