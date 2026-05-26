@@ -104,16 +104,16 @@ html, body {
 .section-label:first-of-type { margin-top:0; }
 .card {
   background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius); padding:20px; margin-bottom:12px;
+  border-radius: var(--radius); padding:14px 16px; margin-bottom:8px;
   cursor:pointer; transition: background 0.3s, transform 0.2s, border-color 0.3s;
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
   box-shadow: 0 2px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.04);
 }
 .card:active { transform:scale(0.97); background:rgba(255,255,255,0.07); }
-.card-title { font-size:17px; font-weight:600; margin-bottom:4px; }
-.card-desc { font-size:13px; color:var(--text-secondary); line-height:1.4; }
-.card-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-size:22px; }
-.card-row { display:flex; align-items:center; gap:14px; }
+.card-title { font-size:15px; font-weight:600; margin-bottom:2px; }
+.card-desc { font-size:12px; color:var(--text-secondary); line-height:1.3; }
+.card-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-size:18px; }
+.card-row { display:flex; align-items:center; gap:12px; }
 .card-row .card-icon { margin-bottom:0; flex-shrink:0; }
 .card-row .card-info { flex:1; }
 .btn {
@@ -129,11 +129,11 @@ html, body {
   width:100%;
   padding:12px 24px;
   border-radius:14px;
-  background:rgba(255,255,255,0.06);
+  background:rgba(200,100,40,0.25);
   backdrop-filter:blur(20px) saturate(1.5);
   -webkit-backdrop-filter:blur(20px) saturate(1.5);
-  border:1px solid rgba(255,255,255,0.12);
-  color:rgba(255,255,255,0.9);
+  border:1px solid rgba(240,140,60,0.3);
+  color:rgba(255,220,180,0.95);
   font-size:13px;
   font-weight:600;
   letter-spacing:3px;
@@ -141,8 +141,9 @@ html, body {
   position:relative;
   overflow:hidden;
   transition:all 0.3s;
+  box-shadow:0 2px 16px rgba(200,100,40,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
 }
-.btn-snap:active { transform:scale(0.98); background:rgba(255,255,255,0.1); }
+.btn-snap:active { transform:scale(0.98); background:rgba(200,100,40,0.35); }
 .stats-row { display:flex; gap:10px; margin-bottom:20px; }
 .stat-chip { flex:1; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding:14px 12px; text-align:center; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow: 0 2px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.04); }
 .stat-value { font-size:24px; font-weight:700; }
@@ -626,8 +627,8 @@ html, body {
 </div>
 
 <div id="app">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:0;"><svg viewBox="0 0 100 100" width="64" height="64" style="flex-shrink:0;filter:drop-shadow(0 0 12px rgba(160,128,240,0.35));"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:42px;font-weight:200;letter-spacing:6px;background:linear-gradient(135deg,#7c6cf0,#6ca0f0,#5cc8c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 30px rgba(124,108,240,0.4),0 0 60px rgba(124,108,240,0.2);animation:hero-glow 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(124,108,240,0.3));">AWAKE</span></div>
-  <div class="screen-subtitle" style="margin-bottom:12px;">Loops break. Presence enters.</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:2px;"><svg viewBox="0 0 100 100" width="44" height="44" style="flex-shrink:0;filter:drop-shadow(0 0 10px rgba(160,128,240,0.35));"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="20%" stop-color="#e8d8ff"/><stop offset="50%" stop-color="#a080f0" stop-opacity="0.6"/><stop offset="100%" stop-color="#6040c0" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="28" fill="none" stroke="#c8b8ff" stroke-width="1.5" opacity=".55"/><circle cx="50" cy="22" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="78" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="36" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="25.8" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="74.2" cy="64" r="28" fill="none" stroke="#b8a8ff" stroke-width="1.2" opacity=".4"/><circle cx="50" cy="50" r="14" fill="url(#ig)"/><circle cx="50" cy="50" r="4" fill="#fff"/></svg><span style="font-size:36px;font-weight:200;letter-spacing:6px;background:linear-gradient(135deg,#7c6cf0,#6ca0f0,#5cc8c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:hero-glow 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(124,108,240,0.3));">AWAKE</span></div>
+  <div class="screen-subtitle" style="margin-bottom:8px;">Loops break. Presence enters.</div>
   <div class="daily-quote" id="dailyQuote"></div>
   <button class="btn btn-snap" onclick="startSnap()" style="margin-bottom:20px;">
     <span class="snap-text">SNAP PRESENT</span>
@@ -965,7 +966,9 @@ html, body {
       <div class="stat-chip"><div class="stat-value" id="statSessions">0</div><div class="stat-label">Sessions</div></div>
       <div class="stat-chip"><div class="stat-value" id="statMinutes">0</div><div class="stat-label">Total Min</div></div>
     </div>
-    <div class="section-label" style="margin-top:0;">This Week</div>
+    <div class="section-label" style="margin-top:0;">Focus Quality</div>
+    <div id="focusInsights" style="width:100%;max-width:360px;margin-bottom:20px;"></div>
+    <div class="section-label">This Week</div>
     <div class="insights-week-grid" id="insightsWeekGrid"></div>
     <div class="sparkline-wrap">
       <div class="sparkline-label">30-Day Trend</div>
@@ -2725,10 +2728,131 @@ function closeInsights() {
 }
 
 function renderInsights() {
+  renderFocusInsights();
   renderWeekGrid();
   renderSparkline();
   renderMonthlyStats();
   renderMilestones();
+}
+
+function renderFocusInsights() {
+  const el = document.getElementById('focusInsights');
+  const sitSessions = state.history.filter(h => h.type === 'sit' && h.wanderTimes && h.wanderTimes.length > 0);
+
+  if (sitSessions.length === 0) {
+    el.innerHTML = '<div style="text-align:center;color:var(--text-dim);font-size:13px;padding:16px 0;">Complete a Just Sit session to see focus insights</div>';
+    return;
+  }
+
+  // Calculate gaps between wanders for each session
+  let allGaps = [];
+  let longestGapEver = 0;
+  let bestSessionName = '';
+  let totalWanders = 0;
+  let totalSitMinutes = 0;
+  let longestSession = 0;
+  let sessionsWithZeroWanders = 0;
+  const allSitSessions = state.history.filter(h => h.type === 'sit');
+
+  allSitSessions.forEach(h => {
+    totalSitMinutes += h.minutes;
+    if (h.minutes > longestSession) longestSession = h.minutes;
+    if (!h.wanderTimes || h.wanderTimes.length === 0) {
+      sessionsWithZeroWanders++;
+      // The whole session was one unbroken gap
+      const sessionLen = (h.targetDuration || h.minutes) * 60;
+      if (sessionLen > longestGapEver) {
+        longestGapEver = sessionLen;
+        bestSessionName = h.label;
+      }
+      allGaps.push(sessionLen);
+      return;
+    }
+    totalWanders += h.wanderTimes.length;
+    const sorted = [...h.wanderTimes].sort((a,b) => a - b);
+    const sessionLen = (h.targetDuration || h.minutes) * 60;
+
+    // Gap from start to first wander
+    if (sorted[0] > 0) allGaps.push(sorted[0]);
+    if (sorted[0] > longestGapEver) { longestGapEver = sorted[0]; bestSessionName = h.label; }
+
+    // Gaps between consecutive wanders
+    for (let i = 1; i < sorted.length; i++) {
+      const gap = sorted[i] - sorted[i-1];
+      if (gap > 0) allGaps.push(gap);
+      if (gap > longestGapEver) { longestGapEver = gap; bestSessionName = h.label; }
+    }
+
+    // Gap from last wander to end
+    const lastGap = sessionLen - sorted[sorted.length - 1];
+    if (lastGap > 0) allGaps.push(lastGap);
+    if (lastGap > longestGapEver) { longestGapEver = lastGap; bestSessionName = h.label; }
+  });
+
+  const avgGap = allGaps.length > 0 ? allGaps.reduce((a,b) => a+b, 0) / allGaps.length : 0;
+  const avgSessionLen = allSitSessions.length > 0 ? totalSitMinutes / allSitSessions.length : 0;
+  const wanderRate = totalSitMinutes > 0 ? (totalWanders / totalSitMinutes).toFixed(1) : 0;
+
+  // Recent trend: compare last 5 sessions avg gap to previous 5
+  const recentSit = sitSessions.slice(0, 5);
+  const olderSit = sitSessions.slice(5, 10);
+  let trendArrow = '';
+  if (recentSit.length >= 2 && olderSit.length >= 2) {
+    const recentAvg = calcAvgGap(recentSit);
+    const olderAvg = calcAvgGap(olderSit);
+    if (recentAvg > olderAvg * 1.1) trendArrow = ' ↑';
+    else if (recentAvg < olderAvg * 0.9) trendArrow = ' ↓';
+    else trendArrow = ' →';
+  }
+
+  function fmtTime(secs) {
+    if (secs < 60) return Math.round(secs) + 's';
+    const m = Math.floor(secs / 60);
+    const s = Math.round(secs % 60);
+    return m + 'm ' + s + 's';
+  }
+
+  el.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div class="stat-chip" style="padding:12px 10px;">
+        <div class="stat-value" style="font-size:18px;color:#60d0c0;">${fmtTime(longestGapEver)}</div>
+        <div class="stat-label">Longest Focus Gap</div>
+      </div>
+      <div class="stat-chip" style="padding:12px 10px;">
+        <div class="stat-value" style="font-size:18px;color:#c090f0;">${fmtTime(avgGap)}${trendArrow}</div>
+        <div class="stat-label">Avg Between Thoughts</div>
+      </div>
+      <div class="stat-chip" style="padding:12px 10px;">
+        <div class="stat-value" style="font-size:18px;color:#f0a060;">${wanderRate}</div>
+        <div class="stat-label">Wanders / Min</div>
+      </div>
+      <div class="stat-chip" style="padding:12px 10px;">
+        <div class="stat-value" style="font-size:18px;color:#6ca0f0;">${totalWanders}</div>
+        <div class="stat-label">Total Wanders</div>
+      </div>
+      <div class="stat-chip" style="padding:12px 10px;">
+        <div class="stat-value" style="font-size:18px;color:#7c6cf0;">${Math.round(avgSessionLen)}m</div>
+        <div class="stat-label">Avg Session</div>
+      </div>
+      <div class="stat-chip" style="padding:12px 10px;">
+        <div class="stat-value" style="font-size:18px;color:#5cc8c8;">${Math.round(longestSession)}m</div>
+        <div class="stat-label">Longest Session</div>
+      </div>
+    </div>
+  `;
+}
+
+function calcAvgGap(sessions) {
+  let gaps = [];
+  sessions.forEach(h => {
+    if (!h.wanderTimes || h.wanderTimes.length === 0) return;
+    const sorted = [...h.wanderTimes].sort((a,b) => a - b);
+    const sessionLen = (h.targetDuration || h.minutes) * 60;
+    if (sorted[0] > 0) gaps.push(sorted[0]);
+    for (let i = 1; i < sorted.length; i++) { const g = sorted[i] - sorted[i-1]; if (g > 0) gaps.push(g); }
+    const lastG = sessionLen - sorted[sorted.length - 1]; if (lastG > 0) gaps.push(lastG);
+  });
+  return gaps.length > 0 ? gaps.reduce((a,b) => a+b, 0) / gaps.length : 0;
 }
 
 function getDateKey(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
