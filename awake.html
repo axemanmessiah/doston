@@ -89,6 +89,7 @@ html, body {
   overflow-y:auto; -webkit-overflow-scrolling:touch;
   padding: calc(var(--safe-top) + 16px) 20px calc(var(--safe-bottom) + 30px);
   padding-bottom:80px;
+  max-width:480px; margin:0 auto;
 }
 #app::-webkit-scrollbar { width:0; }
 @media all and (display-mode: standalone) {
@@ -287,7 +288,7 @@ html, body {
 
 /* Snap */
 .snap-container { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0; text-align:center; width:100%; height:100%; }
-.snap-prompt { font-size:44px; font-weight:700; line-height:1.2; padding:0 20px; display:flex; align-items:center; justify-content:center; text-align:center; transition: opacity 0.1s ease; text-shadow: 0 0 60px rgba(255,255,255,0.3); }
+.snap-prompt { font-size:min(44px, 12vw); font-weight:700; line-height:1.2; padding:0 20px; display:flex; align-items:center; justify-content:center; text-align:center; transition: opacity 0.1s ease; text-shadow: 0 0 60px rgba(255,255,255,0.3); word-break:break-word; }
 .snap-step-dots { display:flex; gap:6px; position:absolute; bottom:40px; left:50%; transform:translateX(-50%); }
 .snap-dot { width:6px; height:6px; border-radius:50%; background: rgba(255,255,255,0.15); transition: background 0.2s, transform 0.2s; }
 .snap-dot.active { background: var(--accent-warm); transform:scale(1.5); }
@@ -320,7 +321,7 @@ html, body {
 }
 .sit-overlay.active { opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
 .sit-close { position:absolute; top: calc(var(--safe-top) + 16px); right:20px; background:none; border:none; color:var(--text-secondary); font-size:14px; font-weight:500; padding:8px 16px; cursor:pointer; z-index:5; }
-.sit-timer-display { font-size:72px; font-weight:200; letter-spacing:-2px; margin-bottom:8px; }
+.sit-timer-display { font-size:min(72px, 15vw); font-weight:200; letter-spacing:-2px; margin-bottom:8px; }
 .sit-wander-count { font-size:14px; color:var(--text-secondary); margin-bottom:40px; }
 .sit-left-btn {
   width: 100%; flex:1; min-height:200px; border-radius: var(--radius);
@@ -532,11 +533,6 @@ html, body {
 }
 
 /* Insights overlay */
-.insights-week-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; width:100%; max-width:320px; margin-bottom:20px; text-align:center; }
-.insights-day { padding:8px 4px; border-radius:8px; background:rgba(255,255,255,0.02); }
-.insights-day-label { font-size:9px; color:var(--text-dim); text-transform:uppercase; }
-.insights-day-dot { width:10px; height:10px; border-radius:50%; margin:6px auto 4px; }
-.insights-day-min { font-size:10px; color:var(--text-secondary); }
 .sparkline-wrap { width:100%; max-width:320px; margin-bottom:24px; }
 .sparkline-label { font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
 .monthly-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; max-width:320px; margin-bottom:24px; }
@@ -630,8 +626,7 @@ html, body {
     <span class="snap-text">SNAP PRESENT</span>
   </button>
 
-  <div class="section-label">Practice</div>
-  <div class="card" onclick="openSitPicker()">
+  <div class="card" onclick="openSitPicker()" style="margin-top:10px;">
     <div class="card-row"><div class="card-icon" style="background:rgba(192,144,240,0.12);">🧘</div><div class="card-info"><div class="card-title">Just Sit</div><div class="card-desc">Track the mind wanders</div></div></div>
   </div>
   <div class="card" onclick="openBreathe()">
@@ -729,16 +724,15 @@ html, body {
     <div style="font-size:14px; color:var(--text-secondary); margin-bottom:28px; text-align:center;">Choose your duration. Tap the circle<br>each time you notice your mind wandered.</div>
     <div class="sit-duration-pills">
       <button class="sit-pill" data-dur="2" onclick="selectSitDur(2,this)">2 min</button>
-      <button class="sit-pill active" data-dur="12" onclick="selectSitDur(12,this)">12 min</button>
-      <button class="sit-pill" data-dur="24" onclick="selectSitDur(24,this)">24 min</button>
-      <button class="sit-pill" data-dur="48" onclick="selectSitDur(48,this)">48 min</button>
+      <button class="sit-pill" data-dur="5" onclick="selectSitDur(5,this)">5 min</button>
+      <button class="sit-pill" data-dur="6" onclick="selectSitDur(6,this)">6 min</button>
+      <button class="sit-pill active" data-dur="10" onclick="selectSitDur(10,this)">10 min</button>
+      <button class="sit-pill" data-dur="12" onclick="selectSitDur(12,this)">12 min</button>
     </div>
     <div class="interval-selector">
-      <span class="interval-label">Bells:</span>
-      <button class="interval-pill active" data-int="0" onclick="selectInterval(0,this)">Off</button>
-      <button class="interval-pill" data-int="2" onclick="selectInterval(2,this)">2m</button>
-      <button class="interval-pill" data-int="4" onclick="selectInterval(4,this)">4m</button>
-      <button class="interval-pill" data-int="6" onclick="selectInterval(6,this)">6m</button>
+      <span class="interval-label">1-min bell:</span>
+      <button class="interval-pill active" data-int="0" onclick="toggleBell(this)">Off</button>
+      <button class="interval-pill" data-int="1" onclick="toggleBell(this)">On</button>
     </div>
     <div class="ambient-selector">
       <span class="ambient-label">Ambient:</span>
@@ -818,7 +812,7 @@ html, body {
           <span style="font-size:24px;">😴</span>
           <div>
             <div class="focus-level-name">Can't Sleep</div>
-            <div class="focus-level-desc" style="color:var(--text-dim);font-style:italic;">Fall asleep naturally</div>
+            <div class="focus-level-desc" style="color:var(--text-dim);font-style:italic;">Deep dreamless sleep onset</div>
             <div class="focus-level-hz">Delta · 4Hz binaural beat</div>
           </div>
         </div>
@@ -838,7 +832,7 @@ html, body {
           <span style="font-size:24px;">🌌</span>
           <div>
             <div class="focus-level-name">Astral Projection</div>
-            <div class="focus-level-desc" style="color:var(--text-dim);font-style:italic;">Body asleep, mind awake — OBE gateway</div>
+            <div class="focus-level-desc" style="color:var(--text-dim);font-style:italic;">Out-of-body visualization — stay aware at Delta frequency</div>
             <div class="focus-level-hz">Delta · 4Hz binaural beat</div>
           </div>
         </div>
@@ -921,10 +915,11 @@ html, body {
     <div id="nidraPicker">
       <div style="font-size:22px; font-weight:300; margin-bottom:4px; color:rgba(160,120,220,0.9);">Body Scan</div>
       <div style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">Yoga Nidra — rotation of consciousness</div>
-      <div style="display:flex; gap:10px; justify-content:center; margin-bottom:20px;">
-        <button class="nidra-pill" onclick="selectNidraDur(15,this)">15m</button>
-        <button class="nidra-pill active" onclick="selectNidraDur(25,this)">25m</button>
-        <button class="nidra-pill" onclick="selectNidraDur(35,this)">35m</button>
+      <div style="display:flex; gap:10px; justify-content:center; margin-bottom:20px; flex-wrap:wrap;">
+        <button class="nidra-pill" onclick="selectNidraDur(3,this)">3m</button>
+        <button class="nidra-pill active" onclick="selectNidraDur(7,this)">7m</button>
+        <button class="nidra-pill" onclick="selectNidraDur(12,this)">12m</button>
+        <button class="nidra-pill" onclick="selectNidraDur(25,this)">25m</button>
       </div>
       <div style="padding:14px; background:rgba(160,120,220,0.06); border:1px solid rgba(160,120,220,0.12); border-radius:var(--radius-sm); margin-bottom:20px; max-width:320px;">
         <div style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Yoga Nidra is conscious sleep — a guided rotation of awareness through every part of the body. Lie down, close your eyes, and follow the voice. You remain aware while your body falls into deep rest.</div>
@@ -966,7 +961,7 @@ html, body {
     <div id="streakViz" style="width:100%;max-width:360px;margin-bottom:16px;"></div>
     <div id="periodStats" style="width:100%;max-width:360px;margin-bottom:16px;"></div>
     <div class="section-label" style="margin-top:0;">Activity</div>
-    <div id="insightsHeatmap" style="width:100%;margin-bottom:16px;overflow-x:auto;overflow-y:hidden;min-height:110px;"></div>
+    <div id="insightsHeatmap" style="width:100%;margin-bottom:16px;"></div>
     <div class="section-label">Practice Breakdown</div>
     <div id="insightsBreakdown" style="width:100%;max-width:360px;margin-bottom:16px;"></div>
     <div class="section-label">When You Practice</div>
@@ -1033,16 +1028,6 @@ html, body {
       </div>
       <div class="settings-row" style="justify-content:space-between;align-items:center;padding:0 4px;margin-top:12px;">
         <div>
-          <div style="font-size:14px;color:var(--text-primary);">Haptic Guidance</div>
-          <div style="font-size:11px;color:var(--text-dim);">Vibrations during breathwork & guided sessions</div>
-        </div>
-        <label class="toggle-switch">
-          <input type="checkbox" id="hapticToggle" onchange="toggleHapticGuidance(this.checked)">
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-      <div class="settings-row" style="justify-content:space-between;align-items:center;padding:0 4px;margin-top:12px;">
-        <div>
           <div style="font-size:14px;color:var(--text-primary);">How to Use</div>
           <div style="font-size:11px;color:var(--text-dim);">App walkthrough</div>
         </div>
@@ -1058,12 +1043,11 @@ html, body {
       </div>
     </div>
     <div class="settings-section">
-      <div class="settings-section-label" style="color:rgba(255,80,80,0.5);">Danger Zone</div>
       <div class="settings-row" style="padding:0 4px;">
         <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.6); border-color:rgba(255,80,80,0.15); font-size:12px; padding:8px 16px;">Reset All Progress</button>
       </div>
     </div>
-    <div class="settings-version">AWAKE v16</div>
+    <div class="settings-version">AWAKE v16.1</div>
   </div>
 </div>
 
@@ -1095,14 +1079,13 @@ html, body {
 
 <script>
 /* ════════════════════════════════════════════
-   AWAKE v16
+   AWAKE v16.1
    ════════════════════════════════════════════ */
 
 // ═══ DAILY TEACHINGS ═══
 const TEACHINGS = [
   "The quieter you become, the more you can hear. — Ram Dass",
   "This is it. — Alan Watts",
-  "You are the sky. Everything else is weather. — Rumi",
   "Be still and know. — Psalm 46:10",
   "The mind is a wonderful servant but a terrible master. — Robin Sharma",
   "Before thinking, there is awareness. — Nisargadatta Maharaj",
@@ -1188,7 +1171,6 @@ const TEACHINGS = [
   "Silence is the sleep that nourishes wisdom. — Francis Bacon",
   "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it. — Rumi",
   "Your heart knows the way. Run in that direction. — Rumi",
-  "The mind is everything. What you think you become. — Buddha",
   "To understand everything is to forgive everything. — Buddha",
   "The only Zen you find on the tops of mountains is the Zen you bring up there. — Robert Pirsig",
   "Realize deeply that the present moment is all you have. Make the NOW the primary focus of your life. — Eckhart Tolle",
@@ -1210,7 +1192,7 @@ const TEACHINGS = [
   "To be beautiful means to be yourself. You don't need to be accepted by others. You need to accept yourself. — Thich Nhat Hanh",
   "Sometimes your joy is the source of your smile, but sometimes your smile can be the source of your joy. — Thich Nhat Hanh",
   "Many people think excitement is happiness. But when you are excited you are not peaceful. True happiness is based on peace. — Thich Nhat Hanh",
-  "Drink your tea slowly and reverently, as if it is the axis on which the world earth revolves. — Thich Nhat Hanh",
+  "Drink your tea slowly and reverently, as if it is the axis on which the earth revolves. — Thich Nhat Hanh",
   "People have a hard time letting go of their suffering. Out of a fear of the unknown, they prefer suffering that is familiar. — Thich Nhat Hanh",
   "Waking up this morning, I smile. Twenty-four brand new hours are before me. — Thich Nhat Hanh",
   "The miracle is not to walk on water. The miracle is to walk on the green earth. — Thich Nhat Hanh",
@@ -1277,7 +1259,7 @@ const TEACHINGS = [
   "The mind, once stretched by a new idea, never returns to its original dimensions. — Ralph Waldo Emerson",
   "Nothing ever goes away until it has taught us what we need to know. — Pema Chodron",
   "The most fundamental aggression to ourselves, the most fundamental harm we can do to ourselves, is to remain ignorant by not having the courage to look at ourselves honestly. — Pema Chodron",
-  "You are the sky. Everything else is just the weather. — Pema Chodron",
+  "You are the sky. Everything else is just the weather. — Pema Chödrön",
   "If we learn to open our hearts, anyone, including the people who drive us crazy, can be our teacher. — Pema Chodron",
   "Feel the feelings and drop the story. — Pema Chodron",
   "To be fully alive, fully human, and completely awake is to be continually thrown out of the nest. — Pema Chodron",
@@ -1401,17 +1383,6 @@ const TEACHINGS = [
   "If you correct your mind, the rest of your life will fall into place. — Lao Tzu",
   "Your body is precious. It is our vehicle for awakening. Treat it with care. — Buddha",
   "You can search throughout the entire universe for someone who is more deserving of your love and affection than you are yourself, and that person is not to be found anywhere. — Buddha",
-  "मन के हारे हार है मन के जीते जीत — हिंदी कहावत",
-  "जो होना है सो होना है, जो नहीं होना वो कभी नहीं — कबीर",
-  "बुरा जो देखन मैं चला, बुरा न मिलिया कोय, जो दिल खोजा आपना, मुझसे बुरा न कोय — कबीर",
-  "साईं इतना दीजिए, जा मे कुटुम समाय, मैं भी भूखा न रहूँ, साधु न भूखा जाय — कबीर",
-  "धीरे-धीरे रे मना, धीरे सब कुछ होय, माली सींचे सौ घड़ा, ऋतु आए फल होय — कबीर",
-  "जैसे तिल में तेल है, ज्यों चकमक में आग, तेरा साईं तुझ में है, तू जाग सके तो जाग — कबीर",
-  "पोथी पढ़ि पढ़ि जग मुआ, पंडित भया न कोय, ढाई आखर प्रेम का, पढ़े सो पंडित होय — कबीर",
-  "चलती चक्की देख कर, दिया कबीरा रोय, दो पाटन के बीच में, साबुत बचा न कोय — कबीर",
-  "माटी कहे कुम्हार से, तू क्या रौंदे मोय, एक दिन ऐसा आएगा, मैं रौंदूंगी तोय — कबीर",
-  "दुःख में सुमिरन सब करे, सुख में करे न कोय, जो सुख में सुमिरन करे, दुःख काहे को होय — कबीर",
-  "इक ओंकार सतिनामु — गुरु नानक",
   "Nanak naam chardi kala, tere bhane sarbat da bhala. — Guru Nanak",
   "Before becoming a Muslim, a Hindu, a Sikh, or a Christian, let's become a human first. — Guru Nanak",
   "Burn worldly love, rub the ashes and make ink of it, make the heart the pen, the intellect the writer. — Guru Nanak",
@@ -1500,11 +1471,10 @@ const TEACHINGS = [
 ];
 
 function getDailyQuote() {
-  var stored = localStorage.getItem('awake_quoteIdx');
-  var idx = stored !== null ? parseInt(stored) : Math.floor(Math.random() * TEACHINGS.length);
-  var quote = TEACHINGS[idx % TEACHINGS.length];
-  localStorage.setItem('awake_quoteIdx', (idx + 1) % TEACHINGS.length);
-  return quote;
+  // Use day-of-year as seed so the quote is stable for the entire calendar day
+  var dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000);
+  var idx = dayOfYear % TEACHINGS.length;
+  return TEACHINGS[idx];
 }
 
 // ═══ HAPTICS ENGINE ═══
@@ -1521,6 +1491,17 @@ function getAudio() {
   if (audioCtx.state === 'suspended') audioCtx.resume();
   return audioCtx;
 }
+// iOS Safari requires AudioContext creation/resume during a user gesture.
+// Eagerly initialize on first interaction so later setTimeout-based sounds work.
+(function() {
+  function initAudioOnGesture() {
+    getAudio();
+    document.removeEventListener('touchstart', initAudioOnGesture);
+    document.removeEventListener('click', initAudioOnGesture);
+  }
+  document.addEventListener('touchstart', initAudioOnGesture, { once: true });
+  document.addEventListener('click', initAudioOnGesture, { once: true });
+})();
 function playBowl(freq = 220, duration = 3) {
   if (state && state.muted) return;
   try {
@@ -1547,7 +1528,7 @@ function playChime(freq = 880, dur = 0.6) {
   } catch(e) {}
 }
 function playTick() { playChime(600, 0.15); }
-function playSoftTap() { playChime(400, 0.1); }
+
 function playWelcomeBack() { playChime(528, 0.25); setTimeout(() => playChime(660, 0.35), 120); }
 
 // ═══ AMBIENT SOUND ENGINE ═══
@@ -1662,15 +1643,46 @@ function defaultState() {
     dailyMinutes:0, dailyDate:null,
     streakFreezeUsed: false,
     hapticGuidance: false,
-    language: 'en',
-    tutorialSeen: false
+    tutorialSeen: false,
+    dataVersion: 1
   };
 }
 function loadState() {
-  try { const s = localStorage.getItem('awake_v3'); if(s) return {...defaultState(),...JSON.parse(s)}; } catch(e){}
+  try {
+    const s = localStorage.getItem('awake_v3');
+    if(s) {
+      var loaded = {...defaultState(),...JSON.parse(s)};
+      try { localStorage.setItem('awake_v3_backup', s); } catch(e2){}
+      return loaded;
+    }
+  } catch(e){
+    // Primary load failed — try backup
+    try {
+      const b = localStorage.getItem('awake_v3_backup');
+      if(b) return {...defaultState(),...JSON.parse(b)};
+    } catch(e2){}
+  }
   return defaultState();
 }
-function saveState() { localStorage.setItem('awake_v3', JSON.stringify(state)); }
+function parseWanderTimes(wt) {
+  if (!wt) return [];
+  if (Array.isArray(wt)) return wt;
+  if (typeof wt === 'string' && wt.length > 0) return wt.split(',').map(Number).filter(function(n){return !isNaN(n);});
+  return [];
+}
+function saveState() {
+  // Archive entries older than 90 days: strip wanderTimes, intention, reflection
+  var now = Date.now(), cutoff = 90 * 24 * 60 * 60 * 1000;
+  if (state.history) {
+    for (var i = 0; i < state.history.length; i++) {
+      var h = state.history[i];
+      if (h.date && (now - new Date(h.date).getTime()) > cutoff) {
+        delete h.wanderTimes; delete h.intention; delete h.reflection;
+      }
+    }
+  }
+  localStorage.setItem('awake_v3', JSON.stringify(state));
+}
 function checkDailyReset() { const today = new Date().toDateString(); if (state.dailyDate !== today) { state.dailyMinutes = 0; state.dailyDate = today; saveState(); } }
 
 function addMinutes(minutes, type, label, extra) {
@@ -1678,6 +1690,7 @@ function addMinutes(minutes, type, label, extra) {
   state.dailyMinutes = Math.round((state.dailyMinutes + minutes) * 10) / 10;
   state.totalSessions++;
   const today = new Date().toDateString();
+  var freezeUsedThisCall = false;
   if (state.lastSessionDate !== today) {
     const yesterday = new Date(Date.now()-86400000).toDateString();
     const twoDaysAgo = new Date(Date.now()-2*86400000).toDateString();
@@ -1687,17 +1700,22 @@ function addMinutes(minutes, type, label, extra) {
       // Streak forgiveness: one freeze per gap
       state.streak = state.streak + 1;
       state.streakFreezeUsed = true;
+      freezeUsedThisCall = true;
     } else {
       state.streak = 1;
     }
     state.lastSessionDate = today;
   }
-  // Reset freeze when a session happens on an active day
-  if (state.lastSessionDate === today) {
+  // Reset freeze when a session happens on an active day (but not if freeze was just used)
+  if (state.lastSessionDate === today && !freezeUsedThisCall) {
     state.streakFreezeUsed = false;
   }
   const entry = { type, label, minutes: Math.round(minutes*10)/10, date: new Date().toISOString(), ...extra };
-  state.history.unshift(entry); if (state.history.length > 200) state.history.pop();
+  // Compress wanderTimes array to comma-joined string for storage
+  if (entry.wanderTimes !== undefined) {
+    entry.wanderTimes = Array.isArray(entry.wanderTimes) ? (entry.wanderTimes.length > 0 ? entry.wanderTimes.join(',') : '') : entry.wanderTimes;
+  }
+  state.history.unshift(entry); if (state.history.length > 500) state.history.pop();
   saveState();
   updateAllUI();
 }
@@ -1723,14 +1741,11 @@ function shareApp(){
 }
 
 // ═══ FIRST VISIT & SOUND HINT ═══
-function checkFirstVisit(){}
-function showSoundHint(){ return; }
 
 // ═══ ADD TO HOME SCREEN ═══
 function openA2HS(){hapticTap();document.getElementById('a2hsModal').classList.add('active');}
 function closeA2HS(){hapticTap();document.getElementById('a2hsModal').classList.remove('active');}
 if(window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone){
-  var l=document.getElementById('a2hsLink');if(l)l.style.display='none';
   var appEl=document.getElementById('app');
   if(appEl){appEl.style.paddingTop='calc(env(safe-area-inset-top, 20px) + 24px)';}
 }
@@ -1758,12 +1773,26 @@ function importData(input) {
   reader.onload = function(e) {
     try {
       const imported = JSON.parse(e.target.result);
+      // Validate critical fields before merging
+      if (imported.totalMinutes !== undefined && typeof imported.totalMinutes !== 'number') {
+        alert('Invalid backup file: totalMinutes must be a number.'); input.value = ''; return;
+      }
+      if (imported.history !== undefined && !Array.isArray(imported.history)) {
+        alert('Invalid backup file: history must be an array.'); input.value = ''; return;
+      }
+      if (imported.streak !== undefined && typeof imported.streak !== 'number') {
+        alert('Invalid backup file: streak must be a number.'); input.value = ''; return;
+      }
       if (confirm('Import this data? This will replace your current progress.')) {
-        state = { ...defaultState(), ...imported };
-        saveState();
-        updateAllUI();
-        hapticPattern([20,30,20]);
-        alert('Data imported successfully.');
+        try {
+          state = { ...defaultState(), ...imported };
+          saveState();
+          updateAllUI();
+          hapticPattern([20,30,20]);
+          alert('Data imported successfully.');
+        } catch(mergeErr) {
+          alert('Error applying imported data: ' + mergeErr.message);
+        }
       }
     } catch(err) {
       alert('Invalid backup file.');
@@ -1783,7 +1812,7 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 function updateAllUI() {
   checkDailyReset();
   document.getElementById('dailyQuote').textContent = getDailyQuote();
-  checkFirstVisit(); updateMuteUI();
+  updateMuteUI();
 }
 
 
@@ -1827,7 +1856,7 @@ const SNAP = {
     "MIND\nOFF.\nBODY ON.","BE.\nHERE.\nNOW.","JUST\nEXIST.","NO PAST.\nNO FUTURE.",
   ],
   closers: [
-    "PRESENT. ✦","DOST ON. ✦","AWAKE. ✦","HERE. ✦","ARRIVED. ✦","BACK. ✦",
+    "PRESENT. ✦","AWAKE. ✦","HERE. ✦","ARRIVED. ✦","BACK. ✦",
     "RETURNED. ✦","LANDED. ✦","YOU MADE IT. ✦","CLEAR. ✦","REAL. ✦","ALIVE. ✦",
   ],
 };
@@ -1914,7 +1943,7 @@ function scheduleNextSnap() {
 }
 
 // ═══ JUST SIT ═══
-let sitState = { duration:12, running:false, startTime:null, timer:null, wanders:0, elapsed:0, intervalBell:0, intervalTimer:null, wanderTimes:[], intention:'', reflection:'' };
+let sitState = { duration:10, running:false, startTime:null, timer:null, wanders:0, elapsed:0, bellOn:false, intervalTimer:null, wanderTimes:[], intention:'', reflection:'' };
 
 function updateCharCount(input, countId) {
   document.getElementById(countId).textContent = input.value.length + '/50';
@@ -1925,6 +1954,7 @@ function skipReflection() { saveSitReflectionAndClose(); }
 function openSitPicker() {
   hapticTap();
   document.getElementById('sitOverlay').classList.add('active');
+  showMuteIndicator('sitOverlay');
   document.getElementById('sitPicker').style.display='flex';
   document.getElementById('sitActive').style.display='none';
   document.getElementById('sitComplete').classList.remove('visible');
@@ -1932,7 +1962,7 @@ function openSitPicker() {
   document.getElementById('sitIntentionCount').textContent = '0/50';
 }
 function selectSitDur(dur, btn) { hapticTap(); sitState.duration = dur; document.querySelectorAll('.sit-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
-function selectInterval(mins, btn) { hapticTap(); sitState.intervalBell = mins; document.querySelectorAll('.interval-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
+function toggleBell(btn) { hapticTap(); var on = btn.dataset.int === '1'; sitState.bellOn = on; document.querySelectorAll('.interval-pill').forEach(p => p.classList.remove('active')); btn.classList.add('active'); }
 function startSit() {
   sitState.running=true; sitState.startTime=Date.now(); sitState.wanders=0; sitState.elapsed=0; sitState.wanderTimes=[];
   sitState.intention = document.getElementById('sitIntention').value.trim();
@@ -1943,7 +1973,7 @@ function startSit() {
   document.getElementById('sitBtnLabel').textContent="I'm Back"; document.getElementById('sitBtnSub').textContent='tap when you notice';
   playBowl(220,3); hapticPattern([50,30,50]); requestWakeLock(); canvasIntensity = 0.6; sitTick();
   startAmbientSound(ambientType);
-  if (sitState.intervalBell > 0) { sitState.intervalTimer = setInterval(() => { if (sitState.running) { playBowl(280,2); hapticPattern([30,60,30]); } }, sitState.intervalBell*60*1000); }
+  if (sitState.bellOn) { sitState.intervalTimer = setInterval(() => { if (sitState.running) { playBowl(280,2); hapticPattern([30,60,30]); } }, 60*1000); }
 }
 function sitTick() {
   if (!sitState.running) return;
@@ -2005,6 +2035,8 @@ function renderWanderTimeline(times, totalSec, actualMins) {
   document.getElementById('wanderTlEnd').textContent=endMin+':'+String(endSec).padStart(2,'0');
 }
 function endSit(){
+  if(sitState.running){ if(!confirm('End session early?')) return; }
+  if(sitState.intervalTimer){clearInterval(sitState.intervalTimer);sitState.intervalTimer=null;}
   if(sitState.running) completeSit();
   else if(document.getElementById('sitComplete').classList.contains('visible')) saveSitReflectionAndClose();
   else closeSit();
@@ -2090,9 +2122,21 @@ function saveCustomPattern(){
   document.querySelectorAll('.breath-pattern-btn').forEach(b=>b.classList.remove('active'));
   const nb=document.querySelector(`[data-pattern="${key}"]`);if(nb)nb.classList.add('active');breathState.pattern=key;
 }
-function openBreathe(){hapticTap();document.getElementById('breatheOverlay').classList.add('active');requestWakeLock();}
+function showMuteIndicator(overlayId) {
+  var overlay = document.getElementById(overlayId);
+  var existing = overlay.querySelector('.mute-indicator');
+  if (existing) existing.remove();
+  if (state.muted) {
+    var ind = document.createElement('div');
+    ind.className = 'mute-indicator';
+    ind.textContent = '🔇';
+    ind.style.cssText = 'position:absolute;top:12px;right:50px;font-size:18px;opacity:0.6;z-index:10;';
+    overlay.appendChild(ind);
+  }
+}
+function openBreathe(){hapticTap();document.getElementById('breatheOverlay').classList.add('active');showMuteIndicator('breatheOverlay');requestWakeLock();}
 function closeBreathe(){
-  if(breathState.running)stopBreath();
+  if(breathState.running){ if(!confirm('End session early?')) return; stopBreath(); }
   document.getElementById('breatheOverlay').classList.remove('active');releaseWakeLock();
 }
 
@@ -2126,7 +2170,7 @@ function runWimRound() {
 function runWimPowerBreath() {
   if (!wimState.running) return;
   const pat = BREATH_PATTERNS[wimState.patternKey];
-  const totalBreaths = pat.breathsPerRound || 30;
+  const totalBreaths = (pat.breathsPerRound || 30) * 2;
   const orb = document.getElementById('breathOrb');
   const phaseEl = document.getElementById('breathPhase');
   const timerEl = document.getElementById('breathTimer');
@@ -2176,7 +2220,6 @@ function runWimPowerBreath() {
   }
 
   wimState.breathCount++;
-  const isInhale = wimState.breathCount % 2 !== 0 || wimState.patternKey !== 'kapalabhati';
 
   // Rapid breath animation
   if (wimState.breathCount % 2 === 1) {
@@ -2190,7 +2233,7 @@ function runWimPowerBreath() {
     phaseEl.style.color = 'var(--breath-inhale)';
   }
 
-  timerEl.textContent = Math.ceil(wimState.breathCount / 2) + ' / ' + totalBreaths;
+  timerEl.textContent = Math.ceil(wimState.breathCount / 2) + ' / ' + (totalBreaths / 2);
   document.getElementById('breathCycle').textContent = `Round ${wimState.round + 1} — Breath ${Math.ceil(wimState.breathCount / 2)}`;
 
   const inTime = wimState.patternKey === 'wimhof' ? 750 : 500;
@@ -2382,7 +2425,7 @@ function nextBreathPhase(){const pat=BREATH_PATTERNS[breathState.pattern];breath
 const FOCUS_LEVELS = {
   alpha: { name:'Calm & Relax', useCase:'Wind down after a stressful day', desc:'Alpha waves (10Hz) — gentle relaxation', baseFreq:200, beatFreq:10 },
   theta: { name:'Deep Meditation', useCase:'Go deeper in your practice', desc:'Theta waves (6Hz) — meditative trance', baseFreq:150, beatFreq:6 },
-  delta: { name:'Can\'t Sleep', useCase:'Fall asleep naturally', desc:'Delta waves (4Hz) — sleep onset', baseFreq:120, beatFreq:4 },
+  delta: { name:'Can\'t Sleep', useCase:'Deep dreamless sleep onset', desc:'Delta waves (4Hz) — sleep onset', baseFreq:120, beatFreq:4 },
   gamma: { name:'Sharp Focus', useCase:'Study, work, or creative flow', desc:'Gamma waves (40Hz) — peak concentration', baseFreq:300, beatFreq:40 },
   astral: { name:'Astral Projection', useCase:'Body asleep, mind awake — OBE gateway', desc:'Delta waves (4Hz) — out-of-body states', baseFreq:120, beatFreq:4 },
 };
@@ -2400,9 +2443,9 @@ function selectFocusDur(dur, btn) {
   document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
 }
-function openFocus() { hapticTap(); document.getElementById('focusOverlay').classList.add('active'); }
+function openFocus() { hapticTap(); document.getElementById('focusOverlay').classList.add('active'); showMuteIndicator('focusOverlay'); }
 function closeFocus() {
-  if (focusState.running) stopFocusSession();
+  if (focusState.running) { if(!confirm('End session early?')) return; stopFocusSession(); }
   if (guidedState.active) { guidedState.active = false; if ('speechSynthesis' in window) window.speechSynthesis.cancel(); }
   document.getElementById('focusOverlay').classList.remove('active');
 }
@@ -2510,6 +2553,8 @@ function setFocusVolume(val) {
 function stopFocusSession() {
   focusState.running = false;
   // Clean up guided session
+  guidedPromptTimers.forEach(t => clearTimeout(t));
+  guidedPromptTimers = [];
   if (guidedState.active) {
     guidedState.active = false;
     guidedState.session = null;
@@ -2659,6 +2704,7 @@ const GUIDED_SESSIONS = {
 };
 
 let guidedState = { active:false, session:null, promptIdx:0, promptTimer:null, speechSynth:null };
+var guidedPromptTimers = [];
 
 function startGuidedFocus(key) {
   const session = GUIDED_SESSIONS[key];
@@ -2689,6 +2735,7 @@ function scheduleGuidedPrompts(key) {
   const session = GUIDED_SESSIONS[key];
   if (!session) return;
 
+  guidedPromptTimers = [];
   session.prompts.forEach(prompt => {
     const timer = setTimeout(() => {
       if (!guidedState.active) return;
@@ -2696,6 +2743,7 @@ function scheduleGuidedPrompts(key) {
       if (prompt.speak && prompt.text) speakPrompt(prompt.text);
       if (prompt.speak && prompt.text && state.hapticGuidance) haptic(30);
     }, prompt.t * 1000);
+    guidedPromptTimers.push(timer);
   });
 }
 
@@ -2716,14 +2764,23 @@ function speakPrompt(text) {
   if (!('speechSynthesis' in window)) return;
   try {
     window.speechSynthesis.cancel();
-    const utt = new SpeechSynthesisUtterance(text);
+    // Add natural pauses via punctuation
+    var naturalText = text.replace(/\.\s+/g, '... ').replace(/,\s*/g, ', ').replace(/\band\b/gi, ', and');
+    const utt = new SpeechSynthesisUtterance(naturalText);
     utt.rate = 0.85;
-    utt.pitch = 0.9;
+    utt.pitch = 1.0;
     utt.volume = 0.7;
-    // Prefer a calm-sounding voice
     const voices = window.speechSynthesis.getVoices();
-    const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Karen') || v.name.includes('Moira'));
-    if (preferred) utt.voice = preferred;
+    if (voices.length > 0) {
+      // Prefer natural-sounding iOS/macOS voices
+      var preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Karen') || v.name.includes('Daniel'));
+      if (!preferred) {
+        var vl = voices.filter(v => v.lang && v.lang.startsWith('en'));
+        preferred = vl.find(v => /female|natural|premium|enhanced/i.test(v.name + ' ' + (v.localService ? '' : 'premium')));
+        if (!preferred && vl.length > 0) preferred = vl[0];
+      }
+      if (preferred) utt.voice = preferred;
+    }
     window.speechSynthesis.speak(utt);
   } catch(e) {}
 }
@@ -2786,7 +2843,7 @@ function renderInsights() {
 
 function renderFocusInsights() {
   const el = document.getElementById('focusInsights');
-  const sitSessions = state.history.filter(h => h.type === 'sit' && h.wanderTimes && h.wanderTimes.length > 0);
+  const sitSessions = state.history.filter(h => h.type === 'sit' && parseWanderTimes(h.wanderTimes).length > 0);
 
   if (sitSessions.length === 0) {
     el.innerHTML = '<div style="text-align:center;color:var(--text-dim);font-size:13px;padding:16px 0;">Complete a Just Sit session to see focus insights</div>';
@@ -2806,7 +2863,8 @@ function renderFocusInsights() {
   allSitSessions.forEach(h => {
     totalSitMinutes += h.minutes;
     if (h.minutes > longestSession) longestSession = h.minutes;
-    if (!h.wanderTimes || h.wanderTimes.length === 0) {
+    var wt = parseWanderTimes(h.wanderTimes);
+    if (wt.length === 0) {
       sessionsWithZeroWanders++;
       // The whole session was one unbroken gap
       const sessionLen = (h.targetDuration || h.minutes) * 60;
@@ -2817,8 +2875,8 @@ function renderFocusInsights() {
       allGaps.push(sessionLen);
       return;
     }
-    totalWanders += h.wanderTimes.length;
-    const sorted = [...h.wanderTimes].sort((a,b) => a - b);
+    totalWanders += wt.length;
+    const sorted = [...wt].sort((a,b) => a - b);
     const sessionLen = (h.targetDuration || h.minutes) * 60;
 
     // Gap from start to first wander
@@ -2894,8 +2952,9 @@ function renderFocusInsights() {
 function calcAvgGap(sessions) {
   let gaps = [];
   sessions.forEach(h => {
-    if (!h.wanderTimes || h.wanderTimes.length === 0) return;
-    const sorted = [...h.wanderTimes].sort((a,b) => a - b);
+    var wt = parseWanderTimes(h.wanderTimes);
+    if (wt.length === 0) return;
+    const sorted = [...wt].sort((a,b) => a - b);
     const sessionLen = (h.targetDuration || h.minutes) * 60;
     if (sorted[0] > 0) gaps.push(sorted[0]);
     for (let i = 1; i < sorted.length; i++) { const g = sorted[i] - sorted[i-1]; if (g > 0) gaps.push(g); }
@@ -2926,28 +2985,21 @@ function renderHeatmap() {
   var dailyMap = getDailyMap();
   var today = new Date();
   today.setHours(0,0,0,0);
+  var todayKey = getDateKey(today);
 
-  // Build array of last 365 days
-  var days = [];
-  for (var i = 364; i >= 0; i--) {
-    var d = new Date(today);
-    d.setDate(d.getDate() - i);
-    days.push(d);
-  }
+  var year = insightsYear;
+  var month = insightsMonth;
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+  var firstDow = new Date(year, month, 1).getDay(); // 0=Sun
 
-  // Find the first Sunday to start the grid (align weeks to columns)
-  var startDay = new Date(days[0]);
-  var startDow = startDay.getDay(); // 0=Sun
-  // We want columns starting on Sunday
-  var prefixBlanks = startDow; // blanks before first day
-
-  // Collect all minutes to determine intensity thresholds
+  // Collect minutes for intensity thresholds
   var allMins = [];
-  days.forEach(function(d) {
+  for (var i = 1; i <= daysInMonth; i++) {
+    var d = new Date(year, month, i);
     var key = getDateKey(d);
     var mins = dailyMap[key] ? dailyMap[key].minutes : 0;
     if (mins > 0) allMins.push(mins);
-  });
+  }
   allMins.sort(function(a,b){ return a - b; });
   var t1 = allMins.length > 0 ? allMins[Math.floor(allMins.length * 0.33)] : 5;
   var t2 = allMins.length > 0 ? allMins[Math.floor(allMins.length * 0.66)] : 15;
@@ -2959,72 +3011,29 @@ function renderHeatmap() {
     return 'rgba(240,160,96,0.85)';
   }
 
-  // Build week columns (each column = 7 rows for Sun-Sat)
-  var totalSlots = prefixBlanks + days.length;
-  var numWeeks = Math.ceil(totalSlots / 7);
-
-  // Month labels
-  var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var monthLabels = [];
-  var prevMonth = -1;
-  for (var w = 0; w < numWeeks; w++) {
-    var slotIdx = w * 7 - prefixBlanks;
-    // Find the first valid day in this week
-    for (var r = 0; r < 7; r++) {
-      var di = slotIdx + r;
-      if (di >= 0 && di < days.length) {
-        var m = days[di].getMonth();
-        if (m !== prevMonth) {
-          monthLabels.push({ week: w, label: monthNames[m] });
-          prevMonth = m;
-        }
-        break;
-      }
-    }
+  var dayHeaders = ['S','M','T','W','T','F','S'];
+  var html = '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:320px;margin:0 auto;">';
+  // Day-of-week headers
+  for (var h = 0; h < 7; h++) {
+    html += '<div style="text-align:center;font-size:10px;color:var(--text-dim);padding:2px 0;">' + dayHeaders[h] + '</div>';
   }
-
-  var cellSize = 11;
-  var gap = 2;
-  var step = cellSize + gap;
-  var labelH = 14;
-  var dayLabelW = 18;
-  var svgW = dayLabelW + numWeeks * step;
-  var svgH = labelH + 7 * step;
-
-  var svg = '<svg width="' + svgW + '" height="' + svgH + '" viewBox="0 0 ' + svgW + ' ' + svgH + '" xmlns="http://www.w3.org/2000/svg" style="display:block;">';
-
-  // Month labels
-  monthLabels.forEach(function(ml) {
-    var x = dayLabelW + ml.week * step;
-    svg += '<text x="' + x + '" y="10" fill="rgba(232,230,240,0.4)" font-size="9" font-family="sans-serif">' + ml.label + '</text>';
-  });
-
-  // Day labels (Mon, Wed, Fri)
-  var dayAbbr = ['S','M','T','W','T','F','S'];
-  [1,3,5].forEach(function(r) {
-    var y = labelH + r * step + cellSize - 2;
-    svg += '<text x="0" y="' + y + '" fill="rgba(232,230,240,0.3)" font-size="8" font-family="sans-serif">' + dayAbbr[r] + '</text>';
-  });
-
-  // Cells
-  var todayKey = getDateKey(today);
-  for (var w = 0; w < numWeeks; w++) {
-    for (var r = 0; r < 7; r++) {
-      var di = w * 7 + r - prefixBlanks;
-      if (di < 0 || di >= days.length) continue;
-      var d = days[di];
-      var key = getDateKey(d);
-      var mins = dailyMap[key] ? dailyMap[key].minutes : 0;
-      var color = getCellColor(mins);
-      var x = dayLabelW + w * step;
-      var y = labelH + r * step;
-      var stroke = (key === todayKey) ? ' stroke="rgba(240,160,96,0.7)" stroke-width="1"' : '';
-      svg += '<rect x="' + x + '" y="' + y + '" width="' + cellSize + '" height="' + cellSize + '" rx="2" fill="' + color + '"' + stroke + '><title>' + key + ': ' + Math.round(mins) + ' min</title></rect>';
-    }
+  // Blank cells before first day
+  for (var b = 0; b < firstDow; b++) {
+    html += '<div></div>';
   }
-
-  svg += '</svg>';
-  el.innerHTML = svg;
+  // Day cells
+  for (var day = 1; day <= daysInMonth; day++) {
+    var d = new Date(year, month, day);
+    var key = getDateKey(d);
+    var mins = dailyMap[key] ? dailyMap[key].minutes : 0;
+    var color = getCellColor(mins);
+    var isToday = key === todayKey;
+    var border = isToday ? 'border:1px solid rgba(240,160,96,0.7);' : '';
+    var title = key + ': ' + Math.round(mins) + ' min';
+    html += '<div style="aspect-ratio:1;border-radius:4px;background:' + color + ';display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-dim);' + border + '" title="' + title + '">' + day + '</div>';
+  }
+  html += '</div>';
+  el.innerHTML = html;
 }
 
 function exportInsightsImage() {
@@ -3197,11 +3206,11 @@ function renderBreakdown() {
 
 function renderFocusTrend() {
   var el = document.getElementById('focusTrendChart');
-  var sitSessions = state.history.filter(function(h) { return h.type === 'sit' && h.wanderTimes && h.wanderTimes.length > 0; });
+  var sitSessions = state.history.filter(function(h) { return h.type === 'sit' && parseWanderTimes(h.wanderTimes).length > 0; });
   if (sitSessions.length < 2) { el.innerHTML = '<div style="text-align:center;color:var(--text-dim);font-size:13px;padding:12px 0;">Need 2+ Just Sit sessions for trend</div>'; return; }
   var recent = sitSessions.slice(0, 20).reverse();
   var avgGaps = recent.map(function(h) {
-    var sorted = h.wanderTimes.slice().sort(function(a,b){return a-b;});
+    var sorted = parseWanderTimes(h.wanderTimes).slice().sort(function(a,b){return a-b;});
     var sessionLen = (h.targetDuration || h.minutes) * 60;
     var gaps = [];
     if (sorted[0] > 0) gaps.push(sorted[0]);
@@ -3423,30 +3432,6 @@ function getDailyMap() {
   return map;
 }
 
-function renderWeekGrid() {
-  const grid = document.getElementById('insightsWeekGrid');
-  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const now = new Date();
-  const dayOfWeek = (now.getDay() + 6) % 7; // Mon=0
-  const dailyMap = getDailyMap();
-  const typeColors = { snap:'#f0a060', breath:'#60d0c0', sit:'#c090f0', focus:'#6ca0f0' };
-
-  let html = '';
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(now);
-    d.setDate(d.getDate() - dayOfWeek + i);
-    const key = getDateKey(d);
-    const entry = dailyMap[key];
-    const mins = entry ? Math.round(entry.minutes) : 0;
-    let dotColor = 'rgba(255,255,255,0.06)';
-    if (entry && entry.types.size > 0) {
-      const firstType = [...entry.types][0];
-      dotColor = typeColors[firstType] || '#7c6cf0';
-    }
-    html += `<div class="insights-day"><div class="insights-day-label">${days[i]}</div><div class="insights-day-dot" style="background:${dotColor}"></div><div class="insights-day-min">${mins > 0 ? mins+'m' : '-'}</div></div>`;
-  }
-  grid.innerHTML = html;
-}
 
 function renderSparkline() {
   const svg = document.getElementById('sparklineSvg');
@@ -3478,45 +3463,6 @@ function renderSparkline() {
   svg.innerHTML = `<defs><linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(240,160,96,0.3)"/><stop offset="100%" stop-color="rgba(240,160,96,0)"/></linearGradient></defs><path d="${fillD}" fill="url(#sparkGrad)"/><path d="${pathD}" fill="none" stroke="rgba(240,160,96,0.7)" stroke-width="2"/>`;
 }
 
-function renderMonthlyStats() {
-  const el = document.getElementById('monthlyStats');
-  const now = new Date();
-  const thisMonth = now.getMonth();
-  const thisYear = now.getFullYear();
-  const daysInMonth = new Date(thisYear, thisMonth + 1, 0).getDate();
-  const currentDay = now.getDate();
-
-  let totalMins = 0, totalSessions = 0, daysPracticed = 0;
-  let wanderMins = 0, wanderCount = 0;
-  const daysWithPractice = new Set();
-
-  state.history.forEach(h => {
-    const d = new Date(h.date);
-    if (d.getMonth() === thisMonth && d.getFullYear() === thisYear) {
-      totalMins += h.minutes;
-      totalSessions++;
-      daysWithPractice.add(d.getDate());
-      if (h.type === 'sit' && h.wanders !== undefined) {
-        wanderMins += h.minutes;
-        wanderCount += h.wanders;
-      }
-    }
-  });
-
-  daysPracticed = daysWithPractice.size;
-  const consistency = currentDay > 0 ? Math.round((daysPracticed / currentDay) * 100) : 0;
-  const avgSession = totalSessions > 0 ? (totalMins / totalSessions).toFixed(1) : 0;
-  const avgWandersPerMin = wanderMins > 0 ? (wanderCount / wanderMins).toFixed(1) : '-';
-
-  el.innerHTML = `
-    <div class="monthly-stat"><div class="monthly-stat-val">${Math.round(totalMins)}</div><div class="monthly-stat-label">Total Minutes</div></div>
-    <div class="monthly-stat"><div class="monthly-stat-val">${totalSessions}</div><div class="monthly-stat-label">Sessions</div></div>
-    <div class="monthly-stat"><div class="monthly-stat-val">${avgSession}</div><div class="monthly-stat-label">Avg Length</div></div>
-    <div class="monthly-stat"><div class="monthly-stat-val">${consistency}%</div><div class="monthly-stat-label">Consistency</div></div>
-    <div class="monthly-stat"><div class="monthly-stat-val">${avgWandersPerMin}</div><div class="monthly-stat-label">Wanders/Min</div></div>
-    <div class="monthly-stat"><div class="monthly-stat-val">${daysPracticed}</div><div class="monthly-stat-label">Days Active</div></div>
-  `;
-}
 
 function renderMilestones() {
   const el = document.getElementById('milestonesGrid');
@@ -3552,6 +3498,10 @@ resizeCanvas(); window.addEventListener('resize', resizeCanvas);
 function hslToRgb(h,s,l){let r,g,b;if(s===0){r=g=b=l;}else{const hue2rgb=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;};const q=l<0.5?l*(1+s):l+s-l*s;const p=2*l-q;r=hue2rgb(p,q,h+1/3);g=hue2rgb(p,q,h);b=hue2rgb(p,q,h-1/3);}return[Math.round(r*255),Math.round(g*255),Math.round(b*255)];}
 
 function drawSacredGeometry() {
+  if (document.querySelector('.exercise-overlay.active, .sit-overlay.active')) {
+    requestAnimationFrame(drawSacredGeometry);
+    return;
+  }
   const w = canvas.width, h = canvas.height;
   const driftX = Math.sin(geoTime * 0.08) * w * 0.03 + Math.sin(geoTime * 0.05) * w * 0.015;
   const driftY = Math.cos(geoTime * 0.06) * h * 0.025 + Math.cos(geoTime * 0.09) * h * 0.012;
@@ -3770,11 +3720,11 @@ const NIDRA_SESSIONS = {
   }
 };
 
-let nidraState = { running:false, duration:25, startTime:null, timer:null, nodes:null, promptTimers:[] };
+let nidraState = { running:false, duration:7, startTime:null, timer:null, nodes:null, promptTimers:[] };
 
-function openBodyScan() { hapticTap(); document.getElementById('nidraOverlay').classList.add('active'); }
+function openBodyScan() { hapticTap(); document.getElementById('nidraOverlay').classList.add('active'); showMuteIndicator('nidraOverlay'); }
 function closeBodyScan() {
-  if (nidraState.running) stopBodyScan();
+  if (nidraState.running) { if(!confirm('End session early?')) return; stopBodyScan(); }
   document.getElementById('nidraOverlay').classList.remove('active');
 }
 
@@ -3788,7 +3738,7 @@ function selectNidraDur(dur, btn) {
 function startBodyScan() {
   nidraState.running = true;
   nidraState.startTime = Date.now();
-  nidraState.duration = nidraState.duration || 25;
+  nidraState.duration = nidraState.duration || 7;
   requestWakeLock();
   hapticMedium();
 
@@ -3797,11 +3747,12 @@ function startBodyScan() {
   document.getElementById('nidraElapsed').textContent = '0:00';
   canvasIntensity = 0.3;
 
-  // Start Theta tone bed (6Hz beat) — mono so it works on speakers
+  // Start Theta tone bed (6Hz beat) — stereo: headphones required for true binaural effect
   try {
     const ctx = getAudio();
     const oL = ctx.createOscillator(), oR = ctx.createOscillator();
     const gainL = ctx.createGain(), gainR = ctx.createGain();
+    const merger = ctx.createChannelMerger(2);
     const masterGain = ctx.createGain();
     oL.type = 'sine'; oR.type = 'sine';
     oL.frequency.value = 150; oR.frequency.value = 156; // 6Hz theta
@@ -3809,23 +3760,26 @@ function startBodyScan() {
     gainR.gain.setValueAtTime(0, ctx.currentTime);
     gainL.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 15);
     gainR.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 15);
-    // Mono output: both tones to both channels (creates audible 6Hz amplitude modulation on any speaker)
-    oL.connect(gainL); gainL.connect(masterGain);
-    oR.connect(gainR); gainR.connect(masterGain);
+    // Stereo output: left freq to left ear, right freq to right ear (requires headphones)
+    oL.connect(gainL); gainL.connect(merger, 0, 0);
+    oR.connect(gainR); gainR.connect(merger, 0, 1);
     masterGain.gain.value = 0.5;
+    merger.connect(masterGain);
     masterGain.connect(ctx.destination);
     oL.start(); oR.start();
 
-    // Pink noise bed (mono)
+    // Pink noise bed (stereo)
     const bufferSize = 2 * ctx.sampleRate;
-    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = noiseBuffer.getChannelData(0);
-    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
-    for (let i = 0; i < bufferSize; i++) {
-      const w = Math.random()*2-1;
-      b0=0.99886*b0+w*0.0555179;b1=0.99332*b1+w*0.0750759;b2=0.96900*b2+w*0.1538520;
-      b3=0.86650*b3+w*0.3104856;b4=0.55000*b4+w*0.5329522;b5=-0.7616*b5-w*0.0168980;
-      data[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.08;b6=w*0.115926;
+    const noiseBuffer = ctx.createBuffer(2, bufferSize, ctx.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const data = noiseBuffer.getChannelData(ch);
+      let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+      for (let i = 0; i < bufferSize; i++) {
+        const w = Math.random()*2-1;
+        b0=0.99886*b0+w*0.0555179;b1=0.99332*b1+w*0.0750759;b2=0.96900*b2+w*0.1538520;
+        b3=0.86650*b3+w*0.3104856;b4=0.55000*b4+w*0.5329522;b5=-0.7616*b5-w*0.0168980;
+        data[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.08;b6=w*0.115926;
+      }
     }
     const noiseSrc = ctx.createBufferSource();
     noiseSrc.buffer = noiseBuffer; noiseSrc.loop = true;
@@ -3834,7 +3788,7 @@ function startBodyScan() {
     noiseGain.gain.linearRampToValueAtTime(0.015, ctx.currentTime + 15);
     noiseSrc.connect(noiseGain); noiseGain.connect(masterGain);
     noiseSrc.start();
-    nidraState.nodes = { oL, oR, gainL, gainR, merger:null, masterGain, noiseSrc, noiseGain };
+    nidraState.nodes = { oL, oR, gainL, gainR, merger, masterGain, noiseSrc, noiseGain };
   } catch(e) {}
 
   // Schedule prompts (scale timing to duration)
@@ -3883,7 +3837,7 @@ function nidraTick() {
     nidraState.startTime = null;
     stopBodyScan();
     playBowl(396, 4);
-    addMinutes(Math.round(nidraState.duration * 10) / 10, 'nidra', 'Yoga Nidra');
+    addMinutes(Math.round(nidraState.duration * 10) / 10, 'bodyscan', 'Yoga Nidra');
     return;
   }
   nidraState.timer = setTimeout(nidraTick, 500);
@@ -3917,7 +3871,7 @@ function stopBodyScan() {
 
   if (nidraState.startTime) {
     const elapsed = (Date.now() - nidraState.startTime) / 60000;
-    if (elapsed > 1) addMinutes(Math.round(elapsed * 10) / 10, 'nidra', 'Yoga Nidra');
+    if (elapsed > 1) addMinutes(Math.round(elapsed * 10) / 10, 'bodyscan', 'Yoga Nidra');
   }
 
   document.getElementById('nidraSession').classList.remove('visible');
@@ -3974,10 +3928,10 @@ function tutorialPrev() {
 checkDailyReset();
 loadCustomPatterns();
 updateAllUI();
-document.getElementById('hapticToggle').checked = !!state.hapticGuidance;
+// haptic toggle removed from settings UI
 // Auto-show tutorial on first launch
 if (!state.tutorialSeen) { setTimeout(() => startTutorial(), 1500); }
-setTimeout(showSoundHint, 2000);
+
 if('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(function(){});
 }
