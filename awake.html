@@ -724,9 +724,7 @@ html, body {
     <div style="font-size:14px; color:var(--text-secondary); margin-bottom:28px; text-align:center;">Choose your duration. Tap the circle<br>each time you notice your mind wandered.</div>
     <div class="sit-duration-pills">
       <button class="sit-pill" data-dur="2" onclick="selectSitDur(2,this)">2 min</button>
-      <button class="sit-pill" data-dur="5" onclick="selectSitDur(5,this)">5 min</button>
-      <button class="sit-pill" data-dur="6" onclick="selectSitDur(6,this)">6 min</button>
-      <button class="sit-pill active" data-dur="10" onclick="selectSitDur(10,this)">10 min</button>
+      <button class="sit-pill active" data-dur="6" onclick="selectSitDur(6,this)">6 min</button>
       <button class="sit-pill" data-dur="12" onclick="selectSitDur(12,this)">12 min</button>
     </div>
     <div class="interval-selector">
@@ -1943,7 +1941,7 @@ function scheduleNextSnap() {
 }
 
 // ═══ JUST SIT ═══
-let sitState = { duration:10, running:false, startTime:null, timer:null, wanders:0, elapsed:0, bellOn:false, intervalTimer:null, wanderTimes:[], intention:'', reflection:'' };
+let sitState = { duration:6, running:false, startTime:null, timer:null, wanders:0, elapsed:0, bellOn:false, intervalTimer:null, wanderTimes:[], intention:'', reflection:'' };
 
 function updateCharCount(input, countId) {
   document.getElementById(countId).textContent = input.value.length + '/50';
