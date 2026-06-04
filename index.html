@@ -3444,53 +3444,13 @@ function loadMoreWisdom(){
   const container=document.getElementById('wisdomCards');if(!container)return;
   const PAGE=30;const start=wisdomPage*PAGE;const batch=wisdomShuffled.slice(start,start+PAGE);
   if(!batch.length)return;
-  const escaped=batch.map(e=>{const t=e.text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/
-/g,'<br>');return`<div class="wisdom-card"><div class="wc-text">${t}</div><span class="wc-topic">${e.topic}</span></div>`;}).join('');
+  const escaped=batch.map(e=>{const t=e.text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');return`<div class="wisdom-card"><div class="wc-text">${t}</div><span class="wc-topic">${e.topic}</span></div>`;}).join('');
   container.insertAdjacentHTML('beforeend',escaped);
   wisdomPage++;
   const existing=container.querySelector('.wc-loadmore');if(existing)existing.remove();
   if(start+PAGE<wisdomShuffled.length){
     container.insertAdjacentHTML('beforeend',`<div class="wc-loadmore" style="text-align:center;padding:16px;"><button class="btn btn-ghost" onclick="loadMoreWisdom()" style="padding:10px 28px;font-size:13px;">Load more (${wisdomShuffled.length-start-PAGE} remaining)</button></div>`);
   }
-}')" style="margin-bottom:8px;">
-        <div class="card-row">
-          <div class="card-icon" style="background:rgba(160,120,220,0.12);font-size:22px;">${t.emoji}</div>
-          <div class="card-info">
-            <div class="card-title">${t.name}</div>
-            <div class="card-desc">${t.description} · ${t.entries.length} teachings</div>
-          </div>
-        </div>
-      </div>`
-    ).join('');
-    return;
-  }
-
-  // Show teacher header + shuffled entries
-  let entries = [...teacher.entries];
-  for (let i = entries.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [entries[i], entries[j]] = [entries[j], entries[i]];
-  }
-
-  let html = `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-    <div>
-      <div style="font-size:28px;display:inline;">${teacher.emoji}</div>
-      <span style="font-size:18px;font-weight:300;color:var(--text-primary);margin-left:8px;">${teacher.name}</span>
-      <div style="font-size:12px;color:var(--text-dim);margin-top:2px;">${teacher.description}</div>
-    </div>
-    <button class="btn btn-ghost" onclick="selectTeacher(null)" style="padding:6px 12px;font-size:11px;">← All</button>
-  </div>`;
-
-  html += entries.map(e =>
-    `<div class="wisdom-card">
-      <div class="wc-text">${e.text}</div>
-      <span class="wc-topic">${e.topic}</span>
-    </div>`
-  ).join('');
-
-  feed.innerHTML = html;
-  feed.scrollTop = 0;
-}
 
 // ═══ INSIGHTS TABS ═══
 function switchInsightsTab(tab, btn) {
