@@ -3451,6 +3451,7 @@ function loadMoreWisdom(){
   if(start+PAGE<wisdomShuffled.length){
     container.insertAdjacentHTML('beforeend',`<div class="wc-loadmore" style="text-align:center;padding:16px;"><button class="btn btn-ghost" onclick="loadMoreWisdom()" style="padding:10px 28px;font-size:13px;">Load more (${wisdomShuffled.length-start-PAGE} remaining)</button></div>`);
   }
+}
 
 // ═══ INSIGHTS TABS ═══
 function switchInsightsTab(tab, btn) {
