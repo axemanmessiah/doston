@@ -322,9 +322,6 @@ html, body {
 .overlay-close { align-self:flex-end; background:none; border:none; color:var(--text-secondary); font-size:14px; font-weight:500; padding:8px 16px; cursor:pointer; z-index:10; position:relative; }
 .overlay-content { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow-y:auto; }
 
-/* Wisdom Library */
-}
-
 /* Just Sit overlay */
 .sit-overlay {
   position:fixed; inset:0; z-index:200; background: var(--bg-deep);
@@ -1062,7 +1059,7 @@ html, body {
         <button class="btn btn-ghost" onclick="confirmReset()" style="color:rgba(255,80,80,0.6); border-color:rgba(255,80,80,0.15); font-size:12px; padding:8px 16px;">Reset All Progress</button>
       </div>
     </div>
-    <div class="settings-version">AWAKE v17.2</div>
+    <div class="settings-version">AWAKE v17.4</div>
   </div>
 </div>
 
@@ -1094,7 +1091,7 @@ html, body {
 
 <script>
 /* ════════════════════════════════════════════
-   AWAKE v17.2
+   AWAKE v17.4
    ════════════════════════════════════════════ */
 
 // ═══ DAILY TEACHINGS ═══
@@ -3765,7 +3762,31 @@ updateAllUI();
 if (!state.tutorialSeen) { setTimeout(() => startTutorial(), 1500); }
 
 if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(function(){});
+  // Auto-update: when a new version is deployed, activate it and reload once so
+  // users (especially the installed PWA) are never stuck on a stale cached build.
+  var swRefreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function() {
+    if (swRefreshing) return;
+    swRefreshing = true;
+    window.location.reload();
+  });
+  navigator.serviceWorker.register('sw.js').then(function(reg) {
+    reg.update();
+    // Re-check for a new version whenever the app regains focus.
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible') reg.update();
+    });
+    reg.addEventListener('updatefound', function() {
+      var nw = reg.installing;
+      if (!nw) return;
+      nw.addEventListener('statechange', function() {
+        // A new worker is waiting and we already have a controller -> tell it to take over.
+        if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+          nw.postMessage('SKIP_WAITING');
+        }
+      });
+    });
+  }).catch(function(){});
 }
 </script>
 </body>
